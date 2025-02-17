@@ -68,3 +68,17 @@ export const getMovieCredits = async (id: number) => {
     console.log(error.message);
   }
 };
+
+// Similar movies
+export const getSimilarMovies = async (id: number) => {
+  const similarMoviesURL = `${baseApiURL}/movie/${id}/similar?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(similarMoviesURL);
+    const resData = await res.json();
+
+    return resData;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};

@@ -4,6 +4,7 @@ import Image from "next/image";
 import moviePosterURL from "../../app/actions/movies/image-API-URL";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import HeaderSection from "./header-section";
 
 export default function ImageGallery({ backdrops }) {
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
@@ -29,18 +30,11 @@ export default function ImageGallery({ backdrops }) {
     }
   };
 
+  const sectionName = "Photos";
+
   return (
     <div className="container">
-      {/* Header Section */}
-      <div className="mb-4">
-        <h2 className="inline-flex gap-2 items-center mb-4 text-4xl font-medium text-zinc-900 dark:text-white">
-          <div className="h-10 w-1 bg-[#f5c518] rounded-sm" />
-          Photos
-          <span className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
-            {sortedBackdrops.length}
-          </span>
-        </h2>
-      </div>
+      <HeaderSection sectionName={sectionName} data={sortedBackdrops} />
 
       {/* Main Content */}
       <div className="flex flex-col">

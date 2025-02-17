@@ -4,6 +4,7 @@ import {
   getMovieImages,
   getMovieBackdrops,
   getMovieVideos,
+  getSimilarMovies,
 } from "../../../actions/movies/moviesData";
 import { Metadata } from "next";
 
@@ -12,6 +13,7 @@ import MovieMedia from "../../../../components/movie-details/media-section";
 import ImageGallery from "../../../../components/movie-details/image-gallery";
 import VideoGallery from "../../../../components/movie-details/video-gallery";
 import TopCastList from "../../../../components/movie-details/top-cast-list";
+import MovieSuggestions from "../../../../components/movie-details/movie-suggestions";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -23,6 +25,7 @@ export default async function MovieDetails({ params }) {
   const movieCredits = await getMovieCredits(id);
   const backdrops = await getMovieBackdrops(movie.id);
   const videos = await getMovieVideos(movie.id);
+  const movieSuggestions = await getSimilarMovies(movie.id);
   const directors: string[] = [];
   const writers: string[] = [];
   const stars = [];
@@ -131,6 +134,9 @@ export default async function MovieDetails({ params }) {
 
       {/* Top Cast List */}
       <TopCastList topCast={topCast} />
+
+      {/* Movie Suggestions */}
+      <MovieSuggestions movieSuggestions={movieSuggestions} />
     </div>
   );
 }

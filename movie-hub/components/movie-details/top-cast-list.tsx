@@ -1,22 +1,13 @@
 import Image from "next/image";
 import moviePosterURL from "../../app/actions/movies/image-API-URL";
+import HeaderSection from "./header-section";
 
 export default function TopCastList({ topCast }) {
+  const sectionName = "Top Cast";
+
   return (
     <>
-      <div className="container">
-        {/* Header Section */}
-        <div className="mb-4">
-          <h2 className="inline-flex gap-2 items-center mb-4 text-4xl font-medium text-zinc-900 dark:text-white">
-            <div className="h-10 w-1 bg-[#f5c518] rounded-sm" />
-            Top Cast
-            <span className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
-              {topCast.length}
-            </span>
-          </h2>
-        </div>
-      </div>
-
+      <HeaderSection sectionName={sectionName} data={topCast} />
       <div className="grid xl:grid-cols-4">
         <ul
           role="list"

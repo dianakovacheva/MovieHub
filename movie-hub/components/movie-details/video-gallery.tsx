@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import YouTube from "react-youtube";
 import Image from "next/image";
+import HeaderSection from "./header-section";
 
 export default function VideoGallery({ videos }) {
   if (!videos.results || videos.results.length === 0) {
@@ -65,18 +66,11 @@ export default function VideoGallery({ videos }) {
     setPlayer(event.target);
   };
 
+  const sectionName = "Videos";
+
   return (
     <div className="container">
-      {/* Header Section */}
-      <div className="mb-4">
-        <h2 className="inline-flex gap-2 items-center mb-4 text-4xl font-medium text-zinc-900 dark:text-white">
-          <div className="h-10 w-1 bg-[#f5c518] rounded-sm" />
-          Videos
-          <span className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
-            {sortedVideos.length}
-          </span>
-        </h2>
-      </div>
+      <HeaderSection sectionName={sectionName} data={sortedVideos} />
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
