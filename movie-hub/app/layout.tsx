@@ -34,9 +34,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {" "}
-        <ThemeProvider enableSystem={true} defaultTheme="system">
+        <ThemeProvider
+          attribute="class"
+          enableSystem={true}
+          defaultTheme="system"
+        >
           <Navbar />
-          <main>{children}</main>
+          <main className="w-full">{children}</main>
         </ThemeProvider>
       </body>
     </html>

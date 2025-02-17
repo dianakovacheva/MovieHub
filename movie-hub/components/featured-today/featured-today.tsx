@@ -1,4 +1,4 @@
-import { getTrendingMoviesToday } from "../../app/actions/movies/movies";
+import { getTrendingMoviesToday } from "../../app/actions/movies/moviesData";
 import moviePosterURL from "../../app/actions/movies/image-API-URL";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default async function FeaturedToday() {
       <div className="carousel rounded-box w-[60vw]">
         <div className="carousel-item gap-1">
           {trendingMoviesToday.map((movie) => (
-            <Link href={"/"} key={movie.id}>
+            <Link href={`/movie/${movie.id}`} key={movie.id}>
               <Image
                 src={`${moviePosterURL}/${movie!.poster_path}`}
                 alt={`${movie?.title}'s poster`}
@@ -28,6 +28,6 @@ export default async function FeaturedToday() {
       </div>
     </>
   ) : (
-    <p>No movie to show.</p>
+    <p>No movies to show.</p>
   );
 }
