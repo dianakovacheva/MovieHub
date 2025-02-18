@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function MoviePoster({ movie }) {
   return (
     <Image
-      src={`${moviePosterURL}/${movie!.poster_path}`}
+      src={`${moviePosterURL}${movie!.poster_path}`}
       alt={`${movie?.title}'s poster`}
       height={2}
       width={500}

@@ -69,8 +69,8 @@ export const getMovieCredits = async (id: number) => {
   }
 };
 
-// Similar movies
-export const getSimilarMovies = async (id: number) => {
+// Movie Suggestions
+export const getMovieSuggestions = async (id: number) => {
   const similarMoviesURL = `${baseApiURL}/movie/${id}/similar?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {

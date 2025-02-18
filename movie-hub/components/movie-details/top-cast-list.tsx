@@ -8,10 +8,11 @@ export default function TopCastList({ topCast }) {
   return (
     <>
       <HeaderSection sectionName={sectionName} data={topCast} />
-      <div className="grid xl:grid-cols-4">
+
+      <div className="grid xl:grid-cols-3">
         <ul
           role="list"
-          className="grid gap-x-24 gap-y-12 sm:grid-cols-2  xl:col-span-2"
+          className="grid gap-x-24 gap-y-5 sm:grid-cols-2  xl:col-span-2"
         >
           {topCast.map((person) => (
             <li key={person.id}>

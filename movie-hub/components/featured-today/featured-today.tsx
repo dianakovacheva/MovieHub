@@ -14,13 +14,18 @@ export default async function FeaturedToday() {
       <div className="carousel rounded-box w-[60vw]">
         <div className="carousel-item gap-1">
           {trendingMoviesToday.map((movie) => (
-            <Link href={`/movie/${movie.id}`} key={movie.id}>
+            <Link
+              href={`/movie/${movie.id}-${movie.title
+                .split(" ")
+                .join("-")
+                .toLowerCase()}`}
+              key={movie.id}
+            >
               <Image
                 src={`${moviePosterURL}/${movie!.poster_path}`}
                 alt={`${movie?.title}'s poster`}
                 width={250}
                 height={250}
-                key={movie.id}
               />
             </Link>
           ))}

@@ -1,10 +1,9 @@
 import {
   getMovieDetails,
   getMovieCredits,
-  getMovieImages,
   getMovieBackdrops,
   getMovieVideos,
-  getSimilarMovies,
+  getMovieSuggestions,
 } from "../../../actions/movies/moviesData";
 import { Metadata } from "next";
 
@@ -25,12 +24,11 @@ export default async function MovieDetails({ params }) {
   const movieCredits = await getMovieCredits(id);
   const backdrops = await getMovieBackdrops(movie.id);
   const videos = await getMovieVideos(movie.id);
-  const movieSuggestions = await getSimilarMovies(movie.id);
+  const movieSuggestions = await getMovieSuggestions(movie.id);
   const directors: string[] = [];
   const writers: string[] = [];
   const stars = [];
   const cast = [];
-  let topCast: object = [];
 
   // Directors
   movieCredits.crew.map((data) => {
@@ -77,7 +75,12 @@ export default async function MovieDetails({ params }) {
     }
   });
 
-  topCast = cast.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
+  const topCast = cast.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
+
+  // Movie Suggestions
+  const topMovieSuggestions = movieSuggestions.results
+    .sort((a, b) => b.popularity - a.popularity)
+    .slice(0, 12);
 
   return (
     <div className="flex flex-col gap-6">
@@ -135,8 +138,8 @@ export default async function MovieDetails({ params }) {
       {/* Top Cast List */}
       <TopCastList topCast={topCast} />
 
-      {/* Movie Suggestions */}
-      <MovieSuggestions movieSuggestions={movieSuggestions} />
+      {/* Top Movie Suggestions */}
+      <MovieSuggestions topMovieSuggestions={topMovieSuggestions} />
     </div>
   );
 }

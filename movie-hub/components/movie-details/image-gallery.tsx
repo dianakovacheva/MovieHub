@@ -33,7 +33,7 @@ export default function ImageGallery({ backdrops }) {
   const sectionName = "Photos";
 
   return (
-    <div className="container">
+    <>
       <HeaderSection sectionName={sectionName} data={sortedBackdrops} />
 
       {/* Main Content */}
@@ -107,6 +107,6 @@ export default function ImageGallery({ backdrops }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

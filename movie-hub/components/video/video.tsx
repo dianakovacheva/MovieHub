@@ -1,16 +1,9 @@
 "use client";
+
 import React from "react";
 import YouTube from "react-youtube";
 
 export default function Video({ videoId }) {
-  // const opts = {
-  //   height: "100%",
-  //   width: "100%",
-  //   playerVars: {
-  //     autoplay: 0,
-  //   },
-  // };
-
   const opts = {
     height: "100%",
     width: "100%",

@@ -69,7 +69,7 @@ export default function VideoGallery({ videos }) {
   const sectionName = "Videos";
 
   return (
-    <div className="container">
+    <>
       <HeaderSection sectionName={sectionName} data={sortedVideos} />
 
       {/* Main Content Grid */}
@@ -94,7 +94,7 @@ export default function VideoGallery({ videos }) {
           </div>
         </div>
 
-        {/* Playlist Section */}
+        {/* Videos List Section */}
         <div className="lg:col-span-1">
           <div className="bg-zinc-50 dark:bg-[#121212] rounded-xl p-4">
             <div className="flex justify-between items-center mb-4">
@@ -141,7 +141,7 @@ export default function VideoGallery({ videos }) {
                 >
                   <div className="relative flex-shrink-0 w-32 aspect-video rounded-md overflow-hidden">
                     <Image
-                      src={`https://img.youtube.com/vi/${video.key}/maxresdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
                       width={100}
                       height={100}
                       alt={video.name}
@@ -162,6 +162,6 @@ export default function VideoGallery({ videos }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
