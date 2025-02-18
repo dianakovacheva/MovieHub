@@ -4,6 +4,7 @@ import {
   getMovieBackdrops,
   getMovieVideos,
   getMovieSuggestions,
+  getKeywords,
 } from "../../../actions/movies/moviesData";
 import { Metadata } from "next";
 
@@ -13,6 +14,8 @@ import ImageGallery from "../../../../components/movie-details/image-gallery";
 import VideoGallery from "../../../../components/movie-details/video-gallery";
 import TopCastList from "../../../../components/movie-details/top-cast-list";
 import MovieSuggestions from "../../../../components/movie-details/movie-suggestions";
+import DetailsSection from "../../../../components/movie-details/details-section";
+import Storyline from "../../../../components/movie-details/storyline";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -25,6 +28,7 @@ export default async function MovieDetails({ params }) {
   const backdrops = await getMovieBackdrops(movie.id);
   const videos = await getMovieVideos(movie.id);
   const movieSuggestions = await getMovieSuggestions(movie.id);
+  const keywords = await getKeywords(movie.id);
   const directors: string[] = [];
   const writers: string[] = [];
   const stars = [];
@@ -83,23 +87,23 @@ export default async function MovieDetails({ params }) {
     .slice(0, 12);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       {/* Movie Info */}
       <MovieInfo key={movie.id} movie={movie} />
 
       {/* Media Section */}
       <MovieMedia key={movie.id} movie={movie} />
 
-      {/* Staff */}
+      {/* Crew and Cast */}
       <div className="flex flex-col">
         <div>
-          <p className="text-base font-normal">{movie.overview}</p>
+          <p className="text-base font-normal">{movie.tagline}</p>
         </div>
         <div className="divider"></div>
         {/* Directors */}
         <div>
           <p className="text-base">
-            <span className="font-bold">
+            <span className="font-bold mr-2">
               {directors.length > 1 ? "Directors" : "Director"}{" "}
             </span>
             {directors.join(", ")}
@@ -110,7 +114,7 @@ export default async function MovieDetails({ params }) {
         {/* Writers */}
         <div>
           <p className="text-base">
-            <span className="font-bold">
+            <span className="font-bold mr-2">
               {writers.length > 1 ? "Writers" : "Writer"}{" "}
             </span>
             {writers.join(", ")}
@@ -121,7 +125,7 @@ export default async function MovieDetails({ params }) {
         {/* Stars */}
         <div>
           <p className="text-base">
-            <span className="font-bold">
+            <span className="font-bold mr-2">
               {starsSorted.length > 1 ? "Stars" : "Star"}{" "}
             </span>
             {starsSorted.map((actor) => actor.name).join(", ")}
@@ -140,6 +144,12 @@ export default async function MovieDetails({ params }) {
 
       {/* Top Movie Suggestions */}
       <MovieSuggestions topMovieSuggestions={topMovieSuggestions} />
+
+      {/* Storyline */}
+      <Storyline movie={movie} keywords={keywords.keywords} />
+
+      {/* Details Section */}
+      <DetailsSection movie={movie} />
     </div>
   );
 }
