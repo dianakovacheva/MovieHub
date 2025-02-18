@@ -44,12 +44,21 @@ export default function TopCastList({ topCast }) {
                 <div className="flex items-center gap-3">
                   <div className="avatar">
                     <div className="rounded-full mask mask-squircle h-24 w-24">
-                      <Image
-                        src={`${moviePosterURL}${person.profile_path}`}
-                        alt={person.name}
-                        width={100}
-                        height={100}
-                      />
+                      {!person.profile_path ? (
+                        <Image
+                          src="/default-avatar-profile-icon.jpg"
+                          alt={person.name}
+                          width={150}
+                          height={150}
+                        />
+                      ) : (
+                        <Image
+                          src={`${moviePosterURL}${person.profile_path}`}
+                          alt={person.name}
+                          width={100}
+                          height={100}
+                        />
+                      )}
                     </div>
                   </div>
                   <div>
