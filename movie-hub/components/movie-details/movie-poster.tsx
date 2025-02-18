@@ -11,6 +11,9 @@ export default function MoviePoster({ movie }) {
       key={movie.id}
       style={{ objectFit: "cover", padding: 0, margin: 0 }}
       className="rounded-box"
+      // priority={true}
+      loading="lazy"
+      unoptimized={false}
     />
   );
 }

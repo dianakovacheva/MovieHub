@@ -101,7 +101,9 @@ export default function FeaturedToday({ topMovieSuggestions }) {
                   src={`${moviePosterURL}/${movie.poster_path}`}
                   alt={`${movie?.title}'s poster`}
                   width={250}
-                  height={250}
+                  height={200}
+                  loading="lazy"
+                  unoptimized={false}
                   className="rounded-lg"
                 />
               </Link>
