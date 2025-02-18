@@ -17,7 +17,7 @@ export default async function MovieMedia({ movie }) {
   }
 
   return (
-    <div className="flex flex-col-reverse md:flex-row w-full gap-6 sm:gap-2">
+    <div className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2">
       <MoviePoster movie={movie} />
 
       {/* Trailer Video */}
