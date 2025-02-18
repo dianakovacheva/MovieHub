@@ -1,18 +1,16 @@
 import movieRealseYear from "../../app/utils/movie";
 import convertMinsToHrsMins from "../../app/utils/convert-time";
+import MovieGenres from "./movie-genres";
 
 export default async function MovieInfo({ movie }) {
   const movieReleaseYear = await movieRealseYear(movie.release_date);
-  const movieGendersSorted = movie.genres.sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
 
   return movie ? (
-    <div className="flex items-start justify-between w-full m-0 p-0">
+    <div className="flex items-start justify-between w-full">
       {/* Movie Info Left Side */}
       <div className="flex flex-col gap-2 md:gap-0">
         <h1 className="text-5xl font-normal break-words">{movie.title}</h1>
-        <div className="flex gap-1 items-end font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
+        <div className="flex gap-1 items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
           <p>{movieReleaseYear}</p>
           <p>({movie.origin_country})</p>
           <svg
@@ -25,11 +23,12 @@ export default async function MovieInfo({ movie }) {
           >
             <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
           </svg>
-          <p className="mt-1 hidden md:flex">
-            {movieGendersSorted.length > 1
-              ? movieGendersSorted.map((genre) => genre.name).join(", ")
-              : " "}
+
+          {/* Movie Genres */}
+          <p className="hidden md:flex">
+            <MovieGenres movieGenres={movie.genres} />
           </p>
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
