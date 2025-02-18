@@ -82,3 +82,17 @@ export const getMovieSuggestions = async (id: number) => {
     console.log(error.message);
   }
 };
+
+// Movie Keyword
+export const getKeywords = async (id: number) => {
+  const keywordsURL = `${baseApiURL}/movie/${id}/keywords?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(keywordsURL);
+    const resData = await res.json();
+
+    return resData;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
