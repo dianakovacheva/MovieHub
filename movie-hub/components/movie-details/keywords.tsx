@@ -20,7 +20,7 @@ export default function Keywords({ keywords }) {
     );
   }
   return (
-    <div className="w-[60vw]">
+    <div className="sm:w-[60vw]">
       <ul className="flex flex-wrap gap-2">
         {keywords.map((keyword) => (
           <li key={keyword.id}>

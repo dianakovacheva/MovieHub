@@ -99,7 +99,7 @@ export default async function MovieDetails({ params }) {
         {/* Movie Tagline */}
         {movie.tagline ? (
           <div className="tagline">
-            <p className="text-base font-normal">{movie.tagline}</p>
+            <p className="text-base font-normal text-base/6">{movie.tagline}</p>
           </div>
         ) : (
           ""
@@ -111,13 +111,13 @@ export default async function MovieDetails({ params }) {
           {directors ? (
             <>
               <div className="divider"></div>
-              <div className="flex items-center">
+              <div className="flex items-center flex-wrap">
                 {directors.length > 1 ? (
                   <p className="text-base font-bold mr-4">Directors</p>
                 ) : (
                   <p className="text-base font-bold mr-4">Director</p>
                 )}
-                <ul className="flex gap-6">
+                <ul className="flex flex-wrap gap-6">
                   {directors.map((director) => (
                     <li
                       key={director.id}
@@ -137,13 +137,13 @@ export default async function MovieDetails({ params }) {
           {writers ? (
             <>
               <div className="divider"></div>
-              <div className="flex items-center">
+              <div className="flex items-center flex-wrap">
                 {writers.length > 1 ? (
                   <p className="text-base font-bold mr-4">Writes</p>
                 ) : (
                   <p className="text-base font-bold mr-4">Write</p>
                 )}
-                <ul className="flex gap-6">
+                <ul className="flex gap-6 flex-wrap">
                   {writers.map((data) => (
                     <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
                       {data.name}
@@ -160,13 +160,13 @@ export default async function MovieDetails({ params }) {
           {starsSorted ? (
             <>
               <div className="divider"></div>
-              <div className="flex items-center">
+              <div className="flex flex-wrap gap-6 sm:gap-0 items-center">
                 {starsSorted.length > 1 ? (
                   <p className="text-base font-bold mr-4">Stars</p>
                 ) : (
                   <p className="text-base font-bold mr-4">Star</p>
                 )}
-                <ul className="flex gap-6">
+                <ul className="flex flex-wrap gap-6">
                   {starsSorted.map((star) => (
                     <li
                       key={star.name}

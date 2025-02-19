@@ -31,7 +31,7 @@ export default function Storyline({ movie, keywords }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 w-[60vw]">
+      <div className="flex flex-col gap-2 sm:w-[60vw]">
         <HeaderSection sectionName={sectionName} data={0} />
         {movie.overview ? (
           <p className="text-base/6 mb-4">{movie.overview}</p>
@@ -42,14 +42,14 @@ export default function Storyline({ movie, keywords }) {
 
       {keywords ? <Keywords keywords={keywords} /> : ""}
 
-      <div className="flex flex-col">
+      <div className="flex flex-col sm:w-[60vw]">
         {/* Taglines */}
         {movie.tagline ? (
           <>
             <div className="divider"></div>
-            <div className="flex items-center">
+            <div className="flex items-center flex-wrap gap-6 sm:gap-0">
               <p className="text-base font-bold mr-2">Taglines</p>
-              {movie.tagline}
+              <span className="text-base/6"> {movie.tagline} </span>
             </div>
           </>
         ) : (
@@ -60,7 +60,7 @@ export default function Storyline({ movie, keywords }) {
         {movie.genres ? (
           <>
             <div className="divider"></div>
-            <div className="flex items-center">
+            <div className="flex items-center flex-wrap">
               {movie.genres.length > 1 ? (
                 <p className="text-base font-bold mr-4">Genres</p>
               ) : (

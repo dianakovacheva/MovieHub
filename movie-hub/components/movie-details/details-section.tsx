@@ -30,7 +30,7 @@ export default function DetailsSection({ movie }) {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col sm:w-[60vw]">
       <HeaderSection sectionName={sectionName} data={0} />
 
       {/* Movie Release Date */}
@@ -134,13 +134,13 @@ export default function DetailsSection({ movie }) {
       {movie.production_countries ? (
         <>
           <div className="divider"></div>
-          <div className="flex items-center">
+          <div className="flex items-center flex-wrap gap-6 sm:gap-0">
             {movie.production_countries.length > 1 ? (
               <p className="text-base font-bold mr-4">Filming locations</p>
             ) : (
               <p className="text-base font-bold mr-4">Filming location</p>
             )}
-            <ul className="flex gap-6">
+            <ul className="flex flex-wrap gap-6">
               {movie.production_countries.map((counry) => (
                 <li
                   key={counry.iso_3166_1}
@@ -160,7 +160,7 @@ export default function DetailsSection({ movie }) {
       {movie.production_companies ? (
         <>
           <div className="divider"></div>
-          <div className="flex items-center">
+          <div className="flex items-center flex-wrap gap-6 sm:gap-0">
             {movie.production_companies.length > 1 ? (
               <p className="text-base font-bold mr-4">Production companies</p>
             ) : (

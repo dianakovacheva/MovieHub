@@ -11,14 +11,14 @@ export default async function MovieInfo({ movie }) {
       <div className="flex flex-col gap-2 md:gap-0">
         <h1 className="text-5xl font-normal break-words">{movie.title}</h1>
         <div>
-          <ul className="flex gap-3 md:gap-6 items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
-            <li className="flex gap-20">
+          <ul className="flex items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
+            <li className="mr-6">
               {movieReleaseYear} ({movie.origin_country})
             </li>
 
             {/* Movie Genres */}
             {movie.genres ? (
-              <li className="list-none md:list-disc">
+              <li className="list-disc mr-6">
                 <MovieGenres movieGenres={movie.genres} />
               </li>
             ) : (
