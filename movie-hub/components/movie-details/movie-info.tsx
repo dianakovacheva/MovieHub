@@ -12,17 +12,14 @@ export default async function MovieInfo({ movie }) {
         <h1 className="text-5xl font-normal break-words">{movie.title}</h1>
         <div>
           <ul className="flex gap-3 md:gap-6 items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
-            <li className="flex gap-1">
-              <p>{movieReleaseYear}</p>
-              <p>({movie.origin_country})</p>
+            <li className="flex gap-20">
+              {movieReleaseYear} ({movie.origin_country})
             </li>
 
             {/* Movie Genres */}
             {movie.genres ? (
               <li className="list-none md:list-disc">
-                <p className="hidden md:flex">
-                  <MovieGenres movieGenres={movie.genres} />
-                </p>
+                <MovieGenres movieGenres={movie.genres} />
               </li>
             ) : (
               ""
@@ -31,7 +28,7 @@ export default async function MovieInfo({ movie }) {
             {/* Movie Runtime */}
             {movie.runtime ? (
               <li className="list-disc">
-                <span>{convertMinsToHrsMins(movie.runtime)}</span>
+                {convertMinsToHrsMins(movie.runtime)}
               </li>
             ) : (
               ""
