@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="footer footer-horizontal footer-center text-base-content p-10">
-      <aside className="flex gap-2">
+      <aside className="flex flex-col md:flex-row items-end">
         Copyright © {new Date().getFullYear()} - Developed by Diana Kovacheva.
         Source code at{" "}
         <Link
@@ -13,7 +13,7 @@ export default function Footer() {
           }
           target="_blank"
         >
-          <Github size={16} />{" "}
+          <Github size={16} />
         </Link>
       </aside>
     </footer>
