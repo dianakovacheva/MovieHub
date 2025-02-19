@@ -10,36 +10,33 @@ export default async function MovieInfo({ movie }) {
       {/* Movie Info Left Side */}
       <div className="flex flex-col gap-2 md:gap-0">
         <h1 className="text-5xl font-normal break-words">{movie.title}</h1>
-        <div className="flex gap-1 items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
-          <p>{movieReleaseYear}</p>
-          <p>({movie.origin_country})</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-dot hidden md:flex"
-            viewBox="0 0 16 16"
-          >
-            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-          </svg>
+        <div>
+          <ul className="flex gap-3 md:gap-6 items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
+            <li className="flex gap-1">
+              <p>{movieReleaseYear}</p>
+              <p>({movie.origin_country})</p>
+            </li>
 
-          {/* Movie Genres */}
-          <p className="hidden md:flex">
-            <MovieGenres movieGenres={movie.genres} />
-          </p>
+            {/* Movie Genres */}
+            {movie.genres ? (
+              <li className="list-none md:list-disc">
+                <p className="hidden md:flex">
+                  <MovieGenres movieGenres={movie.genres} />
+                </p>
+              </li>
+            ) : (
+              ""
+            )}
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-dot"
-            viewBox="0 0 16 16"
-          >
-            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-          </svg>
-          <span>{convertMinsToHrsMins(movie.runtime)}</span>
+            {/* Movie Runtime */}
+            {movie.runtime ? (
+              <li className="list-disc">
+                <span>{convertMinsToHrsMins(movie.runtime)}</span>
+              </li>
+            ) : (
+              ""
+            )}
+          </ul>
         </div>
       </div>
 
@@ -65,16 +62,27 @@ export default async function MovieInfo({ movie }) {
             {/* Rating */}
             <div>
               <div className="flex items-center gap-1">
-                <p className="text-xl font-semibold">
-                  {movie.vote_average.toFixed(1)}
-                </p>
+                {movie.vote_average ? (
+                  <p className="text-xl font-semibold">
+                    {movie.vote_average.toFixed(1)}
+                  </p>
+                ) : (
+                  <p className="text-xl font-semibold">0</p>
+                )}
+
                 <span className="text-base font-normal text-zinc-500 dark:text-[#c0bcbc]">
                   / 10
                 </span>
               </div>
-              <p className="text-xs font-normal text-zinc-500 dark:text-[#c0bcbc]">
-                {movie.vote_count}
-              </p>
+              {movie.vote_count ? (
+                <p className="text-xs font-normal text-zinc-500 dark:text-[#c0bcbc]">
+                  {movie.vote_count}
+                </p>
+              ) : (
+                <p className="text-xs font-normal text-zinc-500 dark:text-[#c0bcbc]">
+                  0
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -109,6 +117,6 @@ export default async function MovieInfo({ movie }) {
       </div>
     </div>
   ) : (
-    <p>No movie info to display yet.</p>
+    <p> No movie info to display yet. </p>
   );
 }

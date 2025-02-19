@@ -4,10 +4,12 @@ export default function MovieGenres({ movieGenres }) {
   );
 
   return (
-    <>
-      {movieGendersSorted.length > 1
-        ? movieGendersSorted.map((genre) => genre.name).join(", ")
-        : " "}
-    </>
+    <ul className="flex gap-6">
+      {movieGendersSorted.map((genre) => (
+        <li key={genre.id} className="[&:nth-child(n+2)]:list-disc">
+          {genre.name}
+        </li>
+      ))}
+    </ul>
   );
 }

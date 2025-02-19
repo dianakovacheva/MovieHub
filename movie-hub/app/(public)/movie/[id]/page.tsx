@@ -29,25 +29,25 @@ export default async function MovieDetails({ params }) {
   const videos = await getMovieVideos(movie.id);
   const movieSuggestions = await getMovieSuggestions(movie.id);
   const keywords = await getKeywords(movie.id);
-  const directors: string[] = [];
-  const writers: string[] = [];
+  const directors: any[] = [];
+  const writers: any[] = [];
   const stars = [];
   const cast = [];
 
   // Directors
   movieCredits.crew.map((data) => {
     if (data.job.toLowerCase() == "director") {
-      directors.push(data.name);
+      directors.push(data);
     }
   });
 
-  // Writers
+  // Writes
   movieCredits.crew.map((data) => {
     if (
       data.job.toLowerCase() == "writer" ||
       data.job.toLowerCase() == "screenplay"
     ) {
-      writers.push(data.name);
+      writers.push(data);
     }
   });
 
@@ -94,42 +94,92 @@ export default async function MovieDetails({ params }) {
       {/* Media Section */}
       <MovieMedia key={movie.id} movie={movie} />
 
-      {/* Crew and Cast */}
       <div className="flex flex-col">
-        <div>
-          <p className="text-base font-normal">{movie.tagline}</p>
-        </div>
-        <div className="divider"></div>
-        {/* Directors */}
-        <div>
-          <p className="text-base">
-            <span className="font-bold mr-2">
-              {directors.length > 1 ? "Directors" : "Director"}{" "}
-            </span>
-            {directors.join(", ")}
-          </p>
-        </div>
+        {/* Movie Tagline */}
+        {movie.tagline ? (
+          <div className="tagline">
+            <p className="text-base font-normal">{movie.tagline}</p>
+          </div>
+        ) : (
+          ""
+        )}
 
-        <div className="divider"></div>
-        {/* Writers */}
-        <div>
-          <p className="text-base">
-            <span className="font-bold mr-2">
-              {writers.length > 1 ? "Writers" : "Writer"}{" "}
-            </span>
-            {writers.join(", ")}
-          </p>
-        </div>
+        {/* Crew and Cast */}
+        <div className="flex flex-col">
+          {/* Directors */}
+          {directors ? (
+            <>
+              <div className="divider"></div>
+              <div className="flex items-center">
+                {directors.length > 1 ? (
+                  <p className="text-base font-bold mr-4">Directors</p>
+                ) : (
+                  <p className="text-base font-bold mr-4">Director</p>
+                )}
+                <ul className="flex gap-6">
+                  {directors.map((director) => (
+                    <li
+                      key={director.id}
+                      className="[&:nth-child(n+2)]:list-disc"
+                    >
+                      {director.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
 
-        <div className="divider"></div>
-        {/* Stars */}
-        <div>
-          <p className="text-base">
-            <span className="font-bold mr-2">
-              {starsSorted.length > 1 ? "Stars" : "Star"}{" "}
-            </span>
-            {starsSorted.map((actor) => actor.name).join(", ")}
-          </p>
+          {/* Writers */}
+          {writers ? (
+            <>
+              <div className="divider"></div>
+              <div className="flex items-center">
+                {writers.length > 1 ? (
+                  <p className="text-base font-bold mr-4">Writes</p>
+                ) : (
+                  <p className="text-base font-bold mr-4">Write</p>
+                )}
+                <ul className="flex gap-6">
+                  {writers.map((data) => (
+                    <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
+                      {data.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+
+          {/* Stars */}
+          {starsSorted ? (
+            <>
+              <div className="divider"></div>
+              <div className="flex items-center">
+                {starsSorted.length > 1 ? (
+                  <p className="text-base font-bold mr-4">Stars</p>
+                ) : (
+                  <p className="text-base font-bold mr-4">Star</p>
+                )}
+                <ul className="flex gap-6">
+                  {starsSorted.map((star) => (
+                    <li
+                      key={star.name}
+                      className="[&:nth-child(n+2)]:list-disc"
+                    >
+                      {star.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 

@@ -30,26 +30,48 @@ export default function Storyline({ movie, keywords }) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 w-[60vw]">
         <HeaderSection sectionName={sectionName} data={0} />
-        <p className="text-base/6">{movie.overview}</p>
+        {movie.overview ? (
+          <p className="text-base/6 mb-4">{movie.overview}</p>
+        ) : (
+          ""
+        )}
       </div>
-      <div>
-        <Keywords keywords={keywords} />
-      </div>
-      <div className="flex flex-col m-0 p-0">
+
+      {keywords ? <Keywords keywords={keywords} /> : ""}
+
+      <div className="flex flex-col">
         {/* Taglines */}
-        <div className="divider"></div>
-        <p className="text-base">
-          <span className="font-bold mr-2">Taglines </span>
-          {movie.tagline}
-        </p>
-        <div className="divider"></div>
-        <p className="text-base">
-          <span className="font-bold mr-2">Genres</span>
-          <MovieGenres movieGenres={movie.genres} />
-        </p>
+        {movie.tagline ? (
+          <>
+            <div className="divider"></div>
+            <div className="flex items-center">
+              <p className="text-base font-bold mr-2">Taglines</p>
+              {movie.tagline}
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+
+        {/* Genres */}
+        {movie.genres ? (
+          <>
+            <div className="divider"></div>
+            <div className="flex items-center">
+              {movie.genres.length > 1 ? (
+                <p className="text-base font-bold mr-4">Genres</p>
+              ) : (
+                <p className="text-base font-bold mr-4">Genre</p>
+              )}
+              <MovieGenres movieGenres={movie.genres} />
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
