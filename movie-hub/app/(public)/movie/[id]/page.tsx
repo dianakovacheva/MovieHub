@@ -16,6 +16,7 @@ import TopCastList from "../../../../components/movie-details/top-cast-list";
 import MovieSuggestions from "../../../../components/movie-details/movie-suggestions";
 import DetailsSection from "../../../../components/movie-details/details-section";
 import Storyline from "../../../../components/movie-details/storyline";
+import BoxOffice from "../../../../components/movie-details/box-office";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -200,6 +201,9 @@ export default async function MovieDetails({ params }) {
 
       {/* Details Section */}
       <DetailsSection movie={movie} />
+
+      {/* Box Office*/}
+      <BoxOffice revenue={movie.revenue} />
     </div>
   );
 }

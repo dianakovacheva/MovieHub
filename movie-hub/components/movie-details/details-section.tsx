@@ -32,26 +32,47 @@ export default function DetailsSection({ movie }) {
   return (
     <div className="flex flex-col">
       <HeaderSection sectionName={sectionName} data={0} />
-      <div className="divider"></div>
-      <p className="text-base">
-        <span className="font-bold mr-2">Release date</span>
-        {movie.release_date} (United States)
-      </p>
-      <div className="divider"></div>
-      <div className="flex items-center">
-        {movie.origin_country.length > 1 ? (
-          <p className="text-base font-bold mr-4">Countries of origin</p>
-        ) : (
-          <p className="text-base font-bold mr-4">Country of origin</p>
-        )}
-        <ul className="flex gap-6">
-          {movie.origin_country.map((counry) => (
-            <li key={counry} className="[&:nth-child(n+2)]:list-disc color-red">
-              {counry}
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      {/* Movie Release Date */}
+      {movie.release_date ? (
+        <>
+          <div className="divider"></div>
+          <p className="text-base">
+            <span className="font-bold mr-2">Release date</span>
+            {movie.release_date} (United States)
+          </p>
+        </>
+      ) : (
+        ""
+      )}
+
+      {/* Movie Origin Country */}
+      {movie.origin_country ? (
+        <>
+          <div className="divider"></div>
+          <div className="flex items-center">
+            {movie.origin_country.length > 1 ? (
+              <p className="text-base font-bold mr-4">Countries of origin</p>
+            ) : (
+              <p className="text-base font-bold mr-4">Country of origin</p>
+            )}
+            <ul className="flex gap-6">
+              {movie.origin_country.map((counry) => (
+                <li
+                  key={counry}
+                  className="[&:nth-child(n+2)]:list-disc color-red"
+                >
+                  {counry}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+
+      {/* Movie Website */}
       {movie.homepage ? (
         <>
           <div className="divider"></div>
@@ -70,62 +91,93 @@ export default function DetailsSection({ movie }) {
         ""
       )}
 
-      <div className="divider"></div>
-      <div className="flex items-center">
-        {movie.spoken_languages.length > 1 ? (
-          <p className="text-base font-bold mr-4">Languages</p>
-        ) : (
-          <p className="text-base font-bold mr-4">Language</p>
-        )}
-        <ul className="flex gap-6">
-          {movie.spoken_languages.map((language) => (
-            <li
-              key={language.iso_639_1}
-              className="[&:nth-child(n+2)]:list-disc"
-            >
-              {language.english_name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="divider"></div>
-      <div className="flex items-center">
-        <p className="text-base font-bold mr-2">Also known as</p>
-        {movie.original_title}
-      </div>
-      <div className="divider"></div>
-      <div className="flex items-center">
-        {movie.production_countries.length > 1 ? (
-          <p className="text-base font-bold mr-4">Filming locations</p>
-        ) : (
-          <p className="text-base font-bold mr-4">Filming location</p>
-        )}
-        <ul className="flex gap-6">
-          {movie.production_countries.map((counry) => (
-            <li
-              key={counry.iso_3166_1}
-              className="[&:nth-child(n+2)]:list-disc"
-            >
-              {counry.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="divider"></div>
-      <div className="flex items-center">
-        {movie.production_companies.length > 1 ? (
-          <p className="text-base font-bold mr-4">Production companies</p>
-        ) : (
-          <p className="text-base font-bold mr-4">Production company</p>
-        )}
-        <ul className="flex gap-6">
-          {movie.production_companies.map((company) => (
-            <li key={company.id} className="[&:nth-child(n+2)]:list-disc">
-              {company.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Languages */}
+      {movie.spoken_languages ? (
+        <>
+          <div className="divider"></div>
+          <div className="flex items-center">
+            {movie.spoken_languages.length > 1 ? (
+              <p className="text-base font-bold mr-4">Languages</p>
+            ) : (
+              <p className="text-base font-bold mr-4">Language</p>
+            )}
+            <ul className="flex gap-6">
+              {movie.spoken_languages.map((language) => (
+                <li
+                  key={language.iso_639_1}
+                  className="[&:nth-child(n+2)]:list-disc"
+                >
+                  {language.english_name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+
+      {/* Also known as */}
+      {movie.original_title ? (
+        <>
+          <div className="divider"></div>
+          <div className="flex items-center">
+            <p className="text-base font-bold mr-2">Also known as</p>
+            {movie.original_title}
+          </div>
+        </>
+      ) : (
+        ">"
+      )}
+
+      {/* Filming Locations */}
+      {movie.production_countries ? (
+        <>
+          <div className="divider"></div>
+          <div className="flex items-center">
+            {movie.production_countries.length > 1 ? (
+              <p className="text-base font-bold mr-4">Filming locations</p>
+            ) : (
+              <p className="text-base font-bold mr-4">Filming location</p>
+            )}
+            <ul className="flex gap-6">
+              {movie.production_countries.map((counry) => (
+                <li
+                  key={counry.iso_3166_1}
+                  className="[&:nth-child(n+2)]:list-disc"
+                >
+                  {counry.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+
+      {/* Production Companies */}
+      {movie.production_companies ? (
+        <>
+          <div className="divider"></div>
+          <div className="flex items-center">
+            {movie.production_companies.length > 1 ? (
+              <p className="text-base font-bold mr-4">Production companies</p>
+            ) : (
+              <p className="text-base font-bold mr-4">Production company</p>
+            )}
+            <ul className="flex flex-wrap gap-6">
+              {movie.production_companies.map((company) => (
+                <li key={company.id} className="[&:nth-child(n+2)]:list-disc">
+                  {company.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
