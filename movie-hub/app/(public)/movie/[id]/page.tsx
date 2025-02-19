@@ -5,7 +5,7 @@ import {
   getMovieVideos,
   getMovieSuggestions,
   getKeywords,
-} from "../../../actions/movies/moviesData";
+} from "../../../actions/movie/movie-data";
 import { Metadata } from "next";
 
 import MovieInfo from "../../../../components/movie-details/movie-info";
@@ -17,6 +17,7 @@ import MovieSuggestions from "../../../../components/movie-details/movie-suggest
 import DetailsSection from "../../../../components/movie-details/details-section";
 import Storyline from "../../../../components/movie-details/storyline";
 import BoxOffice from "../../../../components/movie-details/box-office";
+import Paragraph from "../../../../components/paragraph";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -97,13 +98,7 @@ export default async function MovieDetails({ params }) {
 
       <div className="flex flex-col">
         {/* Movie Tagline */}
-        {movie.tagline ? (
-          <div className="tagline">
-            <p className="text-base font-normal text-base/6">{movie.tagline}</p>
-          </div>
-        ) : (
-          ""
-        )}
+        {movie.tagline ? <Paragraph text={movie.tagline} /> : ""}
 
         {/* Crew and Cast */}
         <div className="flex flex-col">

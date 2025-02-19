@@ -1,5 +1,5 @@
-import { getTrendingMoviesToday } from "../../app/actions/movies/moviesData";
-import moviePosterURL from "../../app/actions/movies/image-API-URL";
+import { getTrendingMoviesToday } from "../../app/actions/movie/movie-data";
+import moviePosterURL from "../../app/actions/movie/image-API-URL";
 import Image from "next/image";
 import Link from "next/link";
 

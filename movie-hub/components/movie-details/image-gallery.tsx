@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import moviePosterURL from "../../app/actions/movies/image-API-URL";
+import moviePosterURL from "../../app/actions/movie/image-API-URL";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderSection from "./header-section";

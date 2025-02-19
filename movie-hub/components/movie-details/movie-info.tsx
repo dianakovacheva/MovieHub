@@ -1,40 +1,13 @@
-import movieRealseYear from "../../app/utils/movie";
-import convertMinsToHrsMins from "../../app/utils/convert-time";
-import MovieGenres from "./movie-genres";
+import SubtitleMovie from "./subtitle-movie";
+import Title from "./title";
 
 export default async function MovieInfo({ movie }) {
-  const movieReleaseYear = await movieRealseYear(movie.release_date);
-
   return movie ? (
     <div className="flex items-start justify-between w-full">
       {/* Movie Info Left Side */}
       <div className="flex flex-col gap-2 md:gap-0">
-        <h1 className="text-5xl font-normal break-words">{movie.title}</h1>
-        <div>
-          <ul className="flex items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
-            <li className="mr-6">
-              {movieReleaseYear} ({movie.origin_country})
-            </li>
-
-            {/* Movie Genres */}
-            {movie.genres ? (
-              <li className="list-disc mr-6">
-                <MovieGenres movieGenres={movie.genres} />
-              </li>
-            ) : (
-              ""
-            )}
-
-            {/* Movie Runtime */}
-            {movie.runtime ? (
-              <li className="list-disc">
-                {convertMinsToHrsMins(movie.runtime)}
-              </li>
-            ) : (
-              ""
-            )}
-          </ul>
-        </div>
+        <Title name={movie.title} />
+        <SubtitleMovie movie={movie} />
       </div>
 
       {/* Movie Info Right Side */}

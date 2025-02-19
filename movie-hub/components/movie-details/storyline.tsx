@@ -1,3 +1,4 @@
+import Paragraph from "../paragraph";
 import HeaderSection from "./header-section";
 import Keywords from "./keywords";
 import MovieGenres from "./movie-genres";
@@ -33,11 +34,7 @@ export default function Storyline({ movie, keywords }) {
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 sm:w-[60vw]">
         <HeaderSection sectionName={sectionName} data={0} />
-        {movie.overview ? (
-          <p className="text-base/6 mb-4">{movie.overview}</p>
-        ) : (
-          ""
-        )}
+        {movie.overview ? <Paragraph text={movie.overview} /> : ""}
       </div>
 
       {keywords ? <Keywords keywords={keywords} /> : ""}

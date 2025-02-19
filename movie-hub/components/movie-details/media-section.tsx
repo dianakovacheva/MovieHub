@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import Video from "../video/video";
-import MoviePoster from "./movie-poster";
-import { getMovieVideos } from "../../app/actions/movies/moviesData";
+import { getMovieVideos } from "../../app/actions/movie/movie-data";
+import Poster from "./poster";
+import posterURL from "../../app/actions/movie/image-API-URL";
 
 export default async function MovieMedia({ movie }) {
   const movieVideos = await getMovieVideos(movie.id);
@@ -18,7 +19,7 @@ export default async function MovieMedia({ movie }) {
 
   return (
     <div className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2">
-      <MoviePoster movie={movie} />
+      <Poster data={movie} posterURL={posterURL} path={movie.poster_path} />
 
       {/* Trailer Video */}
       <Suspense fallback={<p>Loading video...</p>}>
