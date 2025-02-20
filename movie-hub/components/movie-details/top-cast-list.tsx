@@ -9,7 +9,7 @@ export default function TopCastList({ topCast }) {
   if (!topCast || topCast.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export default function TopCastList({ topCast }) {
       <div className="grid xl:grid-cols-3">
         <ul
           role="list"
-          className="grid gap-x-24 gap-y-5 sm:grid-cols-2  xl:col-span-2"
+          className="grid gap-x-24 gap-y-5 sm:grid-cols-2 xl:col-span-2"
         >
           {topCast.map((person) => (
             <Link
@@ -52,7 +52,7 @@ export default function TopCastList({ topCast }) {
                 <div className="flex items-center gap-x-6">
                   <div className="flex items-center gap-3">
                     <div className="avatar">
-                      <div className="rounded-full mask mask-squircle h-24 w-24">
+                      <div className="rounded-full mask mask-squircle h-24 w-24 shadow-sm">
                         {!person.profile_path ? (
                           <Image
                             src="/default-avatar-profile-icon.jpg"

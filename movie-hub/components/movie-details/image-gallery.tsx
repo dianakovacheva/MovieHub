@@ -35,7 +35,7 @@ export default function ImageGallery({ backdrops }) {
   if (!sortedBackdrops || sortedBackdrops.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ export default function ImageGallery({ backdrops }) {
             width={selectedImage.width}
             height={selectedImage.height}
             alt="Selected backdrop"
-            className="h-auto w-full rounded-lg object-cover"
+            className="h-auto w-full rounded-lg object-cover shadow-sm"
           />
 
           {/* Navigation arrows */}
@@ -120,7 +120,7 @@ export default function ImageGallery({ backdrops }) {
                   alt={`Backdrop ${index + 1}`}
                   width={selectedImage.width}
                   height={selectedImage.height}
-                  className={`h-24 w-40 rounded object-cover ${
+                  className={`h-24 w-40 rounded object-cover shadow-sm ${
                     selectedImage.file_path === backdrop.file_path
                       ? "ring-2 ring-blue-500 dark:ring-yellow-400"
                       : "ring-1 ring-gray-200 dark:ring-gray-700"

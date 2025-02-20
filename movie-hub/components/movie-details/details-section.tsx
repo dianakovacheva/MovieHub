@@ -1,6 +1,7 @@
 import Link from "next/link";
 import HeaderSection from "./header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
+import InformationBlockMultiple from "../information-block-multiple";
 
 export default function DetailsSection({ movie }) {
   const sectionName = "Details";
@@ -8,7 +9,7 @@ export default function DetailsSection({ movie }) {
   if (!movie || movie.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +32,7 @@ export default function DetailsSection({ movie }) {
 
   return (
     <div className="flex flex-col sm:w-[60vw]">
-      <HeaderSection sectionName={sectionName} data={0} />
+      <HeaderSection sectionName={sectionName} data={undefined} />
 
       {/* Movie Release Date */}
       {movie.release_date ? (
@@ -48,26 +49,22 @@ export default function DetailsSection({ movie }) {
 
       {/* Movie Origin Country */}
       {movie.origin_country ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center">
-            {movie.origin_country.length > 1 ? (
-              <p className="text-base font-bold mr-4">Countries of origin</p>
-            ) : (
-              <p className="text-base font-bold mr-4">Country of origin</p>
-            )}
-            <ul className="flex gap-6">
-              {movie.origin_country.map((counry) => (
-                <li
-                  key={counry}
-                  className="[&:nth-child(n+2)]:list-disc color-red"
-                >
-                  {counry}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <InformationBlockMultiple
+          data={movie.origin_country}
+          keyPlural={"Countries of origin"}
+          keySingular={"Country of origin"}
+        >
+          <ul className="flex gap-6">
+            {movie.origin_country.map((counry) => (
+              <li
+                key={counry}
+                className="[&:nth-child(n+2)]:list-disc color-red"
+              >
+                {counry}
+              </li>
+            ))}
+          </ul>
+        </InformationBlockMultiple>
       ) : (
         ""
       )}
@@ -93,26 +90,22 @@ export default function DetailsSection({ movie }) {
 
       {/* Languages */}
       {movie.spoken_languages ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center">
-            {movie.spoken_languages.length > 1 ? (
-              <p className="text-base font-bold mr-4">Languages</p>
-            ) : (
-              <p className="text-base font-bold mr-4">Language</p>
-            )}
-            <ul className="flex gap-6">
-              {movie.spoken_languages.map((language) => (
-                <li
-                  key={language.iso_639_1}
-                  className="[&:nth-child(n+2)]:list-disc"
-                >
-                  {language.english_name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <InformationBlockMultiple
+          data={movie.spoken_languages}
+          keyPlural={"Languages"}
+          keySingular={"Language"}
+        >
+          <ul className="flex gap-6">
+            {movie.spoken_languages.map((language) => (
+              <li
+                key={language.iso_639_1}
+                className="[&:nth-child(n+2)]:list-disc"
+              >
+                {language.english_name}
+              </li>
+            ))}
+          </ul>
+        </InformationBlockMultiple>
       ) : (
         ""
       )}
@@ -132,49 +125,41 @@ export default function DetailsSection({ movie }) {
 
       {/* Filming Locations */}
       {movie.production_countries ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center flex-wrap gap-6 sm:gap-0">
-            {movie.production_countries.length > 1 ? (
-              <p className="text-base font-bold mr-4">Filming locations</p>
-            ) : (
-              <p className="text-base font-bold mr-4">Filming location</p>
-            )}
-            <ul className="flex flex-wrap gap-6">
-              {movie.production_countries.map((counry) => (
-                <li
-                  key={counry.iso_3166_1}
-                  className="[&:nth-child(n+2)]:list-disc"
-                >
-                  {counry.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <InformationBlockMultiple
+          data={movie.production_countries}
+          keyPlural={"Filming locations"}
+          keySingular={"Filming location"}
+        >
+          <ul className="flex flex-wrap gap-6">
+            {movie.production_countries.map((counry) => (
+              <li
+                key={counry.iso_3166_1}
+                className="[&:nth-child(n+2)]:list-disc"
+              >
+                {counry.name}
+              </li>
+            ))}
+          </ul>
+        </InformationBlockMultiple>
       ) : (
         ""
       )}
 
       {/* Production Companies */}
       {movie.production_companies ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center flex-wrap gap-6 sm:gap-0">
-            {movie.production_companies.length > 1 ? (
-              <p className="text-base font-bold mr-4">Production companies</p>
-            ) : (
-              <p className="text-base font-bold mr-4">Production company</p>
-            )}
-            <ul className="flex flex-wrap gap-6">
-              {movie.production_companies.map((company) => (
-                <li key={company.id} className="[&:nth-child(n+2)]:list-disc">
-                  {company.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <InformationBlockMultiple
+          data={movie.production_companies}
+          keyPlural={"Production companies"}
+          keySingular={"Production company"}
+        >
+          <ul className="flex flex-wrap gap-6 md:mt-6">
+            {movie.production_companies.map((company) => (
+              <li key={company.id} className="[&:nth-child(n+2)]:list-disc">
+                {company.name}
+              </li>
+            ))}
+          </ul>
+        </InformationBlockMultiple>
       ) : (
         ""
       )}

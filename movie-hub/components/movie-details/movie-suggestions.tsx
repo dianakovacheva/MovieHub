@@ -30,7 +30,7 @@ export default function FeaturedToday({ topMovieSuggestions }) {
   if (!topMovieSuggestions || topMovieSuggestions.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ export default function FeaturedToday({ topMovieSuggestions }) {
 
   return topMovieSuggestions ? (
     <>
-      <HeaderSection sectionName={sectionName} data={0} />
+      <HeaderSection sectionName={sectionName} data={undefined} />
       <div className="relative group">
         {showLeftArrow && (
           <button
@@ -104,7 +104,7 @@ export default function FeaturedToday({ topMovieSuggestions }) {
                   height={200}
                   loading="lazy"
                   unoptimized={false}
-                  className="rounded-lg"
+                  className="rounded-lg shadow-sm"
                 />
               </Link>
             ))}

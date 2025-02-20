@@ -27,7 +27,7 @@ export default function Video({ videoId }) {
       //     />
       //   </div>
       // </div>
-      <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
+      <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden shadow-sm">
         <YouTube videoId={videoId} opts={opts} className="w-full h-full" />
       </div>
     )

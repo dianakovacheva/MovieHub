@@ -18,6 +18,7 @@ import DetailsSection from "../../../../components/movie-details/details-section
 import Storyline from "../../../../components/movie-details/storyline";
 import BoxOffice from "../../../../components/movie-details/box-office";
 import Paragraph from "../../../../components/paragraph";
+import InformationBlockMultiple from "../../../../components/information-block-multiple";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -104,75 +105,60 @@ export default async function MovieDetails({ params }) {
         <div className="flex flex-col">
           {/* Directors */}
           {directors ? (
-            <>
-              <div className="divider"></div>
-              <div className="flex items-center flex-wrap">
-                {directors.length > 1 ? (
-                  <p className="text-base font-bold mr-4">Directors</p>
-                ) : (
-                  <p className="text-base font-bold mr-4">Director</p>
-                )}
-                <ul className="flex flex-wrap gap-6">
-                  {directors.map((director) => (
-                    <li
-                      key={director.id}
-                      className="[&:nth-child(n+2)]:list-disc"
-                    >
-                      {director.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
+            <InformationBlockMultiple
+              data={directors}
+              keyPlural={"Directors"}
+              keySingular={"Director"}
+            >
+              <ul className="flex flex-wrap gap-6">
+                {directors.map((director) => (
+                  <li
+                    key={director.id}
+                    className="[&:nth-child(n+2)]:list-disc"
+                  >
+                    {director.name}
+                  </li>
+                ))}
+              </ul>
+            </InformationBlockMultiple>
           ) : (
             ""
           )}
 
           {/* Writers */}
           {writers ? (
-            <>
-              <div className="divider"></div>
-              <div className="flex items-center flex-wrap">
-                {writers.length > 1 ? (
-                  <p className="text-base font-bold mr-4">Writes</p>
-                ) : (
-                  <p className="text-base font-bold mr-4">Write</p>
-                )}
-                <ul className="flex gap-6 flex-wrap">
-                  {writers.map((data) => (
-                    <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
-                      {data.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
+            <InformationBlockMultiple
+              data={writers}
+              keyPlural={"Writers"}
+              keySingular={"Write"}
+            >
+              <ul className="flex gap-6 flex-wrap">
+                {writers.map((data) => (
+                  <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
+                    {data.name}
+                  </li>
+                ))}
+              </ul>
+            </InformationBlockMultiple>
           ) : (
             ""
           )}
 
           {/* Stars */}
           {starsSorted ? (
-            <>
-              <div className="divider"></div>
-              <div className="flex flex-wrap gap-6 sm:gap-0 items-center">
-                {starsSorted.length > 1 ? (
-                  <p className="text-base font-bold mr-4">Stars</p>
-                ) : (
-                  <p className="text-base font-bold mr-4">Star</p>
-                )}
-                <ul className="flex flex-wrap gap-6">
-                  {starsSorted.map((star) => (
-                    <li
-                      key={star.name}
-                      className="[&:nth-child(n+2)]:list-disc"
-                    >
-                      {star.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
+            <InformationBlockMultiple
+              data={starsSorted}
+              keyPlural={"Stars"}
+              keySingular={"Star"}
+            >
+              <ul className="flex flex-wrap gap-6">
+                {starsSorted.map((star) => (
+                  <li key={star.name} className="[&:nth-child(n+2)]:list-disc">
+                    {star.name}
+                  </li>
+                ))}
+              </ul>
+            </InformationBlockMultiple>
           ) : (
             ""
           )}

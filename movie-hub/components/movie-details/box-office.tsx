@@ -10,7 +10,7 @@ export default function BoxOffice({ revenue }) {
   if (!revenue || revenue === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ export default function BoxOffice({ revenue }) {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={0} />
+      <HeaderSection sectionName={sectionName} data={undefined} />
       <div className="flex flex-col gap-1">
         <p className="text-base font-bold mr-2">Revenue</p>
         <span>{USDollar.format(revenue)}</span>

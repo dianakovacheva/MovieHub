@@ -1,3 +1,4 @@
+import InformationBlockMultiple from "../information-block-multiple";
 import Paragraph from "../paragraph";
 import HeaderSection from "./header-section";
 import Keywords from "./keywords";
@@ -9,7 +10,7 @@ export default function Storyline({ movie, keywords }) {
   if (!movie || movie.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +34,7 @@ export default function Storyline({ movie, keywords }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 sm:w-[60vw]">
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         {movie.overview ? <Paragraph text={movie.overview} /> : ""}
       </div>
 
@@ -55,17 +56,13 @@ export default function Storyline({ movie, keywords }) {
 
         {/* Genres */}
         {movie.genres ? (
-          <>
-            <div className="divider"></div>
-            <div className="flex items-center flex-wrap">
-              {movie.genres.length > 1 ? (
-                <p className="text-base font-bold mr-4">Genres</p>
-              ) : (
-                <p className="text-base font-bold mr-4">Genre</p>
-              )}
-              <MovieGenres movieGenres={movie.genres} />
-            </div>
-          </>
+          <InformationBlockMultiple
+            data={movie.genres}
+            keyPlural={"Genres"}
+            keySingular={"Genre"}
+          >
+            <MovieGenres movieGenres={movie.genres} />
+          </InformationBlockMultiple>
         ) : (
           ""
         )}

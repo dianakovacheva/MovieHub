@@ -12,7 +12,7 @@ export default function VideoGallery({ videos }) {
   if (!videos.results || videos.results.length === 0) {
     return (
       <>
-        <HeaderSection sectionName={sectionName} data={0} />
+        <HeaderSection sectionName={sectionName} data={undefined} />
         <div role="alert" className="alert alert-error">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ export default function VideoGallery({ videos }) {
               videoId={selectedVideo.key}
               opts={opts}
               onReady={onReady}
-              className="w-full h-full"
+              className="w-full h-full shadow-sm"
             />
           </div>
           <div className="mt-4 space-y-2">
