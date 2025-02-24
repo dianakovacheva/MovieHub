@@ -17,19 +17,8 @@ export default function Video({ videoId }) {
   };
 
   return (
-    videoId && (
-      // <div className="relative w-full pt-[56.25%] m-0">
-      //   <div className="absolute inset-0">
-      //     <YouTube
-      //       opts={opts}
-      //       className="h-full w-full md:h-[60%] md:w-[80%] rounded-box overflow-hidden"
-      //       videoId={videoId}
-      //     />
-      //   </div>
-      // </div>
-      <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden shadow-sm">
-        <YouTube videoId={videoId} opts={opts} className="w-full h-full" />
-      </div>
-    )
+    <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden shadow-sm">
+      <YouTube videoId={videoId} opts={opts} className="w-full h-full" />
+    </div>
   );
 }

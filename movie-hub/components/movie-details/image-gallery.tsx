@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import moviePosterURL from "../../app/actions/movie/image-API-URL";
+import posterURL from "../../app/actions/API-URLS/image-API-URL";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderSection from "./header-section";
@@ -30,33 +30,9 @@ export default function ImageGallery({ backdrops }) {
     }
   };
 
-  const sectionName = "Photos";
+  const sectionName: string = "Photos";
 
-  if (!sortedBackdrops || sortedBackdrops.length === 0) {
-    return (
-      <>
-        <HeaderSection sectionName={sectionName} data={undefined} />
-        <div role="alert" className="alert alert-error">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span> No photo available. </span>
-        </div>
-      </>
-    );
-  }
-
-  return (
+  return sortedBackdrops.length > 0 ? (
     <>
       <HeaderSection sectionName={sectionName} data={sortedBackdrops} />
 
@@ -64,11 +40,11 @@ export default function ImageGallery({ backdrops }) {
       <div className="flex flex-col">
         <div className="relative">
           <Image
-            src={`${baseImageUrl}${selectedImage.file_path}`}
-            width={selectedImage.width}
-            height={selectedImage.height}
+            src={`${baseImageUrl}${selectedImage?.file_path}`}
+            width={250}
+            height={250}
             alt="Selected backdrop"
-            className="h-auto w-full rounded-lg object-cover shadow-sm"
+            className="max-h-[80vh] w-full rounded-lg object-contain shadow-sm"
           />
 
           {/* Navigation arrows */}
@@ -96,8 +72,8 @@ export default function ImageGallery({ backdrops }) {
             Image {currentIndex + 1} of {sortedBackdrops.length}
           </span>
           <span>
-            Rating: {selectedImage.vote_average.toFixed(1)} (
-            {selectedImage.vote_count} votes)
+            Rating: {selectedImage?.vote_average.toFixed(1)} (
+            {selectedImage?.vote_count} votes)
           </span>
         </div>
       </div>
@@ -116,7 +92,7 @@ export default function ImageGallery({ backdrops }) {
                 }}
               >
                 <Image
-                  src={`${moviePosterURL}${backdrop.file_path}`}
+                  src={`${posterURL}${backdrop.file_path}`}
                   alt={`Backdrop ${index + 1}`}
                   width={selectedImage.width}
                   height={selectedImage.height}
@@ -132,5 +108,7 @@ export default function ImageGallery({ backdrops }) {
         </div>
       </div>
     </>
+  ) : (
+    <p> No photo available. </p>
   );
 }

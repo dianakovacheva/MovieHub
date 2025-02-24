@@ -1,4 +1,4 @@
-import baseApiURL from "./base-API-URL";
+import baseApiURL from "../API-URLS/base-API-URL";
 
 // Trending movies today
 export async function getTrendingMoviesToday() {
@@ -61,6 +61,20 @@ export const getMovieCredits = async (id: number) => {
   const movieCreditsURL = `${baseApiURL}/movie/${id}/credits?language=en-US&api_key=${process.env.API_KEY}`;
   try {
     const res = await fetch(movieCreditsURL);
+    const resData = await res.json();
+
+    return resData;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+// Get a Movie Credit details by ID
+export const getMovieCreditDetails = async (id: number) => {
+  const movieCreditDetailsURL = `${baseApiURL}/credit/${id}?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(movieCreditDetailsURL);
     const resData = await res.json();
 
     return resData;

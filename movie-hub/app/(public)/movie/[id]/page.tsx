@@ -13,12 +13,13 @@ import MovieMedia from "../../../../components/movie-details/media-section";
 import ImageGallery from "../../../../components/movie-details/image-gallery";
 import VideoGallery from "../../../../components/movie-details/video-gallery";
 import TopCastList from "../../../../components/movie-details/top-cast-list";
-import MovieSuggestions from "../../../../components/movie-details/movie-suggestions";
 import DetailsSection from "../../../../components/movie-details/details-section";
 import Storyline from "../../../../components/movie-details/storyline";
 import BoxOffice from "../../../../components/movie-details/box-office";
 import Paragraph from "../../../../components/paragraph";
 import InformationBlockMultiple from "../../../../components/information-block-multiple";
+import MoreLikeThis from "../../../../components/movie-details/more-like-this";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -63,6 +64,7 @@ export default async function MovieDetails({ params }) {
       stars.push({
         name: data.name,
         popularity: data.popularity,
+        id: data.id,
       });
     }
   });
@@ -99,12 +101,12 @@ export default async function MovieDetails({ params }) {
 
       <div className="flex flex-col">
         {/* Movie Tagline */}
-        {movie.tagline ? <Paragraph text={movie.tagline} /> : ""}
+        {movie.tagline !== "" ? <Paragraph text={movie.tagline} /> : ""}
 
         {/* Crew and Cast */}
         <div className="flex flex-col">
           {/* Directors */}
-          {directors ? (
+          {directors.length > 0 ? (
             <InformationBlockMultiple
               data={directors}
               keyPlural={"Directors"}
@@ -116,7 +118,12 @@ export default async function MovieDetails({ params }) {
                     key={director.id}
                     className="[&:nth-child(n+2)]:list-disc"
                   >
-                    {director.name}
+                    <Link
+                      href={`/person/${director.id}`}
+                      className="link link-hover text-[#0e63be]"
+                    >
+                      {director.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -126,16 +133,21 @@ export default async function MovieDetails({ params }) {
           )}
 
           {/* Writers */}
-          {writers ? (
+          {writers.length > 0 ? (
             <InformationBlockMultiple
               data={writers}
               keyPlural={"Writers"}
-              keySingular={"Write"}
+              keySingular={"Writer"}
             >
               <ul className="flex gap-6 flex-wrap">
                 {writers.map((data) => (
                   <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
-                    {data.name}
+                    <Link
+                      href={`/person/${data.id}`}
+                      className="link link-hover text-[#0e63be]"
+                    >
+                      {data.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -145,7 +157,7 @@ export default async function MovieDetails({ params }) {
           )}
 
           {/* Stars */}
-          {starsSorted ? (
+          {starsSorted.length > 0 ? (
             <InformationBlockMultiple
               data={starsSorted}
               keyPlural={"Stars"}
@@ -153,8 +165,13 @@ export default async function MovieDetails({ params }) {
             >
               <ul className="flex flex-wrap gap-6">
                 {starsSorted.map((star) => (
-                  <li key={star.name} className="[&:nth-child(n+2)]:list-disc">
-                    {star.name}
+                  <li key={star.id} className="[&:nth-child(n+2)]:list-disc">
+                    <Link
+                      href={`/person/${star.id}`}
+                      className="link link-hover text-[#0e63be]"
+                    >
+                      {star.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -175,7 +192,7 @@ export default async function MovieDetails({ params }) {
       <TopCastList topCast={topCast} />
 
       {/* Top Movie Suggestions */}
-      <MovieSuggestions topMovieSuggestions={topMovieSuggestions} />
+      <MoreLikeThis movies={topMovieSuggestions} />
 
       {/* Storyline */}
       <Storyline movie={movie} keywords={keywords.keywords} />

@@ -7,31 +7,7 @@ import Image from "next/image";
 import HeaderSection from "./header-section";
 
 export default function VideoGallery({ videos }) {
-  const sectionName = "Videos";
-
-  if (!videos.results || videos.results.length === 0) {
-    return (
-      <>
-        <HeaderSection sectionName={sectionName} data={undefined} />
-        <div role="alert" className="alert alert-error">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span> No videos available. </span>
-        </div>
-      </>
-    );
-  }
+  const sectionName: string = "Videos";
 
   const sortedVideos = [...videos.results].sort(
     (a, b) => b.vote_average - a.vote_average
@@ -71,7 +47,7 @@ export default function VideoGallery({ videos }) {
     setPlayer(event.target);
   };
 
-  return (
+  return sortedVideos || selectedVideo ? (
     <>
       <HeaderSection sectionName={sectionName} data={sortedVideos} />
 
@@ -81,7 +57,7 @@ export default function VideoGallery({ videos }) {
         <div className="lg:col-span-2">
           <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
             <YouTube
-              videoId={selectedVideo.key}
+              videoId={selectedVideo?.key}
               opts={opts}
               onReady={onReady}
               className="w-full h-full shadow-sm"
@@ -89,7 +65,7 @@ export default function VideoGallery({ videos }) {
           </div>
           <div className="mt-4 space-y-2">
             <h3 className="text-xl font-medium dark:text-white">
-              {selectedVideo.name}
+              {selectedVideo?.name}
             </h3>
             <p className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
               Video {currentIndex + 1} of {sortedVideos.length}
@@ -166,5 +142,7 @@ export default function VideoGallery({ videos }) {
         </div>
       </div>
     </>
+  ) : (
+    <p> No videos available. </p>
   );
 }

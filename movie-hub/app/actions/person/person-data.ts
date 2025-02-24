@@ -1,4 +1,4 @@
-import baseApiURL from "../movie/base-API-URL";
+import baseApiURL from "../API-URLS/base-API-URL";
 
 // Movie's details
 export const getPersonDetails = async (id: number) => {
@@ -22,7 +22,21 @@ export const getPersonImages = async (id: number) => {
     const res = await fetch(personImagesURL);
     const resData = await res.json();
 
-    return resData.backdrops;
+    return resData;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+// Get Person's Movie Credits
+export const getPersonMovieCredits = async (id: number) => {
+  const personMovieCreditsURL = `${baseApiURL}/person/${id}/movie_credits?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(personMovieCreditsURL);
+    const resData = await res.json();
+
+    return resData;
   } catch (error: any) {
     console.log(error.message);
   }

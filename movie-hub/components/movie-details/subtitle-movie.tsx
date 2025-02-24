@@ -8,8 +8,8 @@ export default async function SubtitleMovie({ movie }) {
   return (
     <div className="flex flex-wrap">
       <ul className="flex items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
-        <li className="mr-6">
-          {movieReleaseYear} ({movie.origin_country})
+        <li className="mr-4">
+          {movieReleaseYear} ({movie.origin_country.join(", ")})
         </li>
 
         {/* Movie Genres */}

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Video from "../video";
 import { getMovieVideos } from "../../app/actions/movie/movie-data";
 import Poster from "../poster";
-import posterURL from "../../app/actions/movie/image-API-URL";
+import posterURL from "../../app/actions/API-URLS/image-API-URL";
 
 export default async function MovieMedia({ movie }) {
   const movieVideos = await getMovieVideos(movie.id);
@@ -17,8 +17,11 @@ export default async function MovieMedia({ movie }) {
     });
   }
 
-  return (
-    <div className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2">
+  return movieVideos ? (
+    <div
+      key={movieKey}
+      className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2"
+    >
       <Poster
         data={movie}
         posterURL={posterURL}
@@ -32,5 +35,7 @@ export default async function MovieMedia({ movie }) {
         <Video videoId={movieKey} />
       </Suspense>
     </div>
+  ) : (
+    " No videos to display. "
   );
 }

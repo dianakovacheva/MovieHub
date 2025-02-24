@@ -1,5 +1,5 @@
 import { getTrendingMoviesToday } from "../../app/actions/movie/movie-data";
-import moviePosterURL from "../../app/actions/movie/image-API-URL";
+import posterURL from "../../app/actions/API-URLS/image-API-URL";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ export default async function FeaturedToday() {
               key={movie.id}
             >
               <Image
-                src={`${moviePosterURL}/${movie!.poster_path}`}
+                src={`${posterURL}/${movie!.poster_path}`}
                 alt={`${movie?.title}'s poster`}
                 width={250}
                 height={250}
@@ -33,6 +33,6 @@ export default async function FeaturedToday() {
       </div>
     </>
   ) : (
-    <p>No movies to show.</p>
+    <p> No movies to show. </p>
   );
 }

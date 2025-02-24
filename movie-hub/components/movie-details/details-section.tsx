@@ -2,53 +2,27 @@ import Link from "next/link";
 import HeaderSection from "./header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
 import InformationBlockMultiple from "../information-block-multiple";
+import InformationBlockSingle from "../informatio-block-single";
 
 export default function DetailsSection({ movie }) {
-  const sectionName = "Details";
+  const sectionName: string = "Details";
 
-  if (!movie || movie.length === 0) {
-    return (
-      <>
-        <HeaderSection sectionName={sectionName} data={undefined} />
-        <div role="alert" className="alert alert-error">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span> No movie suggestions available. </span>
-        </div>
-      </>
-    );
-  }
-
-  return (
+  return movie ? (
     <div className="flex flex-col sm:w-[60vw]">
       <HeaderSection sectionName={sectionName} data={undefined} />
 
       {/* Movie Release Date */}
-      {movie.release_date ? (
-        <>
-          <div className="divider"></div>
-          <p className="text-base">
-            <span className="font-bold mr-2">Release date</span>
-            {movie.release_date} (United States)
-          </p>
-        </>
+      {movie.release_date !== "" ? (
+        <InformationBlockSingle
+          title={"Release date"}
+          data={`${movie.release_date} (United States)`}
+        />
       ) : (
         ""
       )}
 
       {/* Movie Origin Country */}
-      {movie.origin_country ? (
+      {movie.origin_country.length > 0 ? (
         <InformationBlockMultiple
           data={movie.origin_country}
           keyPlural={"Countries of origin"}
@@ -56,10 +30,7 @@ export default function DetailsSection({ movie }) {
         >
           <ul className="flex gap-6">
             {movie.origin_country.map((counry) => (
-              <li
-                key={counry}
-                className="[&:nth-child(n+2)]:list-disc color-red"
-              >
+              <li key={counry} className="[&:nth-child(n+2)]:list-disc">
                 {counry}
               </li>
             ))}
@@ -70,26 +41,26 @@ export default function DetailsSection({ movie }) {
       )}
 
       {/* Movie Website */}
-      {movie.homepage ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center">
-            <p className="text-base font-bold mr-2">Official site</p>
+      {movie.homepage !== "" ? (
+        <InformationBlockSingle
+          title={"Official site"}
+          data={
             <Link
               href={movie.homepage}
               className="flex items-end gap-2"
               target="_blank"
+              rel="nofollow"
             >
               Official site <SquareArrowOutUpRight size={16} strokeWidth={2} />
             </Link>
-          </div>
-        </>
+          }
+        />
       ) : (
         ""
       )}
 
       {/* Languages */}
-      {movie.spoken_languages ? (
+      {movie.spoken_languages.length > 0 ? (
         <InformationBlockMultiple
           data={movie.spoken_languages}
           keyPlural={"Languages"}
@@ -111,20 +82,17 @@ export default function DetailsSection({ movie }) {
       )}
 
       {/* Also known as */}
-      {movie.original_title ? (
-        <>
-          <div className="divider"></div>
-          <div className="flex items-center">
-            <p className="text-base font-bold mr-2">Also known as</p>
-            {movie.original_title}
-          </div>
-        </>
+      {movie.original_title !== "" ? (
+        <InformationBlockSingle
+          title={"Also known as"}
+          data={movie.original_title}
+        />
       ) : (
         ">"
       )}
 
       {/* Filming Locations */}
-      {movie.production_countries ? (
+      {movie.production_countries.length > 0 ? (
         <InformationBlockMultiple
           data={movie.production_countries}
           keyPlural={"Filming locations"}
@@ -146,15 +114,18 @@ export default function DetailsSection({ movie }) {
       )}
 
       {/* Production Companies */}
-      {movie.production_companies ? (
+      {movie.production_companies.length > 0 ? (
         <InformationBlockMultiple
           data={movie.production_companies}
           keyPlural={"Production companies"}
           keySingular={"Production company"}
         >
-          <ul className="flex flex-wrap gap-6 md:mt-6">
+          <ul className="flex flex-wrap gap-6 mt-2 md:mt-0">
             {movie.production_companies.map((company) => (
-              <li key={company.id} className="[&:nth-child(n+2)]:list-disc">
+              <li
+                key={company.id}
+                className="[&:nth-child(n+2)]:list-disc items-center"
+              >
                 {company.name}
               </li>
             ))}
@@ -164,5 +135,7 @@ export default function DetailsSection({ movie }) {
         ""
       )}
     </div>
+  ) : (
+    <p> No movie suggestions available. </p>
   );
 }

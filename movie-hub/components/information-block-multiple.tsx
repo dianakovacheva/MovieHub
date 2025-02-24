@@ -7,11 +7,11 @@ export default function InformationBlockMultiple({
   return (
     <>
       <div className="divider"></div>
-      <div className="flex flex-wrap gap-6 sm:gap-0 items-center">
+      <div className="flex flex-wrap items-center">
         {data.length > 1 ? (
-          <p className="text-base font-bold mr-4">{keyPlural}</p>
+          <p className="text-base font-bold mr-2">{keyPlural}</p>
         ) : (
-          <p className="text-base font-bold mr-4">{keySingular}</p>
+          <p className="text-base font-bold mr-2">{keySingular}</p>
         )}
         {children}
       </div>

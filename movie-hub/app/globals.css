@@ -16,3 +16,24 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
+
+/* .list-row {
+  @apply border-b-2;
+} */
+
+:is(
+    .list > :not(:last-child).list-row,
+    .list > :not(:last-child) .list-row
+  )::after {
+  border-bottom-width: 2px;
+}
+
+.dark
+  :is(
+    .list > :not(:last-child).list-row,
+    .list > :not(:last-child) .list-row
+  )::after {
+  border-bottom-width: 1px;
+  border-color: #c0bcbc;
+  opacity: 40%;
+}

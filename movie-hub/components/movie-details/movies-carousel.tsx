@@ -1,14 +1,12 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import moviePosterURL from "../../app/actions/movie/image-API-URL";
+import posterURL from "../../app/actions/API-URLS/image-API-URL";
 import Image from "next/image";
 import Link from "next/link";
-import HeaderSection from "./header-section";
 import { useState, useRef, useEffect } from "react";
 
-export default function FeaturedToday({ topMovieSuggestions }) {
-  const sectionName = "More like this";
+export default function MoviesCarousel({ movies }) {
   const carouselRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -25,31 +23,7 @@ export default function FeaturedToday({ topMovieSuggestions }) {
   // Initial arrow visibility check
   useEffect(() => {
     updateArrowVisibility();
-  }, [topMovieSuggestions]);
-
-  if (!topMovieSuggestions || topMovieSuggestions.length === 0) {
-    return (
-      <>
-        <HeaderSection sectionName={sectionName} data={undefined} />
-        <div role="alert" className="alert alert-error">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span> No movie suggestions available. </span>
-        </div>
-      </>
-    );
-  }
+  }, [movies]);
 
   const scroll = (direction) => {
     if (carouselRef.current) {
@@ -68,9 +42,8 @@ export default function FeaturedToday({ topMovieSuggestions }) {
     }
   };
 
-  return topMovieSuggestions ? (
+  return movies.length > 0 ? (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
       <div className="relative group">
         {showLeftArrow && (
           <button
@@ -88,7 +61,7 @@ export default function FeaturedToday({ topMovieSuggestions }) {
           onScroll={updateArrowVisibility}
         >
           <div className="carousel-item gap-1 flex">
-            {topMovieSuggestions.map((movie) => (
+            {movies.map((movie) => (
               <Link
                 href={`/movie/${movie.id}-${movie.title
                   .split(" ")
@@ -97,15 +70,29 @@ export default function FeaturedToday({ topMovieSuggestions }) {
                 key={movie.id}
                 className="flex-none"
               >
-                <Image
-                  src={`${moviePosterURL}/${movie.poster_path}`}
-                  alt={`${movie?.title}'s poster`}
-                  width={250}
-                  height={200}
-                  loading="lazy"
-                  unoptimized={false}
-                  className="rounded-lg shadow-sm"
-                />
+                {movie.poster_path ? (
+                  <Image
+                    src={`${posterURL}/${movie.poster_path}`}
+                    alt={`${movie?.title}'s poster`}
+                    width={250}
+                    height={200}
+                    loading="lazy"
+                    unoptimized={false}
+                    className="rounded-lg h-90 w-auto object-cover shadow-sm"
+                    key={movie.id}
+                  />
+                ) : (
+                  <Image
+                    src="/default-movie-image.jpg"
+                    alt={`${movie?.title}'s poster`}
+                    width={250}
+                    height={200}
+                    loading="lazy"
+                    unoptimized={false}
+                    className="rounded-lg h-90 object-cover w-65 shadow-sm"
+                    key={movie.id}
+                  />
+                )}
               </Link>
             ))}
           </div>

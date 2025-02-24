@@ -1,36 +1,12 @@
 import Image from "next/image";
-import moviePosterURL from "../../app/actions/movie/image-API-URL";
+import posterURL from "../../app/actions/API-URLS/image-API-URL";
 import HeaderSection from "./header-section";
 import Link from "next/link";
 
 export default function TopCastList({ topCast }) {
-  const sectionName = "Top Cast";
+  const sectionName: string = "Top Cast";
 
-  if (!topCast || topCast.length === 0) {
-    return (
-      <>
-        <HeaderSection sectionName={sectionName} data={undefined} />
-        <div role="alert" className="alert alert-error">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span> No cast available. </span>
-        </div>
-      </>
-    );
-  }
-
-  return (
+  return topCast.length > 0 ? (
     <>
       <HeaderSection sectionName={sectionName} data={topCast} />
 
@@ -62,7 +38,7 @@ export default function TopCastList({ topCast }) {
                           />
                         ) : (
                           <Image
-                            src={`${moviePosterURL}${person.profile_path}`}
+                            src={`${posterURL}${person.profile_path}`}
                             alt={person.name}
                             width={100}
                             height={100}
@@ -84,5 +60,7 @@ export default function TopCastList({ topCast }) {
         </ul>
       </div>
     </>
+  ) : (
+    <p> No cast available. </p>
   );
 }
