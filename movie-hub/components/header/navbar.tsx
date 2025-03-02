@@ -6,6 +6,8 @@ import ThemeSwitcher from "./theme-switcher";
 import AuthButton from "./auth-button";
 
 export default function Navbar() {
+  const buttonName = "Watchlist";
+
   return (
     <nav className="navbar flex flex-1 items-center justify-between gap-4 m-0 p-0">
       {/* Navbar left side */}
@@ -22,7 +24,7 @@ export default function Navbar() {
         </div>
         {/* Buttons right side */}
         <div className="flex gap-4">
-          <WatchListBtn />
+          <WatchListBtn buttonName={buttonName} />
           <AuthButton />
           <ThemeSwitcher />
         </div>

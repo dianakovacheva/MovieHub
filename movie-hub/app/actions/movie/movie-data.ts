@@ -21,8 +21,8 @@ export const getMovieDetails = async (id: number) => {
 
   try {
     const res = await fetch(movieDetailsURL);
-
     const resData = await res.json();
+
     return resData;
   } catch (error: any) {
     console.log(error.message);
@@ -34,9 +34,9 @@ export const getMovieVideos = async (id: number) => {
   const movieVideosURL = `${baseApiURL}/movie/${id}/videos?language=en-US&api_key=${process.env.API_KEY}`;
   try {
     const res = await fetch(movieVideosURL);
-
     const resData = await res.json();
-    return resData;
+
+    return resData.results;
   } catch (error: any) {
     console.log(error.message);
   }
@@ -48,8 +48,8 @@ export const getMovieBackdrops = async (id: number) => {
 
   try {
     const res = await fetch(movieImagesURL);
-
     const resData = await res.json();
+
     return resData.backdrops;
   } catch (error: any) {
     console.log(error.message);
@@ -106,6 +106,49 @@ export const getKeywords = async (id: number) => {
     const resData = await res.json();
 
     return resData;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+// Get Upcoming Movies
+export const getUpcomingMovies = async () => {
+  const year = new Date().getFullYear();
+
+  const upcomingMoviesURL = `${baseApiURL}/discover/movie?primary_release_year=${year}&language=en-US&api_key=${process.env.API_KEY}`;
+
+  // const today = new Date();
+  // const minDate = new Date(today);
+  // minDate.setDate(today.getDate() + 1); // Tomorrow
+
+  // const maxDate = new Date(minDate);
+  // maxDate.setDate(minDate.getDate() + 14); // Tomorrow + 14 days
+
+  // const formatDate = (date: Date): string => date.toISOString().split("T")[0];
+
+  // const upcomingMoviesURL = `${baseApiURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${formatDate(
+  //   minDate
+  // )}&release_date.lte=${formatDate(maxDate)}&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(upcomingMoviesURL);
+    const resData = await res.json();
+
+    return resData.results;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+// Get a list of movies ordered by rating
+export const getTopRatedMovies = async () => {
+  const topRatedMoviesURL = `${baseApiURL}/movie/top_rated?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(topRatedMoviesURL);
+    const resData = await res.json();
+
+    return resData.results;
   } catch (error: any) {
     console.log(error.message);
   }

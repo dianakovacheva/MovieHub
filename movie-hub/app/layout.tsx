@@ -41,7 +41,9 @@ export default function RootLayout({
           defaultTheme="system"
         >
           <Navbar />
-          <main className="w-full">{children}</main>
+          <main className="w-full flex flex-col gap-4 mb-10 overflow-hidden">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>

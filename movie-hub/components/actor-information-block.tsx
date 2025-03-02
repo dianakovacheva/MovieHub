@@ -31,10 +31,12 @@ export default async function ActorInformationBlock({ actorData }) {
             data={`${actorData.birthday} (${age} years old)`}
           />
         </div>
-      ) : (
+      ) : actorData.birthday ? (
         <div>
           <InformationBlockSingle title={"Born"} data={actorData.birthday} />
         </div>
+      ) : (
+        ""
       )}
 
       {actorData.deathday ? (

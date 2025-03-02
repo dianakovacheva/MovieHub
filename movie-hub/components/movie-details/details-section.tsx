@@ -7,8 +7,8 @@ import InformationBlockSingle from "../informatio-block-single";
 export default function DetailsSection({ movie }) {
   const sectionName: string = "Details";
 
-  return movie ? (
-    <div className="flex flex-col sm:w-[60vw]">
+  return (
+    <div>
       <HeaderSection sectionName={sectionName} data={undefined} />
 
       {/* Movie Release Date */}
@@ -88,7 +88,7 @@ export default function DetailsSection({ movie }) {
           data={movie.original_title}
         />
       ) : (
-        ">"
+        ""
       )}
 
       {/* Filming Locations */}
@@ -135,7 +135,5 @@ export default function DetailsSection({ movie }) {
         ""
       )}
     </div>
-  ) : (
-    <p> No movie suggestions available. </p>
   );
 }

@@ -3,7 +3,7 @@
 import React from "react";
 import YouTube from "react-youtube";
 
-export default function Video({ videoId }) {
+export default function Video({ videoId, onReady }) {
   const opts = {
     height: "100%",
     width: "100%",
@@ -18,7 +18,12 @@ export default function Video({ videoId }) {
 
   return (
     <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden shadow-sm">
-      <YouTube videoId={videoId} opts={opts} className="w-full h-full" />
+      <YouTube
+        videoId={videoId}
+        opts={opts}
+        onReady={onReady}
+        className="w-full h-full"
+      />
     </div>
   );
 }

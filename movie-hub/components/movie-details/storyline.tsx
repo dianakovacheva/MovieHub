@@ -10,14 +10,17 @@ export default function Storyline({ movie, keywords }) {
 
   return movie ? (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 sm:w-[60vw]">
+      {movie.overview ? (
         <HeaderSection sectionName={sectionName} data={undefined} />
-        {movie.overview !== "" ? <Paragraph text={movie.overview} /> : ""}
-      </div>
+      ) : (
+        ""
+      )}
+
+      {movie.overview !== "" ? <Paragraph text={movie.overview} /> : ""}
 
       {keywords ? <Keywords keywords={keywords} /> : ""}
 
-      <div className="flex flex-col sm:w-[60vw]">
+      <div>
         {/* Taglines */}
         {movie.tagline !== "" ? (
           <InformationBlockSingle title={"Taglines"} data={movie.tagline} />

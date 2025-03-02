@@ -41,3 +41,17 @@ export const getPersonMovieCredits = async (id: number) => {
     console.log(error.message);
   }
 };
+
+// Get a list of people ordered by popularity
+export const getMostPopularPeople = async () => {
+  const mostPopularPeopleURL = `${baseApiURL}/person/popular?language=en-US&api_key=${process.env.API_KEY}`;
+
+  try {
+    const res = await fetch(mostPopularPeopleURL);
+    const resData = await res.json();
+
+    return resData.results;
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};

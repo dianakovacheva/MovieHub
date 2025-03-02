@@ -1,19 +1,25 @@
+import getMoviesByReleaseState from "../app/utils/get-movies-by-release-state";
 import Accordion from "./accordion";
 
 export default function MoviesSortedByReleaseYear({
   moviesSortedByReleaseYear,
 }) {
-  const today = new Date();
-  let upcomingMovies = [];
-  let previousMovies = [];
-
-  upcomingMovies = moviesSortedByReleaseYear.filter(
-    (movie) => new Date(movie.release_date) > today
+  const upcomingMovies = getMoviesByReleaseState(
+    moviesSortedByReleaseYear,
+    "upcoming"
   );
 
-  previousMovies = moviesSortedByReleaseYear.filter(
-    (movie) => new Date(movie.release_date) <= today
+  let previousMovies = getMoviesByReleaseState(
+    moviesSortedByReleaseYear,
+    "previous"
   );
+
+  // Get movies with empty release_date and merge with previousMovies
+  const moviesWithEmptyReleaseDate = moviesSortedByReleaseYear.filter(
+    (movie) => movie.release_date === ""
+  );
+
+  previousMovies = previousMovies.concat(moviesWithEmptyReleaseDate);
 
   return (
     <>

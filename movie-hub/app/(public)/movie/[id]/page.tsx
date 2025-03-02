@@ -11,7 +11,7 @@ import { Metadata } from "next";
 import MovieInfo from "../../../../components/movie-details/movie-info";
 import MovieMedia from "../../../../components/movie-details/media-section";
 import ImageGallery from "../../../../components/movie-details/image-gallery";
-import VideoGallery from "../../../../components/movie-details/video-gallery";
+import VideoGallery from "../../../../components/video-gallery";
 import TopCastList from "../../../../components/movie-details/top-cast-list";
 import DetailsSection from "../../../../components/movie-details/details-section";
 import Storyline from "../../../../components/movie-details/storyline";
@@ -30,13 +30,14 @@ export default async function MovieDetails({ params }) {
   const movie = await getMovieDetails(id);
   const movieCredits = await getMovieCredits(id);
   const backdrops = await getMovieBackdrops(movie.id);
-  const videos = await getMovieVideos(movie.id);
+  const movieVideos = await getMovieVideos(movie.id);
   const movieSuggestions = await getMovieSuggestions(movie.id);
   const keywords = await getKeywords(movie.id);
   const directors: any[] = [];
   const writers: any[] = [];
   const stars = [];
   const cast = [];
+  const videoListTitle = "Videos List";
 
   // Directors
   movieCredits.crew.map((data) => {
@@ -47,10 +48,7 @@ export default async function MovieDetails({ params }) {
 
   // Writes
   movieCredits.crew.map((data) => {
-    if (
-      data.job.toLowerCase() == "writer" ||
-      data.job.toLowerCase() == "screenplay"
-    ) {
+    if (data.job.toLowerCase() == "writer") {
       writers.push(data);
     }
   });
@@ -94,10 +92,10 @@ export default async function MovieDetails({ params }) {
   return (
     <div className="flex flex-col gap-4 mb-10">
       {/* Movie Info */}
-      <MovieInfo key={movie.id} movie={movie} />
+      <MovieInfo movie={movie} />
 
       {/* Media Section */}
-      <MovieMedia key={movie.id} movie={movie} />
+      <MovieMedia movie={movie} />
 
       <div className="flex flex-col">
         {/* Movie Tagline */}
@@ -183,7 +181,11 @@ export default async function MovieDetails({ params }) {
       </div>
 
       {/* Video Gallery */}
-      <VideoGallery videos={videos} />
+      <VideoGallery
+        videos={movieVideos}
+        videoListTitle={videoListTitle}
+        sectionName={"Videos"}
+      />
 
       {/* Image Gallery */}
       <ImageGallery backdrops={backdrops} />
@@ -194,14 +196,16 @@ export default async function MovieDetails({ params }) {
       {/* Top Movie Suggestions */}
       <MoreLikeThis movies={topMovieSuggestions} />
 
-      {/* Storyline */}
-      <Storyline movie={movie} keywords={keywords.keywords} />
+      <div className="flex flex-col gap-4 sm:w-[60vw]">
+        {/* Storyline */}
+        <Storyline movie={movie} keywords={keywords.keywords} />
 
-      {/* Details Section */}
-      <DetailsSection movie={movie} />
+        {/* Details Section */}
+        <DetailsSection movie={movie} />
 
-      {/* Box Office*/}
-      <BoxOffice revenue={movie.revenue} />
+        {/* Box Office*/}
+        <BoxOffice revenue={movie.revenue} />
+      </div>
     </div>
   );
 }

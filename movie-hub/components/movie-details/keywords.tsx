@@ -1,7 +1,7 @@
 export default function Keywords({ keywords }) {
   return keywords.length > 0 ? (
-    <div className="sm:w-[60vw]">
-      <ul className="flex flex-wrap gap-2">
+    <>
+      <ul className="flex flex-wrap gap-2 mt-2">
         {keywords.map((keyword) => (
           <li key={keyword.id}>
             <button className="btn btn-xs">
@@ -10,7 +10,7 @@ export default function Keywords({ keywords }) {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   ) : (
     <p> No keywords available. </p>
   );

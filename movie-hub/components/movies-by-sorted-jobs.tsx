@@ -1,8 +1,8 @@
+import getMoviesByReleaseState from "../app/utils/get-movies-by-release-state";
 import Accordion from "./accordion";
 
 export default function MoviesBySortedJobs({ moviesBySortedJobsAndYear }) {
   let jobs: string[] = [];
-  const today = new Date();
 
   moviesBySortedJobsAndYear.map((movie) => {
     jobs.push(movie.job);
@@ -13,30 +13,19 @@ export default function MoviesBySortedJobs({ moviesBySortedJobsAndYear }) {
 
   return jobs.map((job) => {
     let jobMovies = [];
-    let upcomingMovies = [];
-    let previousMovies = [];
 
     jobMovies = moviesBySortedJobsAndYear.filter((movie) => movie.job == job);
 
-    // Upcoming Movies
-    upcomingMovies = jobMovies
-      .filter((movie) => movie.release_date !== "")
-      .filter((movie) => new Date(movie.release_date) > today);
+    const upcomingMovies = getMoviesByReleaseState(jobMovies, "upcoming");
 
-    // Previous Movies
-    previousMovies = jobMovies.filter(
-      (movie) => new Date(movie.release_date) <= today
-    );
+    let previousMovies = getMoviesByReleaseState(jobMovies, "previous");
 
-    // Get movies with empy release_date
+    // Get movies with empty release_date and merge with previousMovies
     const moviesWithEmptyReleaseDate = jobMovies.filter(
-      (movie) => movie.release_date == ""
+      (movie) => movie.release_date === ""
     );
 
-    // Add movies with empy release_date to previousMovies
-    moviesWithEmptyReleaseDate.map((movie) => {
-      previousMovies.push(movie);
-    });
+    previousMovies = previousMovies.concat(moviesWithEmptyReleaseDate);
 
     return (
       <>
@@ -51,16 +40,12 @@ export default function MoviesBySortedJobs({ moviesBySortedJobsAndYear }) {
           ""
         )}
 
-        {upcomingMovies.length > 0 ? (
-          <Accordion movies={jobMovies} listTitle={"Upcoming"} />
-        ) : (
-          ""
+        {upcomingMovies.length > 0 && (
+          <Accordion movies={upcomingMovies} listTitle={"Upcoming"} />
         )}
 
-        {previousMovies.length > 0 ? (
-          <Accordion movies={jobMovies} listTitle={"Previous"} />
-        ) : (
-          ""
+        {previousMovies.length > 0 && (
+          <Accordion movies={previousMovies} listTitle={"Previous"} />
         )}
       </>
     );
