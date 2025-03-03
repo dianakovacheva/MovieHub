@@ -46,11 +46,11 @@ export default function VideoGallery({ videos, videoListTitle, sectionName }) {
           </div>
           <div className="mt-4 space-y-2">
             <div className="flex gap-3">
-              {selectedVideo.movie_title ? (
+              {selectedVideo?.movie_title ? (
                 <Link
                   href={`/movie/${
-                    selectedVideo.movie_id
-                  }-${selectedVideo.movie_title
+                    selectedVideo?.movie_id
+                  }-${selectedVideo?.movie_title
                     .split(" ")
                     .join("-")
                     .toLowerCase()}`}
