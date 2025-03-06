@@ -1,4 +1,4 @@
-import { signUp } from "../../../app/actions/auth";
+import { signUp } from "../../../app/actions/user/auth";
 
 export function RegisterForm({ children }: { children: React.ReactNode }) {
   return (
@@ -25,9 +25,6 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
           required
           className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 text-gray-800 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
-        {/* {state?.errors?.email && (
-          <p className="text-sm text-red-500">{state.errors.email}</p>
-        )} */}
       </div>
 
       <div>
@@ -44,13 +41,7 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
           required
           className="mt-1 block w-full appearance-none rounded-md border border-gray-300 text-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />
-        {/* {state?.errors?.password && (
-          <p className="text-sm text-red-500">{state.errors.password}</p>
-        )} */}
       </div>
-      {/* {state?.message && (
-        <p className="text-sm text-red-500">{state.message}</p>
-      )} */}
 
       {children}
     </form>

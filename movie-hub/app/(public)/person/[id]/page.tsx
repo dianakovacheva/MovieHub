@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Title from "../../../../components/movie-details/title";
 import {
   getPersonDetails,
   getPersonImages,
@@ -12,6 +11,8 @@ import ActorInformationBlock from "../../../../components/actor-information-bloc
 import ImageGallery from "../../../../components/movie-details/image-gallery";
 import ActorKnownFor from "../../../../components/actor-known-for";
 import ActorCredits from "../../../../components/actor-credits";
+import PageTitle from "../../../../components/page-title";
+import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 
 export const metadata: Metadata = {
   title: "Person Page",
@@ -27,6 +28,8 @@ export default async function PersonPage({ params }) {
   const personMovieCredits = await getPersonMovieCredits(personId);
   const moviesActorPlayedIn = personMovieCredits.cast;
   const acterAsCrew = personMovieCredits.crew;
+  const title = personData.name;
+  const subtitleData = `Known For ${personData.known_for_department}`;
 
   // Sort cast movies by release year
   const moviesSortedByReleaseYear = moviesActorPlayedIn.sort(
@@ -54,22 +57,24 @@ export default async function PersonPage({ params }) {
     yearOfBirth = personData.birthday.split("-")[0];
   }
 
+  const titleData = (
+    <div className="flex flex-col items-start md:flex-row md:items-end gap-2">
+      <span>{title}</span>
+      <h2 className="text-3xl text-zinc-500 dark:text-[#c0bcbc] font-medium">
+        ({yearOfBirth} - {yearOfDeat})
+      </h2>
+    </div>
+  );
+
   return (
     <div className="flex flex-col gap-4 mb-10">
       {/* Header Section */}
-      <div className="flex flex-col gap-2 md:gap-0">
-        {personData.deathday ? (
-          <div className="flex flex-col items-start md:flex-row md:items-end gap-2">
-            <Title name={personData.name} />
-            <h2 className="text-3xl text-zinc-500 dark:text-[#c0bcbc] font-medium">
-              ({yearOfBirth} - {yearOfDeat})
-            </h2>
-          </div>
-        ) : (
-          <Title name={personData.name} />
-        )}
-        <Subtitle data={personData.known_for_department} />
-      </div>
+      {personData.deathday ? (
+        <PageTitleSubtitle title={titleData} subtitle={subtitleData} />
+      ) : (
+        <PageTitleSubtitle title={title} subtitle={subtitleData} />
+      )}
+
       {/* Actor Image and Biography */}
       <div className="flex flex-col md:flex-row gap-6 mb-2">
         <div className="flex flex-col md:w-[25vw]">

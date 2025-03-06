@@ -1,10 +1,7 @@
 export default function BurgerMenu() {
   return (
     <div className="menu dropdown flex-none text-base dropdown-content rounded-box z-1">
-      <button
-        className="btn-ghost btn-circle flex items-center font-bold hover:cursor-pointer gap-1"
-        tabIndex={0}
-      >
+      <button className="btn btn-ghost rounded-field" tabIndex={0}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="inline-block h-5 w-5 stroke-current"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { login } from "../../../app/actions/auth";
+import { login } from "../../../app/actions/user/auth";
 
 export function LoginForm({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);

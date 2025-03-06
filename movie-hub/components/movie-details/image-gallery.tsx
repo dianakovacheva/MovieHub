@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import posterURL from "../../app/actions/API-URLS/image-API-URL";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderSection from "./header-section";
+import Poster from "../poster";
 
 export default function ImageGallery({ backdrops }) {
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
@@ -41,16 +41,15 @@ export default function ImageGallery({ backdrops }) {
           {/* Main Content */}
           <div className="flex flex-col">
             <div className="relative">
-              <Image
-                src={`${baseImageUrl}${selectedImage?.file_path}`}
-                width={800} // Default size for larger screens
+              <Poster
+                data={sortedBackdrops}
+                path={`${baseImageUrl}${selectedImage?.file_path}`}
                 height={800}
-                alt="Selected backdrop"
-                className="max-h-[80vh] w-full rounded-lg object-contain shadow-sm"
-                sizes="(max-width: 640px) 250px,
-             (max-width: 1024px) 600px,
-             (max-width: 1280px) 800px,
-             1200px"
+                width={800}
+                className={
+                  "max-h-[80vh] w-full rounded-lg object-contain shadow-sm"
+                }
+                isMovie={false}
               />
 
               {/* Navigation arrows */}
@@ -97,16 +96,17 @@ export default function ImageGallery({ backdrops }) {
                       setCurrentIndex(index);
                     }}
                   >
-                    <Image
-                      src={`${posterURL}${backdrop.file_path}`}
-                      alt={`Backdrop ${index + 1}`}
-                      width={selectedImage.width}
+                    <Poster
+                      data={sortedBackdrops}
+                      path={`${posterURL}${backdrop.file_path}`}
                       height={selectedImage.height}
+                      width={selectedImage.width}
                       className={`h-24 w-40 rounded object-cover shadow-sm ${
                         selectedImage.file_path === backdrop.file_path
                           ? "ring-2 ring-blue-500 dark:ring-yellow-400"
                           : "ring-1 ring-gray-200 dark:ring-gray-700"
                       }`}
+                      isMovie={false}
                     />
                   </div>
                 ))}

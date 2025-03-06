@@ -13,19 +13,15 @@ export default async function SubtitleMovie({ movie }) {
         </li>
 
         {/* Movie Genres */}
-        {movie.genres ? (
+        {movie.genres && (
           <li className="hidden sm:flex list-disc mr-6">
             <MovieGenres movieGenres={movie.genres} />
           </li>
-        ) : (
-          ""
         )}
 
         {/* Movie Runtime */}
-        {movie.runtime ? (
+        {movie.runtime && (
           <li className="list-disc">{convertMinsToHrsMins(movie.runtime)}</li>
-        ) : (
-          ""
         )}
       </ul>
     </div>

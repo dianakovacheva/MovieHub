@@ -9,9 +9,9 @@ export default function Navbar() {
   const buttonName = "Watchlist";
 
   return (
-    <nav className="navbar flex flex-1 items-center justify-between gap-4 m-0 p-0">
+    <nav className="navbar flex flex-1 items-center justify-between m-0 p-0">
       {/* Navbar left side */}
-      <div className="navbar-start flex-row-reverse items-center justify-end sm:justify-start sm:flex-row gap-2">
+      <div className="navbar-start flex-row-reverse items-center justify-end sm:justify-start sm:flex-row">
         <Link href={"/"} className="text-xl font-bold">
           MovieHub
         </Link>
@@ -23,7 +23,7 @@ export default function Navbar() {
           <SearchContainer />
         </div>
         {/* Buttons right side */}
-        <div className="flex gap-4">
+        <div className="flex">
           <WatchListBtn buttonName={buttonName} />
           <AuthButton />
           <ThemeSwitcher />

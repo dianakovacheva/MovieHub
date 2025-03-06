@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import posterURL from "../app/actions/API-URLS/image-API-URL";
+import Poster from "./poster";
 
 export default function Accordion({ movies, listTitle }) {
   return movies ? (
@@ -29,27 +28,14 @@ export default function Accordion({ movies, listTitle }) {
               >
                 <li className="list-row">
                   <div>
-                    {movie.poster_path ? (
-                      <Image
-                        src={`${posterURL}/${movie.poster_path}`}
-                        alt={`${movie.title}'s poster`}
-                        width={250}
-                        height={200}
-                        loading="lazy"
-                        unoptimized={false}
-                        className="rounded-lg object-cover shadow-sm w-15 h-25"
-                      />
-                    ) : (
-                      <Image
-                        src="/default-movie-image.jpg"
-                        alt={`${movie.title}'s poster`}
-                        width={250}
-                        height={200}
-                        loading="lazy"
-                        unoptimized={false}
-                        className="rounded-lg object-cover shadow-sm w-15 h-25"
-                      />
-                    )}
+                    <Poster
+                      data={movie}
+                      path={movie.poster_path}
+                      height={200}
+                      width={250}
+                      className="rounded-lg object-cover shadow-sm w-15 h-25"
+                      isMovie={true}
+                    />
                   </div>
                   <div className="list-col-grow flex flex-col gap-2">
                     <div className="text-md font-bold">{movie.title}</div>

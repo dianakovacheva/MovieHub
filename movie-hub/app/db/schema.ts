@@ -10,6 +10,7 @@ import {
 
 import type { AdapterAccountType } from "next-auth/adapters";
 
+// Users
 export const users = pgTable("users", {
   id: text("id")
     .primaryKey()
@@ -23,6 +24,7 @@ export const users = pgTable("users", {
   image: text("image"),
 });
 
+// Accounts
 export const accounts = pgTable(
   "accounts",
   {
@@ -49,6 +51,7 @@ export const accounts = pgTable(
   ]
 );
 
+// Sessions
 export const sessions = pgTable("sessions", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
@@ -57,6 +60,7 @@ export const sessions = pgTable("sessions", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
 
+// Verification Tokens
 export const verificationTokens = pgTable(
   "verificationTokens",
   {
@@ -73,6 +77,7 @@ export const verificationTokens = pgTable(
   ]
 );
 
+// Authenticators
 export const authenticators = pgTable(
   "authenticators",
   {
@@ -95,3 +100,29 @@ export const authenticators = pgTable(
     },
   ]
 );
+
+// Lists
+export const lists = pgTable("lists", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull().unique(),
+  description: text("description"),
+  isPublic: boolean("isPublic").notNull().default(true), // Public or private
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
+
+// Movies
+// export const movies = pgTable("movies", {
+//   id: integer("id").primaryKey(), // TMDB Movie ID (no need for UUID)
+//   title: text("title").notNull(),
+//   releaseYear: integer("releaseYear"),
+//   posterPath: text("posterPath"), // TMDB poster path
+//   backdropPath: text("backdropPath"), // TMDB backdrop image
+//   tmdbId: integer("tmdbId").unique().notNull(), // Ensure uniqueness
+//   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+// });

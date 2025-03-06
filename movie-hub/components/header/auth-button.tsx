@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { logout } from "../../app/actions/auth";
 import { auth } from "../../auth";
+import UserButton from "../user-button";
 
 export default async function AuthButton() {
   const session = await auth();
@@ -12,10 +12,6 @@ export default async function AuthButton() {
       </Link>
     </div>
   ) : (
-    <div>
-      <button onClick={logout} className="btn">
-        Logout
-      </button>
-    </div>
+    <UserButton userEmail={session.user.email} />
   );
 }

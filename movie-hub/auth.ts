@@ -1,12 +1,13 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import saltAndHashPassword from "./app/utils/password";
-import getUserFromDb from "./app/actions/user";
+
 import { LoginFormSchema } from "./app/actions/definitions";
 import { ZodError } from "zod";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./app/db";
 import { authConfig } from "./auth.config";
+import getUserByEmail from "./app/actions/user/user-data";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -17,6 +18,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       credentials: {
         email: {},
         password: {},
+        createdAt: {},
+        updatedAt: {},
       },
       authorize: async (credentials) => {
         try {
@@ -30,7 +33,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           const pwHash = saltAndHashPassword(password);
 
           // logic to verify if the user exists
-          user = await getUserFromDb(email, password);
+          user = await getUserByEmail(email, password);
 
           if (!user) {
             // No user found, so this is their first attempt to login

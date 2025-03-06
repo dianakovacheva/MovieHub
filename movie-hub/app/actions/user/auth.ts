@@ -1,13 +1,11 @@
 "use server";
 
-import { db } from "../db/index";
-import { users } from "../db/schema";
-import { FormState, LoginFormSchema, SignUpFormSchema } from "./definitions";
-import { genSaltSync, hashSync, compare } from "bcrypt-ts";
-// import { createSession, deleteSession } from "./stateless_session";
+import { db } from "../../db/index";
+import { users } from "../../db/schema";
+import { FormState, LoginFormSchema, SignUpFormSchema } from "../definitions";
+import { genSaltSync, hashSync } from "bcrypt-ts";
 import { eq } from "drizzle-orm";
-import { signIn, signOut } from "../../auth";
-import { redirect } from "next/navigation";
+import { signIn, signOut } from "../../../auth";
 
 // Sign Up
 export async function signUp(

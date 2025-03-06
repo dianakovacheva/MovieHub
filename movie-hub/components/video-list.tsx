@@ -60,23 +60,17 @@ export default function VideoList({
               }}
             >
               <div className="relative flex-shrink-0 w-32 aspect-video rounded-md overflow-hidden">
-                {video["key"] ? (
-                  <Image
-                    src={`${youtubeURL}${video["key"]}/hqdefault.jpg`}
-                    width={100}
-                    height={100}
-                    alt={video["name"]}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Image
-                    src={`${youtubeURL}${video["key"]}/hqdefault.jpg`}
-                    width={100}
-                    height={100}
-                    alt={"Movie video"}
-                    className="w-full h-full object-cover"
-                  />
-                )}
+                <Image
+                  src={
+                    video["key"]
+                      ? `${youtubeURL}${video["key"]}/hqdefault.jpg`
+                      : "/default-movie-poster.jpg"
+                  }
+                  width={100}
+                  height={100}
+                  alt={video["name"]}
+                  className="w-full h-full object-cover"
+                />
 
                 <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40">
                   <Play size={20} className="text-white" />
