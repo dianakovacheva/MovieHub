@@ -5,9 +5,8 @@ import MoviesCarousel from "./movie-details/movies-carousel";
 export default function WatchlistCarousel({ watchlist }) {
   const sectionName = "Watchlist";
   const listTitle = "No Watchlist yet";
-  const actionParagraph =
-    "Create a watchlist to track movies you want to watch.";
-  const callToActionBtnText = "Browse popular movies";
+  const listParagraph = "Create a watchlist to track movies you want to watch.";
+  const buttonText = "Browse popular movies";
 
   return (
     <>
@@ -18,10 +17,10 @@ export default function WatchlistCarousel({ watchlist }) {
         <>
           <EmptyList
             listTitle={listTitle}
-            actionParagraph={actionParagraph}
-            callToActionBtnText={callToActionBtnText}
-            className="flex flex-col items-center gap-4"
+            listParagraph={listParagraph}
+            buttonText={buttonText}
             buttonAction={undefined}
+            className="flex flex-col items-center gap-4"
           />
         </>
       )}

@@ -8,7 +8,7 @@ import ListCard from "./list-card";
 export default function UserLists({ userLists }) {
   const sectionName = "Lists";
   const listTitle = "No lists yet";
-  const callToActionBtnText = "Create a list";
+  const buttonText = "Create a list";
 
   function redirectToCreateListPage() {
     redirect("/create-list");
@@ -21,10 +21,10 @@ export default function UserLists({ userLists }) {
       ) : (
         <EmptyList
           listTitle={listTitle}
-          actionParagraph={undefined}
-          callToActionBtnText={callToActionBtnText}
-          className="flex flex-col items-center gap-2"
+          listParagraph={undefined}
+          buttonText={buttonText}
           buttonAction={redirectToCreateListPage}
+          className="flex flex-col items-center gap-2"
         />
       )}
     </>
