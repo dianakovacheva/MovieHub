@@ -15,6 +15,7 @@ export async function createList(
   const validatedFields = CreateListFormSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description"),
+    isPublic: formData.get("isPublic"),
   });
 
   // If any form fields are invalid, return early
@@ -25,7 +26,7 @@ export async function createList(
   }
 
   // 2. Prepare data for insertion into database
-  const { name, description } = validatedFields.data;
+  const { name, description, isPublic } = validatedFields.data;
 
   // 3. Check if list already exists
   const existingList = await db
@@ -44,7 +45,7 @@ export async function createList(
     .values({
       name,
       description: description || null,
-      isPublic: true,
+      isPublic,
       userId,
     })
     .returning({ id: lists.id });
@@ -54,7 +55,7 @@ export async function createList(
   }
 
   if (insertedList) {
-    redirect("/dashboard");
+    redirect(`/list/${insertedList[0].id}`);
   }
 
   return { success: true, id: insertedList[0].id };
