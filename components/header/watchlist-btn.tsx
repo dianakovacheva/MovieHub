@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function WatchListBtn({ buttonName }) {
   return (
     <div className="flex-none hidden sm:flex">
-      <Link href={"/watchlist"} className="btn btn-ghost rounded-field">
+      <Link href={"/watchlist"} className="btn btn-ghost">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

@@ -5,6 +5,7 @@ import { createList } from "../app/actions/list/list-data";
 
 export default function CreateListForm({ userId }) {
   const [error, setError] = useState<string | null>(null);
+  const [selected, setSelected] = useState("");
 
   return (
     <form
@@ -15,7 +16,7 @@ export default function CreateListForm({ userId }) {
           setError("Invalid input. Please try again.");
         }
       }}
-      className="flex flex-col gap-8"
+      className="flex flex-col gap-2"
     >
       <div className="flex flex-col gap-2">
         <fieldset className="fieldset ml-1">
@@ -45,18 +46,35 @@ export default function CreateListForm({ userId }) {
         <div className="flex gap-6">
           <div className="flex gap-4 items-center">
             <input
+              id="public"
               type="radio"
-              name="public"
+              name="isPublic"
+              value={1}
               className="radio"
               defaultChecked
+              onChange={(e) => setSelected(e.target.value)}
             />
             <label className="text-base">Public</label>
           </div>
           <div className="flex gap-4 items-center">
-            <input type="radio" name="private" className="radio" />
+            <input
+              id="private"
+              type="radio"
+              name="isPublic"
+              value={0}
+              className="radio"
+              onChange={(e) => setSelected(e.target.value)}
+            />
             <label className="text-base">Private</label>
           </div>
         </div>
+        {selected == "1" ? (
+          <p className="text-base">Your list will be visible to everyone.</p>
+        ) : (
+          <p className="text-base">
+            Others will not be able to view your list.
+          </p>
+        )}
       </fieldset>
       <div className="w-[20vw]">
         <button

@@ -17,13 +17,13 @@ export default function Navbar() {
         </Link>
         <BurgerMenu />
       </div>
-      <div className="flex gap-4 navbar-end order-2 w-auto">
+      <div className="flex gap-2 navbar-end order-2 w-auto">
         {/* Search bar */}
         <div>
           <SearchContainer />
         </div>
         {/* Buttons right side */}
-        <div className="flex">
+        <div className="flex gap-2">
           <WatchListBtn buttonName={buttonName} />
           <AuthButton />
           <ThemeSwitcher />

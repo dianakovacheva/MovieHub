@@ -5,9 +5,9 @@ import { logout } from "../app/actions/user/auth";
 export default function UserButton({ userEmail }) {
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost rounded-field">
+      <div tabIndex={0} role="button" className="btn btn-ghost">
         <CircleUserRound />
-        <span className="hidden sm:flex">{userEmail}</span>
+        <span className="hidden lg:flex">{userEmail}</span>
       </div>
       <ul
         tabIndex={0}

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 export default function CreateListButton() {
   function redirectToCreateListPage() {
-    redirect("/create-list");
+    redirect("/lists/create");
   }
 
   return (

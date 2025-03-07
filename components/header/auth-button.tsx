@@ -7,7 +7,7 @@ export default async function AuthButton() {
 
   return !session?.user?.id ? (
     <div>
-      <Link href={"/login"} className="btn">
+      <Link href={"/login"} className="btn btn-ghost">
         Login
       </Link>
     </div>
