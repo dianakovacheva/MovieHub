@@ -5,6 +5,7 @@ import { db } from "../../db";
 import { CreateListFormSchema, CreateListFormState } from "./definitions";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 // Create list
 export async function createList(
@@ -55,14 +56,15 @@ export async function createList(
   }
 
   if (insertedList) {
-    redirect(`/list/${insertedList[0].id}`);
+    revalidatePath(`/lists`);
+    redirect(`/lists/${insertedList[0].id}`);
   }
 
   return { success: true, id: insertedList[0].id };
 }
 
 // Get user's lists
-export async function getUserLists(userId: string | undefined) {
+export async function getUserLists(userId: string) {
   if (!userId) return null;
   const userLists = await db
     .select()
@@ -75,7 +77,7 @@ export async function getUserLists(userId: string | undefined) {
 }
 
 // Get list by ID
-export async function getListById(listId: string | undefined) {
+export async function getListById(listId: string) {
   if (!listId) return null;
 
   try {
@@ -91,4 +93,12 @@ export async function getListById(listId: string | undefined) {
   } catch (error: any) {
     console.log(error.message);
   }
+}
+
+// Delete list
+export async function deleteList(listId: string) {
+  if (!listId) return null;
+
+  await db.delete(lists).where(eq(lists.id, listId));
+  revalidatePath("/lists");
 }
