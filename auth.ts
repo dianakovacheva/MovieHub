@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import saltAndHashPassword from "./app/utils/password";
+// import saltAndHashPassword from "./app/utils/password";
 
 import { LoginFormSchema } from "./app/actions/definitions";
 import { ZodError } from "zod";
@@ -30,7 +30,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           );
 
           // logic to salt and hash password
-          const pwHash = saltAndHashPassword(password);
+          // const pwHash = saltAndHashPassword(password);
 
           // logic to verify if the user exists
           user = await getUserByEmail(email, password);

@@ -1,118 +1,209 @@
 import baseApiURL from "../API-URLS/base-API-URL";
+import { TrendingMovieListSchema } from "./definitions";
+import {
+  MovieCreditDetailsResponse,
+  MovieCreditsResponse,
+  MovieDetailsResponse,
+  MovieImagesResponse,
+  MovieKeywordsResponse,
+  MovieSuggestionsResponse,
+  MovieVideosResponse,
+  TopRatedMoviesResponse,
+  TrendingMovieListResponse,
+  UpcomingMoviesResponse,
+} from "./types";
 
-// Trending movies today
-export async function getTrendingMoviesToday() {
+// Get trending movies today
+export async function getTrendingMoviesToday(): Promise<TrendingMovieListResponse | null> {
   const trendingMoviesTodayURL = `${baseApiURL}/trending/movie/day?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(trendingMoviesTodayURL);
-    const resData = await res.json();
-    const moviesData = Object.values(resData.results);
 
-    return moviesData;
-  } catch (error: any) {
-    console.log(error.message);
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData = await res.json();
+    const parsed = TrendingMovieListSchema.safeParse(resData);
+
+    if (!parsed.success) {
+      console.error("Invalid API response:", parsed.error);
+      return null;
+    }
+
+    return parsed.data.results as TrendingMovieListResponse;
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
 }
 
 // Movie's details
-export const getMovieDetails = async (id: number) => {
+export async function getMovieDetails(
+  id: number
+): Promise<MovieDetailsResponse | null> {
   const movieDetailsURL = `${baseApiURL}/movie/${id}?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(movieDetailsURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieDetailsResponse = await res.json();
 
     return resData;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Movie videos
-export const getMovieVideos = async (id: number) => {
+export async function getMovieVideos(
+  id: number
+): Promise<MovieVideosResponse["results"] | null> {
   const movieVideosURL = `${baseApiURL}/movie/${id}/videos?language=en-US&api_key=${process.env.API_KEY}`;
   try {
     const res = await fetch(movieVideosURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieVideosResponse = await res.json();
 
     return resData.results;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Movie Backdrops
-export const getMovieBackdrops = async (id: number) => {
+export async function getMovieBackdrops(
+  id: number
+): Promise<MovieImagesResponse["backdrops"] | null> {
   const movieImagesURL = `${baseApiURL}/movie/${id}/images?api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(movieImagesURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieImagesResponse = await res.json();
 
     return resData.backdrops;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Movie Credits
-export const getMovieCredits = async (id: number) => {
+export async function getMovieCredits(
+  id: number
+): Promise<MovieCreditsResponse | null> {
   const movieCreditsURL = `${baseApiURL}/movie/${id}/credits?language=en-US&api_key=${process.env.API_KEY}`;
   try {
     const res = await fetch(movieCreditsURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieCreditsResponse = await res.json();
 
     return resData;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Get a Movie Credit details by ID
-export const getMovieCreditDetails = async (id: number) => {
+export async function getMovieCreditDetails(
+  id: number
+): Promise<MovieCreditDetailsResponse | null> {
   const movieCreditDetailsURL = `${baseApiURL}/credit/${id}?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(movieCreditDetailsURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieCreditDetailsResponse = await res.json();
 
     return resData;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Movie Suggestions
-export const getMovieSuggestions = async (id: number) => {
+export async function getMovieSuggestions(
+  id: number
+): Promise<MovieSuggestionsResponse | null> {
   const similarMoviesURL = `${baseApiURL}/movie/${id}/similar?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(similarMoviesURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieSuggestionsResponse = await res.json();
 
     return resData;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Movie Keyword
-export const getKeywords = async (id: number) => {
+export async function getMovieKeywords(
+  id: number
+): Promise<MovieKeywordsResponse | null> {
   const keywordsURL = `${baseApiURL}/movie/${id}/keywords?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(keywordsURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: MovieKeywordsResponse = await res.json();
 
     return resData;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Get Upcoming Movies
-export const getUpcomingMovies = async () => {
+export async function getUpcomingMovies(): Promise<
+  UpcomingMoviesResponse["results"] | null
+> {
   const year = new Date().getFullYear();
 
   const upcomingMoviesURL = `${baseApiURL}/discover/movie?primary_release_year=${year}&language=en-US&api_key=${process.env.API_KEY}`;
@@ -132,24 +223,41 @@ export const getUpcomingMovies = async () => {
 
   try {
     const res = await fetch(upcomingMoviesURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: UpcomingMoviesResponse = await res.json();
 
     return resData.results;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
 
 // Get a list of movies ordered by rating
-export const getTopRatedMovies = async () => {
+export async function getTopRatedMovies(): Promise<
+  TopRatedMoviesResponse["results"] | null
+> {
   const topRatedMoviesURL = `${baseApiURL}/movie/top_rated?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(topRatedMoviesURL);
-    const resData = await res.json();
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+
+    const resData: TopRatedMoviesResponse = await res.json();
 
     return resData.results;
-  } catch (error: any) {
-    console.log(error.message);
+  } catch (error) {
+    console.error(
+      error instanceof Error ? error.message : "Unknown error occurred"
+    );
+    return null;
   }
-};
+}
+export { TrendingMovieListResponse };

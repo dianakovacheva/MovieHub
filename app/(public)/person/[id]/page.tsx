@@ -4,14 +4,12 @@ import {
   getPersonImages,
   getPersonMovieCredits,
 } from "../../../actions/person/person-data";
-import Subtitle from "../../../../components/subtitle";
 import Poster from "../../../../components/poster";
 import ActorBiography from "../../../../components/actor-biography";
 import ActorInformationBlock from "../../../../components/actor-information-block";
 import ImageGallery from "../../../../components/movie-details/image-gallery";
 import ActorKnownFor from "../../../../components/actor-known-for";
 import ActorCredits from "../../../../components/actor-credits";
-import PageTitle from "../../../../components/page-title";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 
 export const metadata: Metadata = {
@@ -33,18 +31,24 @@ export default async function PersonPage({ params }) {
 
   // Sort cast movies by release year
   const moviesSortedByReleaseYear = moviesActorPlayedIn.sort(
-    (a, b) =>
+    (
+      a: { release_date: string | number | Date },
+      b: { release_date: string | number | Date }
+    ) =>
       new Date(b.release_date).getFullYear() -
       new Date(a.release_date).getFullYear()
   );
 
   // Sort crew movies by job and relese year
-  const moviesBySortedJobs = acterAsCrew.sort((a, b) =>
-    a.job.localeCompare(b.job)
+  const moviesBySortedJobs = acterAsCrew.sort(
+    (a: { job: string }, b: { job: string }) => a.job.localeCompare(b.job)
   );
 
   const moviesBySortedJobsAndYear = moviesBySortedJobs.sort(
-    (a, b) =>
+    (
+      a: { release_date: string | number | Date },
+      b: { release_date: string | number | Date }
+    ) =>
       new Date(b.release_date).getFullYear() -
       new Date(a.release_date).getFullYear()
   );
@@ -96,7 +100,7 @@ export default async function PersonPage({ params }) {
 
       {/* Actor Image Gallery */}
       <div>
-        <ImageGallery backdrops={personImages.profiles} />
+        <ImageGallery backdropsData={personImages.profiles} />
       </div>
 
       {/* Known for */}

@@ -6,8 +6,13 @@ import { useState, useRef, useEffect } from "react";
 import MovieRating from "../movie-rating";
 import AddToWatchListButton from "../add-to-watchlist-button";
 import Poster from "../poster";
+import { TrendingMovieListResponse } from "../../app/actions/movie/movie-data";
 
-export default function MoviesCarousel({ movies }) {
+type MoviesCarouselProps = {
+  movies: TrendingMovieListResponse | null;
+};
+
+export default function MoviesCarousel({ movies }: MoviesCarouselProps) {
   const carouselRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -26,7 +31,7 @@ export default function MoviesCarousel({ movies }) {
     updateArrowVisibility();
   }, [movies]);
 
-  const scroll = (direction) => {
+  const scroll = (direction: string) => {
     if (carouselRef.current) {
       const { scrollLeft, clientWidth } = carouselRef.current;
       const scrollAmount = clientWidth; // Scroll by the width of the visible area

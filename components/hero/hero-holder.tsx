@@ -6,27 +6,32 @@ import VideoGallery from "../video-gallery";
 
 export default async function HeroSection() {
   const upcomingMovies = await getUpcomingMovies();
-
   const upcomingMoviesTrailers = [];
 
-  for (const upcomingMovie of upcomingMovies) {
-    const movieVideos = await getMovieVideos(upcomingMovie.id);
+  if (upcomingMovies) {
+    for (const upcomingMovie of upcomingMovies) {
+      const movieVideos = await getMovieVideos(upcomingMovie.id);
 
-    movieVideos.map(
-      (movie) => (
-        (movie["movie_title"] = upcomingMovie.title),
-        (movie["movie_id"] = upcomingMovie.id)
-      )
-    );
+      if (movieVideos) {
+        movieVideos.map(
+          (movie) => (
+            (movie.name = upcomingMovie.title),
+            (movie.id = upcomingMovie.id.toString())
+          )
+        );
 
-    const movieTrailers = movieVideos.filter(
-      (movie) =>
-        movie.type.toLowerCase() == "trailer" &&
-        movie.name.toLowerCase() === "official trailer"
-    );
+        const movieTrailers = movieVideos.filter(
+          (movie) =>
+            movie.type?.toLowerCase() == "trailer" &&
+            movie.name?.toLowerCase() === "official trailer"
+        );
 
-    upcomingMoviesTrailers.push(movieTrailers);
+        upcomingMoviesTrailers.push(movieTrailers);
+      }
+    }
   }
+
+  console.log(upcomingMoviesTrailers);
 
   const videoListTitle = (
     <span className="font-bold text-[#f5c518]">Up next</span>

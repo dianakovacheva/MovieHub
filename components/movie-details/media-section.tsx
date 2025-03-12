@@ -2,15 +2,17 @@ import { Suspense } from "react";
 import Video from "../video";
 import { getMovieVideos } from "../../app/actions/movie/movie-data";
 import Poster from "../poster";
+import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
-export default async function MovieMedia({ movie }) {
+export default async function MovieMedia({ movieData }) {
+  const movie: MovieDetailsResponse = movieData;
   const movieVideos = await getMovieVideos(movie.id);
-  let movieKey: string = "";
+  let movieKey: string | undefined = "";
 
   // Get trailer key
   if (movieVideos) {
     movieVideos.map((movie) => {
-      if (movie.type.toLowerCase() === "trailer") {
+      if (movie.type?.toLowerCase() === "trailer") {
         movieKey = movie.key;
       }
     });

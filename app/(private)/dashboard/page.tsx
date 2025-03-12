@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 export default async function Dashboard() {
   const session = await auth();
   let userEmail: string = "";
-  let profileCreatedAt: string = "";
-  const userId: string | undefined = session?.user?.id;
+  let profileCreatedAt;
+  const userId = session?.user?.id;
 
   if (session?.user?.email) {
     userEmail = session?.user?.email;

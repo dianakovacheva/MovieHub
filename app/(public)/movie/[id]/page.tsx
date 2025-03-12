@@ -1,12 +1,14 @@
+import { Metadata } from "next";
+import Link from "next/link";
+
 import {
   getMovieDetails,
   getMovieCredits,
   getMovieBackdrops,
   getMovieVideos,
   getMovieSuggestions,
-  getKeywords,
+  getMovieKeywords,
 } from "../../../actions/movie/movie-data";
-import { Metadata } from "next";
 
 import MovieInfo from "../../../../components/movie-details/movie-info";
 import MovieMedia from "../../../../components/movie-details/media-section";
@@ -19,7 +21,10 @@ import BoxOffice from "../../../../components/movie-details/box-office";
 import Paragraph from "../../../../components/paragraph";
 import InformationBlockMultiple from "../../../../components/information-block-multiple";
 import MoreLikeThis from "../../../../components/movie-details/more-like-this";
-import Link from "next/link";
+import {
+  MovieCreditsResponse,
+  MovieSuggestionsResponse,
+} from "../../../actions/movie/types";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -29,43 +34,57 @@ export default async function MovieDetails({ params }) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
   const movieCredits = await getMovieCredits(id);
-  const backdrops = await getMovieBackdrops(movie.id);
-  const movieVideos = await getMovieVideos(movie.id);
-  const movieSuggestions = await getMovieSuggestions(movie.id);
-  const keywords = await getKeywords(movie.id);
-  const directors: any[] = [];
-  const writers: any[] = [];
-  const stars = [];
-  const cast = [];
+  const backdrops = await getMovieBackdrops(movie!.id);
+  const movieVideos = await getMovieVideos(movie!.id);
+  const movieSuggestions = await getMovieSuggestions(movie!.id);
+  const keywords = await getMovieKeywords(movie!.id);
+  const directors: MovieCreditsResponse["crew"] = [];
+  const writers: MovieCreditsResponse["crew"] = [];
+  // const stars: { name: string; popularity: number; id: number }[] = [];
+  const stars: MovieCreditsResponse["cast"] = [];
+  const cast: MovieCreditsResponse["cast"] = [];
+  let topMovieSuggestions: MovieSuggestionsResponse["results"];
   const videoListTitle = "Videos List";
 
-  // Directors
-  movieCredits.crew.map((data) => {
-    if (data.job.toLowerCase() == "director") {
-      directors.push(data);
-    }
-  });
+  if (movieCredits?.crew) {
+    movieCredits.crew.map((data) => {
+      // Directors
+      if (data.job && data.job.toLowerCase() == "director") {
+        directors.push(data);
+        // Writes
+      } else if (data.job && data.job.toLowerCase() == "writer") {
+        writers.push(data);
+      }
+    });
+  }
 
-  // Writes
-  movieCredits.crew.map((data) => {
-    if (data.job.toLowerCase() == "writer") {
-      writers.push(data);
-    }
-  });
-
-  // Stars
-  movieCredits.cast.map((data) => {
-    if (
-      data.known_for_department.toLowerCase() == "acting" &&
-      data.popularity
-    ) {
-      stars.push({
-        name: data.name,
-        popularity: data.popularity,
-        id: data.id,
-      });
-    }
-  });
+  if (movieCredits?.cast) {
+    movieCredits.cast.map((data) => {
+      if (data.known_for_department !== undefined) {
+        if (
+          data.known_for_department.toLowerCase() == "acting" &&
+          data.popularity
+        ) {
+          // Stars
+          // stars.push({
+          //   name: data.name,
+          //   popularity: data.popularity,
+          //   id: data.id,
+          //   adult: false,
+          //   gender: 0,
+          //   cast_id: 0,
+          //   order: 0,
+          // });
+          stars.push(data);
+        } else if (
+          data.known_for_department.toLowerCase() == "acting" &&
+          data.popularity
+        ) {
+          cast.push(data);
+        }
+      }
+    });
+  }
 
   // Sort the stars array by popularity (descending order)
   const starsSorted = stars
@@ -73,38 +92,45 @@ export default async function MovieDetails({ params }) {
     .slice(0, 3);
 
   // Cast
-  movieCredits.cast.map((data) => {
-    if (
-      data.known_for_department.toLowerCase() == "acting" &&
-      data.popularity
-    ) {
-      cast.push(data);
-    }
-  });
+  // movieCredits.cast.map((data) => {
+  //   if (
+  //     data.known_for_department.toLowerCase() == "acting" &&
+  //     data.popularity
+  //   ) {
+  //     cast.push(data);
+  //   }
+  // });
 
   const topCast = cast.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
 
   // Movie Suggestions
-  const topMovieSuggestions = movieSuggestions.results
-    .sort((a, b) => b.popularity - a.popularity)
-    .slice(0, 12);
+  if (movieSuggestions?.results) {
+    topMovieSuggestions = movieSuggestions.results
+      .sort(
+        (a: { popularity: number }, b: { popularity: number }) =>
+          b.popularity - a.popularity
+      )
+      .slice(0, 12);
+  }
 
   return (
     <div className="flex flex-col gap-4 mb-10">
       {/* Movie Info */}
-      <MovieInfo movie={movie} />
+      {movie && <MovieInfo movieData={movie} />}
 
       {/* Media Section */}
-      <MovieMedia movie={movie} />
+      {movie && <MovieMedia movieData={movie} />}
 
       <div className="flex flex-col">
         {/* Movie Tagline */}
-        {movie.tagline !== "" ? <Paragraph text={movie.tagline} /> : ""}
+        {movie && movie.tagline !== "" && movie.tagline !== undefined && (
+          <Paragraph text={movie.tagline} />
+        )}
 
         {/* Crew and Cast */}
         <div className="flex flex-col">
           {/* Directors */}
-          {directors.length > 0 ? (
+          {directors.length > 0 && (
             <InformationBlockMultiple
               data={directors}
               keyPlural={"Directors"}
@@ -126,12 +152,10 @@ export default async function MovieDetails({ params }) {
                 ))}
               </ul>
             </InformationBlockMultiple>
-          ) : (
-            ""
           )}
 
           {/* Writers */}
-          {writers.length > 0 ? (
+          {writers.length > 0 && (
             <InformationBlockMultiple
               data={writers}
               keyPlural={"Writers"}
@@ -150,12 +174,10 @@ export default async function MovieDetails({ params }) {
                 ))}
               </ul>
             </InformationBlockMultiple>
-          ) : (
-            ""
           )}
 
           {/* Stars */}
-          {starsSorted.length > 0 ? (
+          {starsSorted.length > 0 && (
             <InformationBlockMultiple
               data={starsSorted}
               keyPlural={"Stars"}
@@ -174,37 +196,37 @@ export default async function MovieDetails({ params }) {
                 ))}
               </ul>
             </InformationBlockMultiple>
-          ) : (
-            ""
           )}
         </div>
       </div>
 
       {/* Video Gallery */}
-      <VideoGallery
-        videos={movieVideos}
-        videoListTitle={videoListTitle}
-        sectionName={"Videos"}
-      />
+      {movieVideos && videoListTitle && (
+        <VideoGallery
+          videos={movieVideos}
+          videoListTitle={videoListTitle}
+          sectionName={"Videos"}
+        />
+      )}
 
       {/* Image Gallery */}
-      <ImageGallery backdrops={backdrops} />
+      {backdrops && <ImageGallery backdropsData={backdrops} />}
 
       {/* Top Cast List */}
-      <TopCastList topCast={topCast} />
+      {topCast && <TopCastList topCast={topCast} />}
 
       {/* Top Movie Suggestions */}
-      <MoreLikeThis movies={topMovieSuggestions} />
+      {topMovieSuggestions && <MoreLikeThis movies={topMovieSuggestions} />}
 
       <div className="flex flex-col gap-4 sm:w-[60vw]">
         {/* Storyline */}
-        <Storyline movie={movie} keywords={keywords.keywords} />
+        {movie && keywords && <Storyline movie={movie} keywords={keywords} />}
 
         {/* Details Section */}
-        <DetailsSection movie={movie} />
+        {movie && <DetailsSection movie={movie} />}
 
         {/* Box Office*/}
-        <BoxOffice revenue={movie.revenue} />
+        {movie && <BoxOffice revenue={movie.revenue} />}
       </div>
     </div>
   );

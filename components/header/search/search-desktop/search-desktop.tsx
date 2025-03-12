@@ -59,6 +59,3 @@ export default function SearchDesktop() {
     </div>
   );
 }
-function replace(arg0: string) {
-  throw new Error("Function not implemented.");
-}

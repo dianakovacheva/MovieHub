@@ -9,7 +9,7 @@ export const getPersonDetails = async (id: number) => {
     const resData = await res.json();
 
     return resData;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log(error.message);
   }
 };
@@ -23,7 +23,7 @@ export const getPersonImages = async (id: number) => {
     const resData = await res.json();
 
     return resData;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log(error.message);
   }
 };
@@ -37,7 +37,7 @@ export const getPersonMovieCredits = async (id: number) => {
     const resData = await res.json();
 
     return resData;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log(error.message);
   }
 };
@@ -51,7 +51,7 @@ export const getMostPopularPeople = async () => {
     const resData = await res.json();
 
     return resData.results;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log(error.message);
   }
 };

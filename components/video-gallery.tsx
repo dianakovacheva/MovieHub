@@ -25,7 +25,7 @@ export default function VideoGallery({ videos, videoListTitle, sectionName }) {
     }
   };
 
-  const onReady = (event) => {
+  const onReady = (event: { target: React.SetStateAction<null> }) => {
     setPlayer(event.target);
   };
 

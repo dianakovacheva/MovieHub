@@ -38,7 +38,8 @@
     "drizzle-kit": "^0.30.4",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
+    "openapi-typescript": "^7.6.1",
     "tsx": "^4.19.2",
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   }
 }

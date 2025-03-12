@@ -5,38 +5,52 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderSection from "./header-section";
 import Poster from "../poster";
+import { MovieImagesResponse } from "../../app/actions/movie/types";
 
-export default function ImageGallery({ backdrops }) {
+export default function ImageGallery({ backdropsData }) {
+  const backdrops: MovieImagesResponse["backdrops"] = backdropsData;
+
+  const sectionName: string = "Photos";
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
+  let sortedBackdrops: typeof backdrops;
+
   // Sort backdrops by vote_average to show best rated images first
-  const sortedBackdrops = [...backdrops].sort(
-    (a, b) => b.vote_average - a.vote_average
+  if (backdrops) {
+    sortedBackdrops = backdrops.sort((a, b) => b.vote_average - a.vote_average);
+  }
+
+  const [selectedImage, setSelectedImage] = useState(
+    sortedBackdrops && sortedBackdrops.length > 0 ? sortedBackdrops[0] : null
   );
 
-  const [selectedImage, setSelectedImage] = useState(sortedBackdrops[0]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
+    if (
+      sortedBackdrops &&
+      sortedBackdrops.length > 0 &&
+      currentIndex !== null &&
+      currentIndex > 0
+    ) {
       setCurrentIndex(currentIndex - 1);
-      setSelectedImage(sortedBackdrops[currentIndex - 1]);
+      setSelectedImage(sortedBackdrops[currentIndex - 1] ?? selectedImage); // Fallback to current image
     }
   };
 
   const handleNext = () => {
-    if (currentIndex < sortedBackdrops.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setSelectedImage(sortedBackdrops[currentIndex + 1]);
+    if (sortedBackdrops) {
+      if (currentIndex < sortedBackdrops.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+        setSelectedImage(sortedBackdrops[currentIndex + 1]);
+      }
     }
   };
-
-  const sectionName: string = "Photos";
 
   return (
     <>
       <HeaderSection sectionName={sectionName} data={sortedBackdrops} />
 
-      {sortedBackdrops.length > 0 ? (
+      {sortedBackdrops && sortedBackdrops.length > 0 ? (
         <>
           {/* Main Content */}
           <div className="flex flex-col">
@@ -72,15 +86,24 @@ export default function ImageGallery({ backdrops }) {
             </div>
 
             {/* Image metadata */}
-            <div className="mt-2 flex justify-between font-normal text-sm text-zinc-500 dark:text-[#c0bcbc]">
-              <span>
-                Image {currentIndex + 1} of {sortedBackdrops.length}
-              </span>
-              <span>
-                Rating: {selectedImage?.vote_average.toFixed(1)} (
-                {selectedImage?.vote_count} votes)
-              </span>
-            </div>
+            {selectedImage &&
+              selectedImage !== undefined &&
+              sectionName !== null && (
+                <div className="mt-2 flex justify-between font-normal text-sm text-zinc-500 dark:text-[#c0bcbc]">
+                  <span>
+                    Image {currentIndex + 1} of {sortedBackdrops.length}
+                  </span>
+                  <span>
+                    Rating: {selectedImage.vote_average.toFixed(1)} (
+                    {selectedImage.vote_count}{" "}
+                    {selectedImage.vote_count > 1 ||
+                    selectedImage.vote_count === 0
+                      ? "votes"
+                      : "vote"}
+                    )
+                  </span>
+                </div>
+              )}
           </div>
 
           {/* Thumbnails */}
@@ -96,18 +119,20 @@ export default function ImageGallery({ backdrops }) {
                       setCurrentIndex(index);
                     }}
                   >
-                    <Poster
-                      data={sortedBackdrops}
-                      path={`${posterURL}${backdrop.file_path}`}
-                      height={selectedImage.height}
-                      width={selectedImage.width}
-                      className={`h-24 w-40 rounded object-cover shadow-sm ${
-                        selectedImage.file_path === backdrop.file_path
-                          ? "ring-2 ring-blue-500 dark:ring-yellow-400"
-                          : "ring-1 ring-gray-200 dark:ring-gray-700"
-                      }`}
-                      isMovie={false}
-                    />
+                    {selectedImage && (
+                      <Poster
+                        data={sortedBackdrops}
+                        path={`${posterURL}${backdrop.file_path}`}
+                        height={selectedImage.height}
+                        width={selectedImage.width}
+                        className={`h-24 w-40 rounded object-cover shadow-sm ${
+                          selectedImage.file_path === backdrop.file_path
+                            ? "ring-2 ring-blue-500 dark:ring-yellow-400"
+                            : "ring-1 ring-gray-200 dark:ring-gray-700"
+                        }`}
+                        isMovie={false}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
