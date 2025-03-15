@@ -3,11 +3,14 @@ import SubtitleMovie from "./subtitle-movie";
 import PageTitle from "../page-title";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
-export default async function MovieInfo({ movieData }) {
-  const movie: MovieDetailsResponse = movieData;
+type MovieInfoProps = {
+  movie: MovieDetailsResponse;
+};
+
+export default async function MovieInfo({ movie }: MovieInfoProps) {
   const buttonName = "Rate";
 
-  return movieData ? (
+  return movie ? (
     <div className="flex items-start justify-between w-full">
       {/* Movie Info Left Side */}
       <div className="flex flex-col gap-2 md:gap-0">
