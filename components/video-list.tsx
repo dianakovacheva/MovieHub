@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import youtubeURL from "../app/actions/API-URLS/youtube-API-URL";
+import { VideoListProps } from "../app/actions/videos/definitions";
 
 export default function VideoList({
   videoListTitle,
@@ -12,8 +13,8 @@ export default function VideoList({
   currentIndex,
   setCurrentIndex,
   player,
-}) {
-  return videos.length > 0 ? (
+}: VideoListProps) {
+  return videos && videos.length > 0 ? (
     <div className="lg:col-span-1">
       <div className="bg-zinc-50 dark:bg-[#121212] rounded-xl p-4">
         <div className="flex justify-between items-center mb-4">
@@ -43,11 +44,11 @@ export default function VideoList({
         <div className="space-y-3 max-h-[400px] overflow-y-auto">
           {videos.map((video, index) => (
             <div
-              video={video}
-              key={video["id"]}
+              // video={video}
+              key={video.id}
               className={`group flex gap-3 p-2 rounded-lg cursor-pointer transition-colors
                   ${
-                    selectedVideo.key == video["key"]
+                    selectedVideo.key == video.key
                       ? "bg-zinc-200 dark:bg-zinc-800"
                       : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
@@ -62,13 +63,13 @@ export default function VideoList({
               <div className="relative flex-shrink-0 w-32 aspect-video rounded-md overflow-hidden">
                 <Image
                   src={
-                    video["key"]
-                      ? `${youtubeURL}${video["key"]}/hqdefault.jpg`
+                    video.key
+                      ? `${youtubeURL}${video.key}/hqdefault.jpg`
                       : "/default-movie-poster.jpg"
                   }
                   width={100}
                   height={100}
-                  alt={video["name"]}
+                  alt={video.name!.toString()}
                   className="w-full h-full object-cover"
                 />
 
@@ -78,16 +79,14 @@ export default function VideoList({
               </div>
               <div className="flex flex-col justify-center">
                 <div className="flex flex-col">
-                  {video["movie_title"] ? (
+                  {video.name && (
                     <h5 className="text-sm font-bold text-zinc-500 dark:text-[#c0bcbc] uppercase line-clamp-2">
-                      {video["movie_title"]}
+                      {video.movie_title}
                     </h5>
-                  ) : (
-                    ""
                   )}
 
                   <h5 className="font-medium text-sm text-zinc-900 dark:text-white line-clamp-2">
-                    {video["name"]}
+                    {video.name}
                   </h5>
                 </div>
               </div>
