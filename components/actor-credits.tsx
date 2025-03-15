@@ -4,18 +4,18 @@ import MoviesSortedByReleaseYear from "./movies-sorted-by-release-year";
 
 export default function ActorCredits({
   moviesSortedByReleaseYear,
-  moviesBySortedJobsAndYear,
+  moviesSortedByJobsAndYear,
 }) {
   const sectionName: string = "Credits";
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
+      <HeaderSection sectionName={sectionName} count={undefined} />
       <MoviesSortedByReleaseYear
         moviesSortedByReleaseYear={moviesSortedByReleaseYear}
       />
       <MoviesBySortedJobs
-        moviesBySortedJobsAndYear={moviesBySortedJobsAndYear}
+        moviesSortedByJobsAndYear={moviesSortedByJobsAndYear}
       />
     </>
   );

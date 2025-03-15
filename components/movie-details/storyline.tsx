@@ -11,7 +11,7 @@ export default function Storyline({ movie, keywords }) {
   return movie ? (
     <div className="flex flex-col gap-2">
       {movie.overview ? (
-        <HeaderSection sectionName={sectionName} data={undefined} />
+        <HeaderSection sectionName={sectionName} count={undefined} />
       ) : (
         ""
       )}

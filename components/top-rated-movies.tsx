@@ -8,8 +8,8 @@ export default async function TopRatedMovies() {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
-      <MoviesCarousel movies={topRatedMovies} />
+      <HeaderSection sectionName={sectionName} count={undefined} />
+      <MoviesCarousel moviesData={topRatedMovies} />
     </>
   );
 }

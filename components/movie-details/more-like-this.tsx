@@ -6,8 +6,8 @@ export default function MoreLikeThis({ movies }) {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
-      <MoviesCarousel movies={movies} />
+      <HeaderSection sectionName={sectionName} count={undefined} />
+      <MoviesCarousel moviesData={movies} />
     </>
   );
 }

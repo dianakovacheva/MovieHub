@@ -13,7 +13,7 @@ export default function DashboardHeader({ userEmail, profileCreatedAt }) {
     <div className="gap-10 flex flex-col items-center md:flex-row">
       <div>
         <Poster
-          data={undefined}
+          name={title}
           path={undefined}
           height={130}
           width={130}

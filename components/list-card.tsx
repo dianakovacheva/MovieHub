@@ -14,7 +14,7 @@ export default function ListCard({ lists }) {
               <div>
                 <Link href={`lists/${list.id}`} className="flex-none">
                   <Poster
-                    data={undefined}
+                    name={list.name}
                     path={undefined}
                     height={250}
                     width={200}

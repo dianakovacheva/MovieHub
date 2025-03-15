@@ -8,8 +8,8 @@ export default async function MostPopularCelebrities() {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
-      <ActorsGallery actors={mostPopularActors} />
+      <HeaderSection sectionName={sectionName} count={undefined} />
+      {mostPopularActors && <ActorsGallery actors={mostPopularActors} />}
     </>
   );
 }

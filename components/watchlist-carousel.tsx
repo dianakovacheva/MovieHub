@@ -7,12 +7,13 @@ export default function WatchlistCarousel({ watchlist }) {
   const listTitle = "No Watchlist yet";
   const listParagraph = "Create a watchlist to track movies you want to watch.";
   const buttonText = "Browse popular movies";
+  const watchlistCount: number = watchlist.length;
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={watchlist} />
+      <HeaderSection sectionName={sectionName} count={watchlistCount} />
       {watchlist ? (
-        <MoviesCarousel movies={watchlist} />
+        <MoviesCarousel moviesData={watchlist} />
       ) : (
         <>
           <EmptyList

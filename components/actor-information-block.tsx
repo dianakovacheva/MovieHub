@@ -20,7 +20,7 @@ export default async function ActorInformationBlock({ actorData }) {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={undefined} />
+      <HeaderSection sectionName={sectionName} count={undefined} />
 
       {gender ? <InformationBlockSingle title={"Gender"} data={gender} /> : ""}
 

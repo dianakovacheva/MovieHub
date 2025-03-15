@@ -3,14 +3,14 @@ import ActorsGallery from "../actors-gallery";
 
 export default function TopCastList({ topCast }) {
   const sectionName: string = "Top Cast";
-  console.log(topCast);
+  const topCastCount: number = topCast.length;
 
   return (
     <>
       {topCast.length > 0 ? (
-        <HeaderSection sectionName={sectionName} data={topCast} />
+        <HeaderSection sectionName={sectionName} count={topCastCount} />
       ) : (
-        <HeaderSection sectionName={sectionName} data={undefined} />
+        <HeaderSection sectionName={sectionName} count={undefined} />
       )}
 
       {topCast && topCast.length > 0 ? (

@@ -9,13 +9,14 @@ export default function UserLists({ userLists }) {
   const sectionName = "Lists";
   const listTitle = "No lists yet";
   const buttonText = "Create a list";
+  const userListsCount: number = userLists.length;
 
   function redirectToCreateListPage() {
     redirect("/lists/create");
   }
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={userLists} />
+      <HeaderSection sectionName={sectionName} count={userListsCount} />
       {userLists.length > 0 ? (
         <ListCard lists={userLists} />
       ) : (

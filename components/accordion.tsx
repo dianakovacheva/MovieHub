@@ -29,7 +29,7 @@ export default function Accordion({ movies, listTitle }) {
                 <li className="list-row">
                   <div>
                     <Poster
-                      data={movie}
+                      name={movie.title}
                       path={movie.poster_path}
                       height={200}
                       width={250}

@@ -22,7 +22,7 @@ export default function ActorsGallery({ actors }) {
                 <div className="avatar">
                   <div className="rounded-full mask mask-squircle h-24 w-24 shadow-sm">
                     <Poster
-                      data={person}
+                      name={person.name}
                       path={person.profile_path}
                       height={150}
                       width={150}
