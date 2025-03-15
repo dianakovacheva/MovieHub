@@ -12,7 +12,7 @@ import {
 
 import MovieInfo from "../../../../components/movie-details/movie-info";
 import MovieMedia from "../../../../components/movie-details/media-section";
-import ImageGallery from "../../../../components/movie-details/image-gallery";
+import ImageGallery from "../../../../components/image-gallery";
 import VideoGallery from "../../../../components/video-gallery";
 import TopCastList from "../../../../components/movie-details/top-cast-list";
 import DetailsSection from "../../../../components/movie-details/details-section";
@@ -34,17 +34,16 @@ export default async function MovieDetails({ params }) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
   const movieCredits = await getMovieCredits(id);
-  const backdrops = await getMovieBackdrops(movie!.id);
+  let backdrops = await getMovieBackdrops(movie!.id);
   const movieVideos = await getMovieVideos(movie!.id);
   const movieSuggestions = await getMovieSuggestions(movie!.id);
   const keywords = await getMovieKeywords(movie!.id);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
-  // const stars: { name: string; popularity: number; id: number }[] = [];
-  const stars: MovieCreditsResponse["cast"] = [];
   const cast: MovieCreditsResponse["cast"] = [];
   let topMovieSuggestions: MovieSuggestionsResponse["results"];
-  const videoListTitle = "Videos List";
+  const videoListTitle: string = "Videos List";
+  const sectionName: string = "Videos";
 
   if (movieCredits?.crew) {
     movieCredits.crew.map((data) => {
@@ -65,52 +64,30 @@ export default async function MovieDetails({ params }) {
           data.known_for_department.toLowerCase() == "acting" &&
           data.popularity
         ) {
-          // Stars
-          // stars.push({
-          //   name: data.name,
-          //   popularity: data.popularity,
-          //   id: data.id,
-          //   adult: false,
-          //   gender: 0,
-          //   cast_id: 0,
-          //   order: 0,
-          // });
-          stars.push(data);
-        } else if (
-          data.known_for_department.toLowerCase() == "acting" &&
-          data.popularity
-        ) {
           cast.push(data);
         }
       }
     });
   }
 
-  // Sort the stars array by popularity (descending order)
-  const starsSorted = stars
-    .sort((a, b) => b.popularity - a.popularity)
-    .slice(0, 3);
-
-  // Cast
-  // movieCredits.cast.map((data) => {
-  //   if (
-  //     data.known_for_department.toLowerCase() == "acting" &&
-  //     data.popularity
-  //   ) {
-  //     cast.push(data);
-  //   }
-  // });
-
   const topCast = cast.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
 
   // Movie Suggestions
-  if (movieSuggestions?.results) {
-    topMovieSuggestions = movieSuggestions.results
-      .sort(
-        (a: { popularity: number }, b: { popularity: number }) =>
-          b.popularity - a.popularity
-      )
-      .slice(0, 12);
+  if (movieSuggestions) {
+    topMovieSuggestions = movieSuggestions.sort(
+      (a: { popularity: number }, b: { popularity: number }) =>
+        b.popularity - a.popularity
+    );
+    // .slice(0, 12);
+  }
+
+  // Add movie's title to the backdrops
+
+  if (movie && backdrops) {
+    backdrops = backdrops.map((image) => ({
+      ...image,
+      name: movie.title,
+    }));
   }
 
   return (
