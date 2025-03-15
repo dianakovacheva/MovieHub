@@ -2,7 +2,7 @@ import { paths } from "../../../types/tmdb";
 
 // Treding movies today
 export type TrendingMovieListResponse =
-  paths["/3/trending/movie/{time_window}"]["get"]["responses"][200]["content"]["application/json"]["results"];
+  paths["/3/trending/movie/{time_window}"]["get"]["responses"][200]["content"]["application/json"];
 
 // Movie details
 export type MovieDetailsResponse =
@@ -30,7 +30,7 @@ export type MovieSuggestionsResponse =
 
 // Movie keywords
 export type MovieKeywordsResponse =
-  paths["/3/movie/{movie_id}/keywords"]["get"]["responses"][200]["content"]["application/json"]["keywords"];
+  paths["/3/movie/{movie_id}/keywords"]["get"]["responses"][200]["content"]["application/json"];
 
 // Upcoming movies
 export type UpcomingMoviesResponse =
