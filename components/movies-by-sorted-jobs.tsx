@@ -1,10 +1,10 @@
 import getMoviesByReleaseState from "../app/utils/get-movies-by-release-state";
 import Accordion from "./accordion";
 
-export default function MoviesBySortedJobs({ moviesBySortedJobsAndYear }) {
+export default function MoviesBySortedJobs({ moviesSortedByJobsAndYear }) {
   let jobs: string[] = [];
 
-  moviesBySortedJobsAndYear.map((movie) => {
+  moviesSortedByJobsAndYear.map((movie) => {
     jobs.push(movie.job);
   });
 
@@ -14,7 +14,7 @@ export default function MoviesBySortedJobs({ moviesBySortedJobsAndYear }) {
   return jobs.map((job) => {
     let jobMovies = [];
 
-    jobMovies = moviesBySortedJobsAndYear.filter((movie) => movie.job == job);
+    jobMovies = moviesSortedByJobsAndYear.filter((movie) => movie.job == job);
 
     const upcomingMovies = getMoviesByReleaseState(jobMovies, "upcoming");
 
