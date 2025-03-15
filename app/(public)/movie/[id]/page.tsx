@@ -116,10 +116,10 @@ export default async function MovieDetails({ params }) {
   return (
     <div className="flex flex-col gap-4 mb-10">
       {/* Movie Info */}
-      {movie && <MovieInfo movieData={movie} />}
+      {movie && <MovieInfo movie={movie} />}
 
       {/* Media Section */}
-      {movie && <MovieMedia movieData={movie} />}
+      {movie && <MovieMedia movie={movie} />}
 
       <div className="flex flex-col">
         {/* Movie Tagline */}
@@ -177,14 +177,14 @@ export default async function MovieDetails({ params }) {
           )}
 
           {/* Stars */}
-          {starsSorted.length > 0 && (
+          {topCast.length > 0 && (
             <InformationBlockMultiple
-              data={starsSorted}
+              data={topCast.slice(0, 3)}
               keyPlural={"Stars"}
               keySingular={"Star"}
             >
               <ul className="flex flex-wrap gap-6">
-                {starsSorted.map((star) => (
+                {topCast.slice(0, 3).map((star) => (
                   <li key={star.id} className="[&:nth-child(n+2)]:list-disc">
                     <Link
                       href={`/person/${star.id}`}
@@ -205,12 +205,12 @@ export default async function MovieDetails({ params }) {
         <VideoGallery
           videos={movieVideos}
           videoListTitle={videoListTitle}
-          sectionName={"Videos"}
+          sectionName={sectionName}
         />
       )}
 
       {/* Image Gallery */}
-      {backdrops && <ImageGallery backdropsData={backdrops} />}
+      {backdrops && <ImageGallery backdrops={backdrops} />}
 
       {/* Top Cast List */}
       {topCast && <TopCastList topCast={topCast} />}
