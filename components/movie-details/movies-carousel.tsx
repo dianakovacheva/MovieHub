@@ -6,13 +6,10 @@ import { useState, useRef, useEffect } from "react";
 import MovieRating from "../movie-rating";
 import AddToWatchListButton from "../add-to-watchlist-button";
 import Poster from "../poster";
-import { TrendingMovieListResponse } from "../../app/actions/movie/movie-data";
+import { TrendingMovieListResponse } from "../../app/actions/movie/types";
 
-type MoviesCarouselProps = {
-  movies: TrendingMovieListResponse | null;
-};
-
-export default function MoviesCarousel({ movies }: MoviesCarouselProps) {
+export default function MoviesCarousel({ moviesData }) {
+  const movies: TrendingMovieListResponse["results"] = moviesData;
   const carouselRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -48,7 +45,7 @@ export default function MoviesCarousel({ movies }: MoviesCarouselProps) {
     }
   };
 
-  return movies.length > 0 ? (
+  return movies && movies.length > 0 ? (
     <div className="relative group carousel rounded-box overflow-x-auto scroll-smooth hide-scrollbar">
       {showLeftArrow && (
         <button
@@ -71,35 +68,7 @@ export default function MoviesCarousel({ movies }: MoviesCarouselProps) {
               key={movie.id}
               className="card shadow-sm bg-zinc-50 dark:bg-[#121212] mb-2 w-55 h-[65vh]"
             >
-              <Link
-                href={`/movie/${movie.id}-${movie.title
-                  .split(" ")
-                  .join("-")
-                  .toLowerCase()}`}
-                className="flex-none"
-              >
-                <Poster
-                  data={movie}
-                  path={
-                    movie.poster_path !== null &&
-                    movie.poster_path !== "" &&
-                    movie.poster_path !== undefined
-                      ? movie.poster_path
-                      : ""
-                  }
-                  height={250}
-                  width={200}
-                  className="rounded-t-lg h-90 w-60 object-cover"
-                  isMovie={true}
-                />
-
-                {/* className="rounded-t-lg h-90 w-60 object-cover" */}
-              </Link>
-              <div className="flex flex-col gap-1 text-base font-normal m-3">
-                <div className="flex gap-4 items-center">
-                  <MovieRating movie={movie} />
-                  <AddToWatchListButton />
-                </div>
+              {movie.title && (
                 <Link
                   href={`/movie/${movie.id}-${movie.title
                     .split(" ")
@@ -107,8 +76,39 @@ export default function MoviesCarousel({ movies }: MoviesCarouselProps) {
                     .toLowerCase()}`}
                   className="flex-none"
                 >
-                  <p className="truncate hover:underline">{movie.title}</p>
+                  <Poster
+                    name={movie.title}
+                    path={
+                      movie.poster_path !== null &&
+                      movie.poster_path !== "" &&
+                      movie.poster_path !== undefined
+                        ? movie.poster_path
+                        : ""
+                    }
+                    height={250}
+                    width={200}
+                    className="rounded-t-lg h-90 w-60 object-cover"
+                    isMovie={true}
+                  />
                 </Link>
+              )}
+
+              <div className="flex flex-col gap-1 text-base font-normal m-3">
+                <div className="flex gap-4 items-center">
+                  <MovieRating movie={movie} />
+                  <AddToWatchListButton />
+                </div>
+                {movie.title && (
+                  <Link
+                    href={`/movie/${movie.id}-${movie.title
+                      .split(" ")
+                      .join("-")
+                      .toLowerCase()}`}
+                    className="flex-none"
+                  >
+                    <p className="truncate hover:underline">{movie.title}</p>
+                  </Link>
+                )}
               </div>
             </div>
           ))}
