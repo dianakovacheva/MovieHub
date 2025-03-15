@@ -1,22 +1,36 @@
 "use client";
 
-import posterURL from "../../app/actions/API-URLS/image-API-URL";
+import posterURL from "../app/actions/API-URLS/image-API-URL";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import HeaderSection from "./header-section";
-import Poster from "../poster";
-import { MovieImagesResponse } from "../../app/actions/movie/types";
+import HeaderSection from "./movie-details/header-section";
+import Poster from "./poster";
 
-export default function ImageGallery({ backdropsData }) {
-  const backdrops: MovieImagesResponse["backdrops"] = backdropsData;
+type ImageGalleryProps = {
+  backdrops: {
+    aspect_ratio: number;
+    height: number;
+    iso_639_1?: unknown;
+    file_path?: string;
+    vote_average: number;
+    vote_count: number;
+    width: number;
+    name: string;
+  }[];
+};
 
+export default function ImageGallery({ backdrops }: ImageGalleryProps) {
   const sectionName: string = "Photos";
-  const baseImageUrl = "https://image.tmdb.org/t/p/original";
-  let sortedBackdrops: typeof backdrops;
+  const baseImageUrl: string = "https://image.tmdb.org/t/p/original";
+  let sortedBackdrops: typeof backdrops = [];
+  let backdropsCount: number = 0;
 
   // Sort backdrops by vote_average to show best rated images first
   if (backdrops) {
     sortedBackdrops = backdrops.sort((a, b) => b.vote_average - a.vote_average);
+    if (sortedBackdrops.length !== undefined) {
+      backdropsCount = sortedBackdrops.length;
+    }
   }
 
   const [selectedImage, setSelectedImage] = useState(
@@ -48,16 +62,16 @@ export default function ImageGallery({ backdropsData }) {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} data={sortedBackdrops} />
+      <HeaderSection sectionName={sectionName} count={backdropsCount} />
 
-      {sortedBackdrops && sortedBackdrops.length > 0 ? (
+      {sortedBackdrops && selectedImage && sortedBackdrops.length > 0 ? (
         <>
           {/* Main Content */}
           <div className="flex flex-col">
             <div className="relative">
               <Poster
-                data={sortedBackdrops}
-                path={`${baseImageUrl}${selectedImage?.file_path}`}
+                name={selectedImage.name}
+                path={`${baseImageUrl}${selectedImage.file_path}`}
                 height={800}
                 width={800}
                 className={
@@ -91,7 +105,7 @@ export default function ImageGallery({ backdropsData }) {
               sectionName !== null && (
                 <div className="mt-2 flex justify-between font-normal text-sm text-zinc-500 dark:text-[#c0bcbc]">
                   <span>
-                    Image {currentIndex + 1} of {sortedBackdrops.length}
+                    Image {currentIndex + 1} of {backdropsCount}
                   </span>
                   <span>
                     Rating: {selectedImage.vote_average.toFixed(1)} (
@@ -121,7 +135,7 @@ export default function ImageGallery({ backdropsData }) {
                   >
                     {selectedImage && (
                       <Poster
-                        data={sortedBackdrops}
+                        name={backdrop.name}
                         path={`${posterURL}${backdrop.file_path}`}
                         height={selectedImage.height}
                         width={selectedImage.width}
