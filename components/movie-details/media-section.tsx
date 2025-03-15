@@ -4,8 +4,11 @@ import { getMovieVideos } from "../../app/actions/movie/movie-data";
 import Poster from "../poster";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
-export default async function MovieMedia({ movieData }) {
-  const movie: MovieDetailsResponse = movieData;
+type MovieMediaProps = {
+  movie: MovieDetailsResponse;
+};
+
+export default async function MovieMedia({ movie }: MovieMediaProps) {
   const movieVideos = await getMovieVideos(movie.id);
   let movieKey: string | undefined = "";
 
@@ -19,23 +22,22 @@ export default async function MovieMedia({ movieData }) {
   }
 
   return (
-    <div
-      key={movieKey}
-      className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2"
-    >
-      <Poster
-        data={movie}
-        path={movie.poster_path}
-        height={0}
-        width={500}
-        className={undefined}
-        isMovie={true}
-      />
+    movie && (
+      <div className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2">
+        <Poster
+          name={movie.title}
+          path={movie.poster_path}
+          height={0}
+          width={500}
+          className={undefined}
+          isMovie={true}
+        />
 
-      {/* Trailer Video */}
-      <Suspense fallback={<p>Loading video...</p>}>
-        <Video videoId={movieKey} onReady={undefined} />
-      </Suspense>
-    </div>
+        {/* Trailer Video */}
+        <Suspense fallback={<p>Loading video...</p>}>
+          <Video videoId={movieKey} onReady={undefined} />
+        </Suspense>
+      </div>
+    )
   );
 }
