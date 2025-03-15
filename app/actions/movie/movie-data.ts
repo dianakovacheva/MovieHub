@@ -1,5 +1,4 @@
 import baseApiURL from "../API-URLS/base-API-URL";
-import { TrendingMovieListSchema } from "./definitions";
 import {
   MovieCreditDetailsResponse,
   MovieCreditsResponse,
@@ -14,7 +13,9 @@ import {
 } from "./types";
 
 // Get trending movies today
-export async function getTrendingMoviesToday(): Promise<TrendingMovieListResponse | null> {
+export async function getTrendingMoviesToday(): Promise<
+  TrendingMovieListResponse["results"] | null
+> {
   const trendingMoviesTodayURL = `${baseApiURL}/trending/movie/day?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
@@ -24,15 +25,15 @@ export async function getTrendingMoviesToday(): Promise<TrendingMovieListRespons
       throw new Error(`API request failed with status ${res.status}`);
     }
 
-    const resData = await res.json();
-    const parsed = TrendingMovieListSchema.safeParse(resData);
+    const resData: TrendingMovieListResponse = await res.json();
+    // const parsed = TrendingMovieListSchema.safeParse(resData);
 
-    if (!parsed.success) {
-      console.error("Invalid API response:", parsed.error);
-      return null;
-    }
+    // if (!parsed.success) {
+    //   console.error("Invalid API response:", parsed.error);
+    //   return null;
+    // }
 
-    return parsed.data.results as TrendingMovieListResponse;
+    return resData.results;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -157,7 +158,7 @@ export async function getMovieCreditDetails(
 // Movie Suggestions
 export async function getMovieSuggestions(
   id: number
-): Promise<MovieSuggestionsResponse | null> {
+): Promise<MovieSuggestionsResponse["results"] | null> {
   const similarMoviesURL = `${baseApiURL}/movie/${id}/similar?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
@@ -168,7 +169,7 @@ export async function getMovieSuggestions(
 
     const resData: MovieSuggestionsResponse = await res.json();
 
-    return resData;
+    return resData.results;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -180,7 +181,7 @@ export async function getMovieSuggestions(
 // Movie Keyword
 export async function getMovieKeywords(
   id: number
-): Promise<MovieKeywordsResponse | null> {
+): Promise<MovieKeywordsResponse["keywords"] | null> {
   const keywordsURL = `${baseApiURL}/movie/${id}/keywords?language=en-US&api_key=${process.env.API_KEY}`;
 
   try {
@@ -191,7 +192,7 @@ export async function getMovieKeywords(
 
     const resData: MovieKeywordsResponse = await res.json();
 
-    return resData;
+    return resData.keywords;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -260,4 +261,3 @@ export async function getTopRatedMovies(): Promise<
     return null;
   }
 }
-export { TrendingMovieListResponse };

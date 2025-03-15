@@ -4,34 +4,55 @@ import {
 } from "../../app/actions/movie/movie-data";
 import VideoGallery from "../video-gallery";
 
+type UpcomingMoviesTrailers = {
+  iso_639_1?: string;
+  iso_3166_1?: string;
+  name?: string;
+  key?: string;
+  site?: string;
+  size: number;
+  type?: string;
+  official: boolean;
+  published_at?: string;
+  id?: string;
+  movie_title?: string | undefined;
+  movie_id?: string | undefined;
+}[];
+
 export default async function HeroSection() {
   const upcomingMovies = await getUpcomingMovies();
-  const upcomingMoviesTrailers = [];
+  const upcomingMoviesTrailers: UpcomingMoviesTrailers[] = [];
 
-  if (upcomingMovies) {
+  if (upcomingMovies && upcomingMovies.length > 0) {
     for (const upcomingMovie of upcomingMovies) {
       const movieVideos = await getMovieVideos(upcomingMovie.id);
 
-      if (movieVideos) {
+      if (movieVideos && movieVideos.length > 0) {
         movieVideos.map(
           (movie) => (
-            (movie.name = upcomingMovie.title),
-            (movie.id = upcomingMovie.id.toString())
+            movie.name?.toLowerCase() === upcomingMovie.title?.toLowerCase(),
+            movie.id === upcomingMovie.id.toString()
           )
         );
 
-        const movieTrailers = movieVideos.filter(
+        let movieTrailers = movieVideos.filter(
           (movie) =>
-            movie.type?.toLowerCase() == "trailer" &&
+            movie.type?.toLowerCase() === "trailer" &&
             movie.name?.toLowerCase() === "official trailer"
         );
 
-        upcomingMoviesTrailers.push(movieTrailers);
+        movieTrailers = movieTrailers.map((trailer) => ({
+          ...trailer,
+          movie_title: upcomingMovie.title,
+          movie_id: upcomingMovie.id,
+        }));
+
+        if (movieTrailers.length > 0) {
+          upcomingMoviesTrailers.push(movieTrailers);
+        }
       }
     }
   }
-
-  console.log(upcomingMoviesTrailers);
 
   const videoListTitle = (
     <span className="font-bold text-[#f5c518]">Up next</span>
