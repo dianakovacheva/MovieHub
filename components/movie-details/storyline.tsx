@@ -1,5 +1,4 @@
-import InformationBlockSingle from "../informatio-block-single";
-import InformationBlockMultiple from "../information-block-multiple";
+import InformationBlock from "../information-block";
 import Paragraph from "../paragraph";
 import HeaderSection from "./header-section";
 import Keywords from "./keywords";
@@ -10,35 +9,29 @@ export default function Storyline({ movie, keywords }) {
 
   return movie ? (
     <div className="flex flex-col gap-2">
-      {movie.overview ? (
+      {movie.overview && (
         <HeaderSection sectionName={sectionName} count={undefined} />
-      ) : (
-        ""
       )}
 
-      {movie.overview !== "" ? <Paragraph text={movie.overview} /> : ""}
+      {movie.overview !== "" && <Paragraph text={movie.overview} />}
 
-      {keywords ? <Keywords keywords={keywords} /> : ""}
+      {keywords && <Keywords keywords={keywords} />}
 
       <div>
         {/* Taglines */}
-        {movie.tagline !== "" ? (
-          <InformationBlockSingle title={"Taglines"} data={movie.tagline} />
-        ) : (
-          ""
+        {movie.tagline !== "" && (
+          <InformationBlock blockName="Taglines">
+            {movie.tagline}
+          </InformationBlock>
         )}
 
         {/* Genres */}
-        {movie.genres.length > 0 ? (
-          <InformationBlockMultiple
-            data={movie.genres}
-            keyPlural={"Genres"}
-            keySingular={"Genre"}
+        {movie.genres.length > 0 && (
+          <InformationBlock
+            blockName={movie.genres.length > 1 ? "Genres" : "Genre"}
           >
             <MovieGenres movieGenres={movie.genres} />
-          </InformationBlockMultiple>
-        ) : (
-          ""
+          </InformationBlock>
         )}
       </div>
     </div>

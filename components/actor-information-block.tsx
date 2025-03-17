@@ -1,8 +1,8 @@
 import Link from "next/link";
-import InformationBlockSingle from "./informatio-block-single";
 import HeaderSection from "./movie-details/header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
 import calculateAge from "../app/utils/calculate-age";
+import InformationBlock from "./information-block";
 
 export default async function ActorInformationBlock({ actorData }) {
   const sectionName: string = "Personal details";
@@ -22,59 +22,49 @@ export default async function ActorInformationBlock({ actorData }) {
     <>
       <HeaderSection sectionName={sectionName} count={undefined} />
 
-      {gender ? <InformationBlockSingle title={"Gender"} data={gender} /> : ""}
+      {gender && (
+        <InformationBlock blockName="Gender">{gender}</InformationBlock>
+      )}
 
       {actorData.birthday && !actorData.deathday ? (
         <div>
-          <InformationBlockSingle
-            title={"Born"}
-            data={`${actorData.birthday} (${age} years old)`}
-          />
+          <InformationBlock blockName="Born">
+            {`${actorData.birthday} (${age} years old)`}
+          </InformationBlock>
         </div>
       ) : actorData.birthday ? (
         <div>
-          <InformationBlockSingle title={"Born"} data={actorData.birthday} />
+          <InformationBlock blockName="Born">
+            {actorData.birthday}
+          </InformationBlock>
         </div>
       ) : (
         ""
       )}
 
-      {actorData.deathday ? (
+      {actorData.deathday && (
         <div>
-          <InformationBlockSingle
-            title={"Died"}
-            data={`${actorData.deathday} (${age} years old)`}
-          />
+          <InformationBlock blockName="Died">{`${actorData.deathday} (${age} years old)`}</InformationBlock>
         </div>
-      ) : (
-        ""
       )}
 
-      {actorData.place_of_birth ? (
-        <InformationBlockSingle
-          title={"Place of Birth"}
-          data={actorData.place_of_birth}
-        />
-      ) : (
-        ""
+      {actorData.place_of_birth && (
+        <InformationBlock blockName="Place of Birth">
+          {actorData.place_of_birth}
+        </InformationBlock>
       )}
 
-      {actorData.homepage ? (
-        <InformationBlockSingle
-          title={"Official site"}
-          data={
-            <Link
-              href={actorData.homepage}
-              className="flex items-end gap-2"
-              target="_blank"
-              rel="nofollow"
-            >
-              Official site <SquareArrowOutUpRight size={16} strokeWidth={2} />
-            </Link>
-          }
-        />
-      ) : (
-        ""
+      {actorData.homepage && (
+        <InformationBlock blockName="Official site">
+          <Link
+            href={actorData.homepage}
+            className="flex items-end gap-2"
+            target="_blank"
+            rel="nofollow"
+          >
+            Official site <SquareArrowOutUpRight size={16} strokeWidth={2} />
+          </Link>
+        </InformationBlock>
       )}
     </>
   );

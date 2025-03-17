@@ -5,5 +5,5 @@ export default function MovieGenres({ movieGenres }) {
     a.name.localeCompare(b.name)
   );
 
-  return <UnorderedList data={movieGenresSorted} />;
+  return <UnorderedList data={movieGenresSorted} path={undefined} />;
 }

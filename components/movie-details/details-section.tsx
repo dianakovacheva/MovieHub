@@ -1,8 +1,8 @@
 import Link from "next/link";
 import HeaderSection from "./header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
-import InformationBlockMultiple from "../information-block-multiple";
-import InformationBlockSingle from "../informatio-block-single";
+import InformationBlock from "../information-block";
+import UnorderedList from "../unordered-list";
 
 export default function DetailsSection({ movie }) {
   const sectionName: string = "Details";
@@ -12,59 +12,43 @@ export default function DetailsSection({ movie }) {
       <HeaderSection sectionName={sectionName} count={undefined} />
 
       {/* Movie Release Date */}
-      {movie.release_date !== "" ? (
-        <InformationBlockSingle
-          title={"Release date"}
-          data={`${movie.release_date} (United States)`}
-        />
-      ) : (
-        ""
+      {movie.release_date !== "" && (
+        <InformationBlock blockName="Release date">{`${movie.release_date} (United States)`}</InformationBlock>
       )}
 
       {/* Movie Origin Country */}
-      {movie.origin_country.length > 0 ? (
-        <InformationBlockMultiple
-          data={movie.origin_country}
-          keyPlural={"Countries of origin"}
-          keySingular={"Country of origin"}
+      {movie.origin_country.length > 0 && (
+        <InformationBlock
+          blockName={
+            movie.origin_country.length > 1
+              ? "Countries of origin"
+              : "Country of origin"
+          }
         >
-          <ul className="flex gap-6">
-            {movie.origin_country.map((counry) => (
-              <li key={counry} className="[&:nth-child(n+2)]:list-disc">
-                {counry}
-              </li>
-            ))}
-          </ul>
-        </InformationBlockMultiple>
-      ) : (
-        ""
+          <UnorderedList data={movie.origin_country} path={undefined} />
+        </InformationBlock>
       )}
 
       {/* Movie Website */}
-      {movie.homepage !== "" ? (
-        <InformationBlockSingle
-          title={"Official site"}
-          data={
-            <Link
-              href={movie.homepage}
-              className="flex items-end gap-2"
-              target="_blank"
-              rel="nofollow"
-            >
-              Official site <SquareArrowOutUpRight size={16} strokeWidth={2} />
-            </Link>
-          }
-        />
-      ) : (
-        ""
+      {movie.homepage !== "" && (
+        <InformationBlock blockName="Official site">
+          <Link
+            href={movie.homepage}
+            className="flex items-end gap-2"
+            target="_blank"
+            rel="nofollow"
+          >
+            Official site <SquareArrowOutUpRight size={16} strokeWidth={2} />
+          </Link>
+        </InformationBlock>
       )}
 
       {/* Languages */}
-      {movie.spoken_languages.length > 0 ? (
-        <InformationBlockMultiple
-          data={movie.spoken_languages}
-          keyPlural={"Languages"}
-          keySingular={"Language"}
+      {movie.spoken_languages.length > 0 && (
+        <InformationBlock
+          blockName={
+            movie.spoken_languages.length > 1 ? "Languages" : "Language"
+          }
         >
           <ul className="flex gap-6">
             {movie.spoken_languages.map((language) => (
@@ -76,27 +60,24 @@ export default function DetailsSection({ movie }) {
               </li>
             ))}
           </ul>
-        </InformationBlockMultiple>
-      ) : (
-        ""
+        </InformationBlock>
       )}
 
       {/* Also known as */}
-      {movie.original_title !== "" ? (
-        <InformationBlockSingle
-          title={"Also known as"}
-          data={movie.original_title}
-        />
-      ) : (
-        ""
+      {movie.original_title !== "" && (
+        <InformationBlock blockName="Also known as">
+          {movie.original_title}
+        </InformationBlock>
       )}
 
       {/* Filming Locations */}
-      {movie.production_countries.length > 0 ? (
-        <InformationBlockMultiple
-          data={movie.production_countries}
-          keyPlural={"Filming locations"}
-          keySingular={"Filming location"}
+      {movie.production_countries.length > 0 && (
+        <InformationBlock
+          blockName={
+            movie.production_countries.length > 1
+              ? "Filming locations"
+              : "Filming location"
+          }
         >
           <ul className="flex flex-wrap gap-6">
             {movie.production_countries.map((counry) => (
@@ -108,31 +89,20 @@ export default function DetailsSection({ movie }) {
               </li>
             ))}
           </ul>
-        </InformationBlockMultiple>
-      ) : (
-        ""
+        </InformationBlock>
       )}
 
       {/* Production Companies */}
-      {movie.production_companies.length > 0 ? (
-        <InformationBlockMultiple
-          data={movie.production_companies}
-          keyPlural={"Production companies"}
-          keySingular={"Production company"}
+      {movie.production_companies.length > 0 && (
+        <InformationBlock
+          blockName={
+            movie.production_companies.length > 1
+              ? "Production companies"
+              : "Production company"
+          }
         >
-          <ul className="flex flex-wrap gap-6 mt-2 md:mt-0">
-            {movie.production_companies.map((company) => (
-              <li
-                key={company.id}
-                className="[&:nth-child(n+2)]:list-disc items-center"
-              >
-                {company.name}
-              </li>
-            ))}
-          </ul>
-        </InformationBlockMultiple>
-      ) : (
-        ""
+          <UnorderedList data={movie.production_companies} path={undefined} />
+        </InformationBlock>
       )}
     </div>
   );

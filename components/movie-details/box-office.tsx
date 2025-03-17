@@ -1,4 +1,4 @@
-import InformationBlockSingle from "../informatio-block-single";
+import InformationBlock from "../information-block";
 import HeaderSection from "./header-section";
 
 export default function BoxOffice({ revenue }) {
@@ -11,10 +11,9 @@ export default function BoxOffice({ revenue }) {
   return (
     <div>
       <HeaderSection sectionName={sectionName} count={undefined} />
-      <InformationBlockSingle
-        title={"Revenue"}
-        data={USDollar.format(revenue)}
-      />
+      <InformationBlock blockName="Revenue">
+        {USDollar.format(revenue)}
+      </InformationBlock>
     </div>
   );
 }
