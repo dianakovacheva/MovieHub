@@ -7,7 +7,11 @@ export default function WatchlistCarousel({ watchlist }) {
   const listTitle = "No Watchlist yet";
   const listParagraph = "Create a watchlist to track movies you want to watch.";
   const buttonText = "Browse popular movies";
-  const watchlistCount: number = watchlist.length;
+  let watchlistCount: number = 0;
+
+  if (watchlist && watchlist.length) {
+    watchlistCount = watchlist.length;
+  }
 
   return (
     <>
