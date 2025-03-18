@@ -14,7 +14,7 @@ interface ListDetailsProps {
 }
 
 export default async function ListDetails({ params }: ListDetailsProps) {
-  const { id } = params;
+  const { id } = await params;
   const list = await getListById(id);
   const title = list?.name;
   const listOwner = await getUserById(list?.userId);

@@ -16,9 +16,13 @@ export const metadata: Metadata = {
   title: "Person Page",
 };
 
-export default async function PersonPage({ params }) {
+interface PersonPageProps {
+  params: { id: string };
+}
+
+export default async function PersonPage({ params }: PersonPageProps) {
   const { id } = await params;
-  const personId: number = id.split("-")[0];
+  const personId: number = Number(id.split("-")[0]);
   const personData = await getPersonData(personId);
   let yearOfBirth: string | undefined;
   let yearOfDeat: string | undefined;

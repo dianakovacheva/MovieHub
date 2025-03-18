@@ -4,7 +4,7 @@ import HeaderSection from "./movie-details/header-section";
 
 export default async function MostPopularCelebrities() {
   const mostPopularActors = await getMostPopularPeople();
-  const sectionName = " Most popular celebrities";
+  const sectionName = "Most popular celebrities";
 
   return (
     <>

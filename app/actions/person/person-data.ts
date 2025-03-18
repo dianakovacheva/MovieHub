@@ -67,6 +67,9 @@ export async function getPersonMovieCredits(
 
     const resData: PersonMovieCreditsResponse = await res.json();
 
+    resData.cast = resData.cast?.filter(getUnique);
+    resData.crew = resData.crew?.filter(getUnique);
+
     return resData;
   } catch (error) {
     console.error(
@@ -89,13 +92,10 @@ export async function getMostPopularPeople(): Promise<
     }
 
     const resData: MostPopularPeopleResponse = await res.json();
-    let results: MostPopularPeopleResponse["results"];
 
-    if (resData && resData.results) {
-      results = resData.results.filter(getUnique);
-    }
+    resData.results = resData.results?.filter(getUnique);
 
-    return results;
+    return resData.results;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"

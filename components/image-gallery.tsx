@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeaderSection from "./movie-details/header-section";
 import Poster from "./poster";
 
-type ImageGalleryProps = {
+type ImageGalleryType = {
   backdrops: {
     aspect_ratio: number;
     height: number;
@@ -15,11 +15,11 @@ type ImageGalleryProps = {
     vote_average: number;
     vote_count: number;
     width: number;
-    name: string;
+    name?: string | undefined;
   }[];
 };
 
-export default function ImageGallery({ backdrops }: ImageGalleryProps) {
+export default function ImageGallery({ backdrops }: ImageGalleryType) {
   const sectionName: string = "Photos";
   const baseImageUrl: string = "https://image.tmdb.org/t/p/original";
   let sortedBackdrops: typeof backdrops = [];

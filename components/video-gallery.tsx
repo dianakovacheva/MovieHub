@@ -35,63 +35,64 @@ export default function VideoGallery({
     setPlayer(event.target);
   };
 
-  return videos ? (
+  return (
     <>
       {sectionName && (
         <HeaderSection sectionName={sectionName} count={Number(videosCount)} />
       )}
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        {/* Main Player Section */}
-        {selectedVideo && (
-          <div className="lg:col-span-2">
-            <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
-              <Video videoId={selectedVideo.key} onReady={onReady} />
-            </div>
-            <div className="mt-4 space-y-2">
-              <div className="flex gap-3">
-                {selectedVideo.movie_title && (
-                  <Link
-                    href={`/movie/${selectedVideo.movie_id}`}
-                    className="flex-none"
-                  >
-                    <h3 className="text-xl font-bold text-zinc-500 dark:text-[#f5c518] uppercase line-clamp-2 hover:underline">
-                      {selectedVideo.movie_title}
-                    </h3>
-                  </Link>
-                )}
-
-                <h3 className="text-xl font-medium dark:text-white">
-                  {selectedVideo.name}
-                </h3>
+      {videos && videos.length > 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {/* Main Player Section */}
+          {selectedVideo && (
+            <div className="lg:col-span-2">
+              <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
+                <Video videoId={selectedVideo.key} onReady={onReady} />
               </div>
-              {videosCount && videosCount > 0 && (
-                <p className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
-                  Video {currentIndex + 1} of {videosCount}
-                </p>
-              )}
-            </div>
-          </div>
-        )}
+              <div className="mt-4 space-y-2">
+                <div className="flex gap-3">
+                  {selectedVideo.movie_title && (
+                    <Link
+                      href={`/movie/${selectedVideo.movie_id}`}
+                      className="flex-none"
+                    >
+                      <h3 className="text-xl font-bold text-zinc-500 dark:text-[#f5c518] uppercase line-clamp-2 hover:underline">
+                        {selectedVideo.movie_title}
+                      </h3>
+                    </Link>
+                  )}
 
-        {/* Videos List Section */}
-        {selectedVideo && (
-          <VideoList
-            videoListTitle={videoListTitle}
-            videos={videos}
-            handlePrevious={handlePrevious}
-            handleNext={handleNext}
-            currentIndex={currentIndex}
-            selectedVideo={selectedVideo}
-            setSelectedVideo={setSelectedVideo}
-            setCurrentIndex={setCurrentIndex}
-            player={player}
-          />
-        )}
-      </div>
+                  <h3 className="text-xl font-medium dark:text-white">
+                    {selectedVideo.name}
+                  </h3>
+                </div>
+                {videosCount && videosCount > 0 && (
+                  <p className="text-sm font-normal text-zinc-500 dark:text-[#c0bcbc]">
+                    Video {currentIndex + 1} of {videosCount}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Videos List Section */}
+          {selectedVideo && (
+            <VideoList
+              videoListTitle={videoListTitle}
+              videos={videos}
+              handlePrevious={handlePrevious}
+              handleNext={handleNext}
+              currentIndex={currentIndex}
+              selectedVideo={selectedVideo}
+              setSelectedVideo={setSelectedVideo}
+              setCurrentIndex={setCurrentIndex}
+              player={player}
+            />
+          )}
+        </div>
+      ) : (
+        <p> No videos available. </p>
+      )}
     </>
-  ) : (
-    <p> No videos available. </p>
   );
 }

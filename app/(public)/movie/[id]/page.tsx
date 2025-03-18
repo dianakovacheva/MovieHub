@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 
 import {
   getMovieDetails,
@@ -19,25 +18,31 @@ import DetailsSection from "../../../../components/movie-details/details-section
 import Storyline from "../../../../components/movie-details/storyline";
 import BoxOffice from "../../../../components/movie-details/box-office";
 import Paragraph from "../../../../components/paragraph";
-import InformationBlockMultiple from "../../../../components/information-block-multiple";
+import InformationBlock from "../../../../components/information-block";
 import MoreLikeThis from "../../../../components/movie-details/more-like-this";
 import {
   MovieCreditsResponse,
   MovieSuggestionsResponse,
 } from "../../../actions/movie/types";
+import UnorderedList from "../../../../components/unordered-list";
 
 export const metadata: Metadata = {
   title: "Details Page",
 };
 
-export default async function MovieDetails({ params }) {
+interface MovieDetailsProps {
+  params: { id: string };
+}
+
+export default async function MovieDetails({ params }: MovieDetailsProps) {
   const { id } = await params;
   const movie = await getMovieDetails(id);
+  const movieId: string = movie!.id.toString();
   const movieCredits = await getMovieCredits(id);
-  let backdrops = await getMovieBackdrops(movie!.id);
-  const movieVideos = await getMovieVideos(movie!.id);
-  const movieSuggestions = await getMovieSuggestions(movie!.id);
-  const keywords = await getMovieKeywords(movie!.id);
+  let backdrops = await getMovieBackdrops(movieId);
+  const movieVideos = await getMovieVideos(movieId);
+  const movieSuggestions = await getMovieSuggestions(movieId);
+  const keywords = await getMovieKeywords(movieId);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
   const cast: MovieCreditsResponse["cast"] = [];
@@ -46,22 +51,22 @@ export default async function MovieDetails({ params }) {
   const sectionName: string = "Videos";
 
   if (movieCredits?.crew) {
-    movieCredits.crew.map((data) => {
+    movieCredits.crew.forEach((data) => {
       // Directors
-      if (data.job && data.job.toLowerCase() == "director") {
+      if (data.job?.toLowerCase() == "director") {
         directors.push(data);
         // Writes
-      } else if (data.job && data.job.toLowerCase() == "writer") {
+      } else if (data.job?.toLowerCase() == "writer") {
         writers.push(data);
       }
     });
   }
 
   if (movieCredits?.cast) {
-    movieCredits.cast.map((data) => {
+    movieCredits.cast.forEach((data) => {
       if (data.known_for_department !== undefined) {
         if (
-          data.known_for_department.toLowerCase() == "acting" &&
+          data.known_for_department?.toLowerCase() == "acting" &&
           data.popularity
         ) {
           cast.push(data);
@@ -71,12 +76,12 @@ export default async function MovieDetails({ params }) {
   }
 
   const topCast = cast.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
+  const topThreeCast = topCast.slice(0, 3);
 
   // Movie Suggestions
   if (movieSuggestions) {
-    topMovieSuggestions = movieSuggestions.sort(
-      (a: { popularity: number }, b: { popularity: number }) =>
-        b.popularity - a.popularity
+    topMovieSuggestions = [...movieSuggestions].sort(
+      (a, b) => b.popularity - a.popularity
     );
     // .slice(0, 12);
   }
@@ -108,71 +113,29 @@ export default async function MovieDetails({ params }) {
         <div className="flex flex-col">
           {/* Directors */}
           {directors.length > 0 && (
-            <InformationBlockMultiple
-              data={directors}
-              keyPlural={"Directors"}
-              keySingular={"Director"}
+            <InformationBlock
+              blockName={directors.length > 1 ? "Directors" : "Director"}
             >
-              <ul className="flex flex-wrap gap-6">
-                {directors.map((director) => (
-                  <li
-                    key={director.id}
-                    className="[&:nth-child(n+2)]:list-disc"
-                  >
-                    <Link
-                      href={`/person/${director.id}`}
-                      className="link link-hover text-[#0e63be]"
-                    >
-                      {director.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </InformationBlockMultiple>
+              <UnorderedList data={directors} path="/person" />
+            </InformationBlock>
           )}
 
           {/* Writers */}
-          {writers.length > 0 && (
-            <InformationBlockMultiple
-              data={writers}
-              keyPlural={"Writers"}
-              keySingular={"Writer"}
+          {writers && writers.length > 0 && (
+            <InformationBlock
+              blockName={writers.length > 1 ? "Writers" : "Writer"}
             >
-              <ul className="flex gap-6 flex-wrap">
-                {writers.map((data) => (
-                  <li key={data.id} className="[&:nth-child(n+2)]:list-disc">
-                    <Link
-                      href={`/person/${data.id}`}
-                      className="link link-hover text-[#0e63be]"
-                    >
-                      {data.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </InformationBlockMultiple>
+              <UnorderedList data={writers} path={"/person"} />
+            </InformationBlock>
           )}
 
           {/* Stars */}
-          {topCast.length > 0 && (
-            <InformationBlockMultiple
-              data={topCast.slice(0, 3)}
-              keyPlural={"Stars"}
-              keySingular={"Star"}
+          {topThreeCast && (
+            <InformationBlock
+              blockName={topThreeCast.length > 1 ? "Stars" : "Star"}
             >
-              <ul className="flex flex-wrap gap-6">
-                {topCast.slice(0, 3).map((star) => (
-                  <li key={star.id} className="[&:nth-child(n+2)]:list-disc">
-                    <Link
-                      href={`/person/${star.id}`}
-                      className="link link-hover text-[#0e63be]"
-                    >
-                      {star.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </InformationBlockMultiple>
+              <UnorderedList data={topThreeCast} path={"/person"} />
+            </InformationBlock>
           )}
         </div>
       </div>

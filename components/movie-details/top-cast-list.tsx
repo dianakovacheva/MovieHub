@@ -1,9 +1,42 @@
 import HeaderSection from "./header-section";
 import ActorsGallery from "../actors-gallery";
 
-export default function TopCastList({ topCast }) {
+type TopCastListProps = {
+  topCast: {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for?: {
+      adult: boolean;
+      backdrop_path?: string;
+      genre_ids?: number[];
+      id: number;
+      media_type?: string;
+      original_language?: string;
+      original_title?: string;
+      overview?: string;
+      poster_path?: string;
+      release_date?: string;
+      title?: string;
+      video: boolean;
+      vote_average: number;
+      vote_count: number;
+    }[];
+    known_for_department?: string;
+    name?: string;
+    popularity: number;
+    profile_path?: string;
+    character?: string;
+  }[];
+};
+
+export default function TopCastList({ topCast }: TopCastListProps) {
   const sectionName: string = "Top Cast";
-  const topCastCount: number = topCast.length;
+  let topCastCount: number = 0;
+
+  if (topCast && topCast.length > 0) {
+    topCastCount = topCast.length;
+  }
 
   return (
     <>
