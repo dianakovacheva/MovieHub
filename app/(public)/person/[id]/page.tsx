@@ -16,11 +16,15 @@ export const metadata: Metadata = {
   title: "Person Page",
 };
 
-interface PersonPageProps {
-  params: { id: string };
-}
+// interface PersonPageProps {
+//   params: { id: string };
+// }
 
-export default async function PersonPage({ params }: PersonPageProps) {
+export default async function PersonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const personId: number = Number(id.split("-")[0]);
   const personData = await getPersonData(personId);
