@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { createList } from "../app/actions/list/list-data";
 
-export default function CreateListForm({ userId }) {
+type CreateListFormProps = {
+  userId: string;
+};
+export default function CreateListForm({ userId }: CreateListFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState("");
 

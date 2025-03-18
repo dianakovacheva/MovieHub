@@ -55,12 +55,12 @@ export async function createList(
     throw new Error("Failed to create list.");
   }
 
-  if (insertedList) {
+  if (insertedList && insertedList[0] !== undefined) {
     revalidatePath(`/lists`);
     redirect(`/lists/${insertedList[0].id}`);
   }
 
-  return { success: true, id: insertedList[0].id };
+  return insertedList[0] && { success: true, id: insertedList[0].id };
 }
 
 // Get user's lists
@@ -90,8 +90,8 @@ export async function getListById(listId: string) {
     if (!list) return null;
 
     return list[0];
-  } catch (error: unknown) {
-    console.log(error.message);
+  } catch (error) {
+    console.log((error as Error).message);
   }
 }
 
