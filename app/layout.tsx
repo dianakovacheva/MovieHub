@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "A web application to explore and discover movies, series, and entertainment.",
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -9,11 +9,13 @@ export const metadata: Metadata = {
   title: "List Details Page",
 };
 
-export default async function ListDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface ListDetailsProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function ListDetails({ params }: ListDetailsProps) {
   const { id } = params;
   const list = await getListById(id);
   const title = list?.name ?? "";

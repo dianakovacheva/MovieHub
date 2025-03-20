@@ -30,11 +30,13 @@ export const metadata: Metadata = {
   title: "Details Page",
 };
 
-export default async function MovieDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface MovieDetailsProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function MovieDetails({ params }: MovieDetailsProps) {
   const { id } = params;
   const movie = await getMovieDetails(id);
   const movieCredits = await getMovieCredits(id);
