@@ -1,6 +1,5 @@
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 import convertMinsToHrsMins from "../../app/utils/convert-time";
-import movieRealseYear from "../../app/utils/movie";
 import MovieGenres from "./movie-genres";
 
 export default async function SubtitleMovie({
@@ -9,7 +8,7 @@ export default async function SubtitleMovie({
   movie: MovieDetailsResponse;
 }) {
   const movieReleaseYear = movie.release_date
-    ? movieRealseYear(movie.release_date)
+    ? movie.release_date.split("-")[0]
     : "";
 
   return (
