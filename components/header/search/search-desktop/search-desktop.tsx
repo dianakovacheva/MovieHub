@@ -32,7 +32,7 @@ export default function SearchDesktop() {
         htmlFor="search"
         className="input join-item text-black text-base font-medium dark:text-white"
       >
-        <Suspense>
+        <Suspense fallback={<p>Loading video...</p>}>
           <input
             type="search"
             placeholder="Search"
