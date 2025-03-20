@@ -1,6 +1,5 @@
 "use client";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { Suspense } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchDesktop() {
@@ -32,17 +31,15 @@ export default function SearchDesktop() {
         htmlFor="search"
         className="input join-item text-black text-base font-medium dark:text-white"
       >
-        <Suspense fallback={<p>Loading video...</p>}>
-          <input
-            type="search"
-            placeholder="Search"
-            className="grow"
-            onChange={(e) => {
-              handleSearch(e.target.value);
-            }}
-            defaultValue={searchParams.get("query")?.toString()}
-          />
-        </Suspense>
+        <input
+          type="search"
+          placeholder="Search"
+          className="grow"
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
+          defaultValue={searchParams.get("query")?.toString()}
+        />
 
         <svg
           xmlns="http://www.w3.org/2000/svg"

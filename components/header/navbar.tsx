@@ -4,6 +4,7 @@ import WatchListBtn from "./watchlist-btn";
 import SearchContainer from "./search/search-container";
 import ThemeSwitcher from "./theme-switcher";
 import AuthButton from "./auth-button";
+import { Suspense } from "react";
 
 export default function Navbar() {
   const buttonName = "Watchlist";
@@ -20,7 +21,9 @@ export default function Navbar() {
       <div className="flex gap-2 navbar-end order-2 w-auto">
         {/* Search bar */}
         <div>
-          <SearchContainer />
+          <Suspense>
+            <SearchContainer />
+          </Suspense>
         </div>
         {/* Buttons right side */}
         <div className="flex gap-2">
