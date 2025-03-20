@@ -17,7 +17,7 @@ export default function MoviesSortedByJobs({
   return jobs.map((job) => {
     let jobMovies = [];
 
-    jobMovies = moviesSortedByJobs!.filter((movie) => movie.job == job);
+    jobMovies = moviesSortedByJobs!.filter((movie) => movie.job === job);
 
     const upcomingMovies = getMoviesByReleaseState(jobMovies, "upcoming");
 
@@ -28,12 +28,11 @@ export default function MoviesSortedByJobs({
 
     return (
       <React.Fragment key={job}>
-        {upcomingMovies.length > 0 ||
-          (previousMovies.length > 0 && (
-            <h2 className="text-2xl font-medium text-zinc-900 dark:text-white">
-              {job}
-            </h2>
-          ))}
+        {job && (
+          <h2 className="text-2xl font-medium text-zinc-900 dark:text-white">
+            {job}
+          </h2>
+        )}
 
         {upcomingMovies.length > 0 && (
           <Accordion movies={upcomingMovies} listTitle={"Upcoming"} />
