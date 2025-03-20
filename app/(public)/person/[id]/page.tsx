@@ -19,10 +19,10 @@ export const metadata: Metadata = {
 export default async function PersonPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
-  const personId = Number(slug.split("-")[0]);
+  const { id } = await params;
+  const personId = Number(id.split("-")[0]);
   const personData = await getPersonData(personId);
 
   const yearOfBirth = personData?.birthday?.split("-")[0] ?? "";

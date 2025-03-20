@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 export default async function ListDetails({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
-  const list = await getListById(slug);
+  const { id } = await params;
+  const list = await getListById(id);
   const title = list?.name ?? "";
   const listOwner = await getUserById(list?.userId);
 

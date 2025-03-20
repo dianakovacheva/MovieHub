@@ -33,15 +33,15 @@ export const metadata: Metadata = {
 export default async function MovieDetails({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { slug } = await params;
-  const movie = await getMovieDetails(slug);
-  const movieCredits = await getMovieCredits(slug);
-  let backdrops = await getMovieBackdrops(slug);
-  const movieVideos = await getMovieVideos(slug);
-  const movieSuggestions = await getMovieSuggestions(slug);
-  const keywords = await getMovieKeywords(slug);
+  const { id } = await params;
+  const movie = await getMovieDetails(id);
+  const movieCredits = await getMovieCredits(id);
+  let backdrops = await getMovieBackdrops(id);
+  const movieVideos = await getMovieVideos(id);
+  const movieSuggestions = await getMovieSuggestions(id);
+  const keywords = await getMovieKeywords(id);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
   const cast: MovieCreditsResponse["cast"] = [];
