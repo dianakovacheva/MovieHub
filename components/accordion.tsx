@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Poster from "./poster";
+import { MoviesProps } from "../app/actions/movie/definitions";
 
-export default function Accordion({ movies, listTitle }) {
+type AccordionProps = {
+  movies: MoviesProps["movies"];
+  listTitle: string;
+};
+
+export default function Accordion({ movies, listTitle }: AccordionProps) {
   return movies ? (
     <div className="collapse collapse-arrow bg-zinc-50 dark:bg-[#121212] rounded-xl p-4 shadow-xs">
       <input type="checkbox" />
@@ -19,37 +25,39 @@ export default function Accordion({ movies, listTitle }) {
         <ul key="movies_list" className="list max-h-[60vh] overflow-scroll">
           {movies.map((movie) => (
             <div key={movie.id}>
-              <Link
-                href={`/movie/${movie.id}-${movie.title
-                  .split(" ")
-                  .join("-")
-                  .toLowerCase()}`}
-                className="flex-none"
-              >
-                <li className="list-row">
-                  <div>
-                    <Poster
-                      name={movie.title}
-                      path={movie.poster_path}
-                      height={200}
-                      width={250}
-                      className="rounded-lg object-cover shadow-sm w-15 h-25"
-                      isMovie={true}
-                    />
-                  </div>
-                  <div className="list-col-grow flex flex-col gap-2">
-                    <div className="text-md font-bold">{movie.title}</div>
-                    <div className="text-xs uppercase font-semibold opacity-60">
-                      {movie.character}
+              {movie.title && (
+                <Link
+                  href={`/movie/${movie.id}-${movie.title
+                    .split(" ")
+                    .join("-")
+                    .toLowerCase()}`}
+                  className="flex-none"
+                >
+                  <li className="list-row">
+                    <div>
+                      <Poster
+                        name={movie.title}
+                        path={movie.poster_path}
+                        height={200}
+                        width={250}
+                        className="rounded-lg object-cover shadow-sm w-15 h-25"
+                        isMovie={true}
+                      />
                     </div>
-                  </div>
-                  <div className="text-sm uppercase font-semibold opacity-60">
-                    {movie.release_date
-                      ? new Date(movie.release_date).getFullYear()
-                      : "-"}
-                  </div>
-                </li>
-              </Link>
+                    <div className="list-col-grow flex flex-col gap-2">
+                      <div className="text-md font-bold">{movie.title}</div>
+                      <div className="text-xs uppercase font-semibold opacity-60">
+                        {movie.character}
+                      </div>
+                    </div>
+                    <div className="text-sm uppercase font-semibold opacity-60">
+                      {movie.release_date
+                        ? new Date(movie.release_date).getFullYear()
+                        : "-"}
+                    </div>
+                  </li>
+                </Link>
+              )}
             </div>
           ))}
         </ul>

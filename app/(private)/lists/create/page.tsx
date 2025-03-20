@@ -11,7 +11,7 @@ export default async function CreateList() {
   const title = "Create a new list";
   const subtitle = "List your movie picks.";
   const session = await auth();
-  const userId: string = session?.user?.id ?? "";
+  const userId = session?.user?.id ?? "";
 
   return (
     <>

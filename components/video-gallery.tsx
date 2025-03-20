@@ -6,6 +6,7 @@ import VideoList from "./video-list";
 import Video from "./video";
 import Link from "next/link";
 import { VideoGalleryProps } from "../app/actions/videos/definitions";
+import { YouTubePlayer } from "react-youtube";
 
 export default function VideoGallery({
   videos,
@@ -14,8 +15,8 @@ export default function VideoGallery({
 }: VideoGalleryProps) {
   const [selectedVideo, setSelectedVideo] = useState(videos[0]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [player, setPlayer] = useState(null);
-  const videosCount: number | undefined = videos.length;
+  const [player, setPlayer] = useState<YouTubePlayer | null>(null);
+  const videosCount: number = videos.length;
 
   const handlePrevious = () => {
     if (videos && currentIndex > 0) {
@@ -31,14 +32,14 @@ export default function VideoGallery({
     }
   };
 
-  const onReady = (event: { target: React.SetStateAction<null> }) => {
+  const onReady = (event: { target: YouTubePlayer }) => {
     setPlayer(event.target);
   };
 
   return (
     <>
       {sectionName && (
-        <HeaderSection sectionName={sectionName} count={Number(videosCount)} />
+        <HeaderSection sectionName={sectionName} count={videosCount} />
       )}
 
       {videos && videos.length > 0 ? (
@@ -46,9 +47,12 @@ export default function VideoGallery({
           {/* Main Player Section */}
           {selectedVideo && (
             <div className="lg:col-span-2">
-              <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
-                <Video videoId={selectedVideo.key} onReady={onReady} />
-              </div>
+              {selectedVideo.key && (
+                <div className="relative aspect-video w-full bg-black rounded-xl overflow-hidden">
+                  <Video videoId={selectedVideo.key} onReady={onReady} />
+                </div>
+              )}
+
               <div className="mt-4 space-y-2">
                 <div className="flex gap-3">
                   {selectedVideo.movie_title && (

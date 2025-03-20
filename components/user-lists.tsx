@@ -4,12 +4,13 @@ import { redirect } from "next/navigation";
 import EmptyList from "./empty-list";
 import HeaderSection from "./movie-details/header-section";
 import ListCard from "./list-card";
+import { ListsProps } from "../app/actions/list/definitions";
 
-export default function UserLists({ userLists }) {
+export default function UserLists({ lists }: ListsProps) {
   const sectionName = "Lists";
   const listTitle = "No lists yet";
   const buttonText = "Create a list";
-  const userListsCount: number = userLists.length;
+  const userListsCount = lists?.length ?? 0;
 
   function redirectToCreateListPage() {
     redirect("/lists/create");
@@ -17,8 +18,8 @@ export default function UserLists({ userLists }) {
   return (
     <>
       <HeaderSection sectionName={sectionName} count={userListsCount} />
-      {userLists.length > 0 ? (
-        <ListCard lists={userLists} />
+      {lists.length > 0 ? (
+        <ListCard lists={lists} />
       ) : (
         <EmptyList
           listTitle={listTitle}

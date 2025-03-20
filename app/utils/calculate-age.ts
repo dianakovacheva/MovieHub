@@ -3,7 +3,8 @@ export default function calculateAge(birthday: string, deathday: string) {
 
   const birthDate = new Date(birthday);
   const deathDate = new Date(deathday);
-  let age = 0;
+
+  let age: number = 0;
 
   if (!deathday) {
     age = Math.abs(today.getFullYear() - birthDate.getFullYear());

@@ -1,7 +1,6 @@
-export default function compareDates(date1, date2) {
+export default function compareDates(date1: string): "upcoming" | "previous" {
   const d1 = new Date(date1);
-  const d2 = new Date(date2);
+  const today = new Date();
 
-  if (d1 > d2) return "upcoming"; // date1 is after date2
-  else return "previous"; // date1 is before date2
+  return d1 > today ? "upcoming" : "previous";
 }

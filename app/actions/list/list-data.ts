@@ -3,7 +3,7 @@
 import { lists } from "./../../db/schema";
 import { db } from "../../db";
 import { CreateListFormSchema, CreateListFormState } from "./definitions";
-import { eq, SQLWrapper } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -64,7 +64,7 @@ export async function createList(
 }
 
 // Get user's lists
-export async function getUserLists(userId: string | SQLWrapper | undefined) {
+export async function getUserLists(userId: string) {
   if (!userId) return null;
   const userLists = await db
     .select()

@@ -1,10 +1,12 @@
+import { EmptyListProps } from "../app/actions/list/definitions";
+
 export default function EmptyList({
   listTitle,
   listParagraph,
   buttonText,
   buttonAction,
   className,
-}) {
+}: EmptyListProps) {
   return (
     <div className={className}>
       <h3 className="text-xl font-bold">{listTitle}</h3>

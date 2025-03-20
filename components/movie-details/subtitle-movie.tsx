@@ -1,15 +1,22 @@
+import { MovieDetailsResponse } from "../../app/actions/movie/types";
 import convertMinsToHrsMins from "../../app/utils/convert-time";
 import movieRealseYear from "../../app/utils/movie";
 import MovieGenres from "./movie-genres";
 
-export default async function SubtitleMovie({ movie }) {
-  const movieReleaseYear = await movieRealseYear(movie.release_date);
+export default async function SubtitleMovie({
+  movie,
+}: {
+  movie: MovieDetailsResponse;
+}) {
+  const movieReleaseYear = movie.release_date
+    ? movieRealseYear(movie.release_date)
+    : "";
 
   return (
     <div className="flex flex-wrap">
       <ul className="flex items-center mt-2 font-normal text-base text-zinc-500 dark:text-[#c0bcbc]">
         <li className="mr-4">
-          {movieReleaseYear} ({movie.origin_country.join(", ")})
+          {movieReleaseYear} ({movie?.origin_country?.join(", ")})
         </li>
 
         {/* Movie Genres */}

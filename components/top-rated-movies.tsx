@@ -1,6 +1,6 @@
 import { getTopRatedMovies } from "../app/actions/movie/movie-data";
 import HeaderSection from "./movie-details/header-section";
-import MoviesCarousel from "./movie-details/movies-carousel";
+import MoviesCarousel from "./movies-carousel";
 
 export default async function TopRatedMovies() {
   const topRatedMovies = await getTopRatedMovies();
@@ -9,7 +9,7 @@ export default async function TopRatedMovies() {
   return (
     <>
       <HeaderSection sectionName={sectionName} count={undefined} />
-      <MoviesCarousel moviesData={topRatedMovies} />
+      {topRatedMovies && <MoviesCarousel movies={topRatedMovies} />}
     </>
   );
 }

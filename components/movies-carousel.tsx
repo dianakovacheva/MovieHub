@@ -3,14 +3,14 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import MovieRating from "../movie-rating";
-import AddToWatchListButton from "../add-to-watchlist-button";
-import Poster from "../poster";
-import { TrendingMovieListResponse } from "../../app/actions/movie/types";
+import MovieRating from "./movie-rating";
+import AddToWatchListButton from "./add-to-watchlist-button";
+import Poster from "./poster";
+// import { TrendingMovieListResponse } from "../../app/actions/movie/types";
+import { MoviesProps } from "../app/actions/movie/definitions";
 
-export default function MoviesCarousel({ moviesData }) {
-  const movies: TrendingMovieListResponse["results"] = moviesData;
-  const carouselRef = useRef(null);
+export default function MoviesCarousel({ movies }: MoviesProps) {
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
@@ -78,13 +78,7 @@ export default function MoviesCarousel({ moviesData }) {
                 >
                   <Poster
                     name={movie.title}
-                    path={
-                      movie.poster_path !== null &&
-                      movie.poster_path !== "" &&
-                      movie.poster_path !== undefined
-                        ? movie.poster_path
-                        : ""
-                    }
+                    path={movie.poster_path ? movie.poster_path : ""}
                     height={250}
                     width={200}
                     className="rounded-t-lg h-90 w-60 object-cover"
@@ -95,7 +89,7 @@ export default function MoviesCarousel({ moviesData }) {
 
               <div className="flex flex-col gap-1 text-base font-normal m-3">
                 <div className="flex gap-4 items-center">
-                  <MovieRating movie={movie} />
+                  <MovieRating voteAverage={movie.vote_average} />
                   <AddToWatchListButton />
                 </div>
                 {movie.title && (

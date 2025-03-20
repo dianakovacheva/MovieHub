@@ -4,6 +4,8 @@ import UserButton from "../user-button";
 
 export default async function AuthButton() {
   const session = await auth();
+  const userEmail =
+    typeof session?.user?.email === "string" ? session?.user?.email : "";
 
   return !session?.user?.id ? (
     <div>
@@ -12,6 +14,6 @@ export default async function AuthButton() {
       </Link>
     </div>
   ) : (
-    <UserButton userEmail={session.user.email} />
+    <UserButton userEmail={userEmail} />
   );
 }

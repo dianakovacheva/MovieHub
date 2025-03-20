@@ -2,7 +2,7 @@ import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import { logout } from "../app/actions/user/auth";
 
-export default function UserButton({ userEmail }) {
+export default function UserButton({ userEmail }: { userEmail: string }) {
   return (
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost">

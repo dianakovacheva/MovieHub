@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 // import saltAndHashPassword from "./app/utils/password";
 
-import { LoginFormSchema } from "./app/actions/definitions";
+import { LoginFormSchema } from "./app/actions/user/definitions";
 import { ZodError } from "zod";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./app/db";

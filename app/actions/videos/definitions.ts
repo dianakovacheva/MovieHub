@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { YouTubePlayer } from "react-youtube";
 
 type VideoListTitle = string | JSX.Element | undefined;
 type SectionName = string | undefined;
@@ -77,5 +78,5 @@ export type VideoListProps = {
   >;
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-  player: null;
+  player: YouTubePlayer | null;
 };

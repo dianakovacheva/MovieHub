@@ -1,9 +1,14 @@
+import { MoviesProps } from "../app/actions/movie/definitions";
 import getMoviesByReleaseState from "../app/utils/get-movies-by-release-state";
 import Accordion from "./accordion";
 
+type MoviesSortedByReleaseYearProps = {
+  moviesSortedByReleaseYear: MoviesProps["movies"];
+};
+
 export default function MoviesSortedByReleaseYear({
   moviesSortedByReleaseYear,
-}) {
+}: MoviesSortedByReleaseYearProps) {
   const upcomingMovies = getMoviesByReleaseState(
     moviesSortedByReleaseYear,
     "upcoming"
@@ -26,16 +31,12 @@ export default function MoviesSortedByReleaseYear({
       <h2 className="text-2xl font-medium text-zinc-900 dark:text-white">
         Actor
       </h2>
-      {upcomingMovies.length > 0 ? (
+      {upcomingMovies.length > 0 && (
         <Accordion movies={upcomingMovies} listTitle={"Upcoming"} />
-      ) : (
-        ""
       )}
 
-      {previousMovies.length > 0 ? (
+      {previousMovies.length > 0 && (
         <Accordion movies={previousMovies} listTitle={"Previous"} />
-      ) : (
-        ""
       )}
     </>
   );

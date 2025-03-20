@@ -42,6 +42,6 @@ export async function getUserById(userId: string | undefined) {
 
     return user[0];
   } catch (error) {
-    console.log(error.message);
+    console.log((error as Error).message);
   }
 }

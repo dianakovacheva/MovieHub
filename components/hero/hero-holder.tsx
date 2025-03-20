@@ -1,31 +1,17 @@
+import { UpcomingMoviesTrailersProps } from "../../app/actions/movie/definitions";
 import {
   getMovieVideos,
   getUpcomingMovies,
 } from "../../app/actions/movie/movie-data";
 import VideoGallery from "../video-gallery";
 
-type UpcomingMoviesTrailers = {
-  iso_639_1?: string;
-  iso_3166_1?: string;
-  name?: string;
-  key?: string;
-  site?: string;
-  size: number;
-  type?: string;
-  official: boolean;
-  published_at?: string;
-  id?: string;
-  movie_title?: string | undefined;
-  movie_id?: string | undefined;
-}[];
-
 export default async function HeroSection() {
   const upcomingMovies = await getUpcomingMovies();
-  const upcomingMoviesTrailers: UpcomingMoviesTrailers[] = [];
+  const upcomingMoviesTrailers: UpcomingMoviesTrailersProps[] = [];
 
   if (upcomingMovies && upcomingMovies.length > 0) {
     for (const upcomingMovie of upcomingMovies) {
-      const movieVideos = await getMovieVideos(upcomingMovie.id);
+      const movieVideos = await getMovieVideos(upcomingMovie.id.toString());
 
       if (movieVideos && movieVideos.length > 0) {
         movieVideos.map(

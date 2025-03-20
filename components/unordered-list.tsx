@@ -1,26 +1,18 @@
-import Link from "next/link";
+import ListItem from "./list-item";
 
-export default function UnorderedList({ data, path }) {
+type UnorderedListProps = {
+  data: { id?: string | number; name?: string }[] | string[];
+  path?: string;
+};
+
+export default function UnorderedList({ data, path }: UnorderedListProps) {
   return (
     <ul className="flex flex-wrap gap-6">
-      {data.map((item) => (
-        <li key={item.id} className="[&:nth-child(n+2)]:list-disc">
-          {path !== undefined ? (
-            <Link
-              href={`${path}/${item.id}-${
-                item.name && item.name.split(" ").join("-").toLowerCase()
-              }`}
-              className="link link-hover text-[#0e63be]"
-            >
-              {item.name ? item.name : item}
-            </Link>
-          ) : item.name ? (
-            item.name
-          ) : (
-            item
-          )}
-        </li>
-      ))}
+      {data.map((item, index) => {
+        const key =
+          typeof item === "object" && item.id ? item.id : `item-${index}`;
+        return <ListItem key={key} item={item} path={path} />;
+      })}
     </ul>
   );
 }

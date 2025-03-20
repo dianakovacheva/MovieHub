@@ -1,16 +1,15 @@
+import { MoviesProps } from "../actions/movie/definitions";
 import compareDates from "./compare-dates";
-import convertDateToString from "./convert-date-to-string";
 
 export default function getMoviesByReleaseState(
-  data,
+  data: MoviesProps["movies"],
   releaseState: "upcoming" | "previous" = "upcoming"
 ) {
-  const today = new Date();
-  const dateToString = convertDateToString(today);
-
   const moviesState = data
     .filter(
-      (movie) => compareDates(movie.release_date, dateToString) === releaseState
+      (movie) =>
+        typeof movie.release_date === "string" &&
+        compareDates(movie.release_date) === releaseState
     )
     .filter((movie) => movie.release_date !== "");
 

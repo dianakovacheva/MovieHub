@@ -1,6 +1,6 @@
 import { getTrendingMoviesToday } from "../../app/actions/movie/movie-data";
 import HeaderSection from "../movie-details/header-section";
-import MoviesCarousel from "../movie-details/movies-carousel";
+import MoviesCarousel from "../movies-carousel";
 
 export default async function FeaturedToday() {
   const trendingMovies = await getTrendingMoviesToday();
@@ -9,7 +9,7 @@ export default async function FeaturedToday() {
   return (
     <>
       <HeaderSection sectionName={sectionName} count={undefined} />
-      <MoviesCarousel moviesData={trendingMovies} />
+      {trendingMovies && <MoviesCarousel movies={trendingMovies} />}
     </>
   );
 }

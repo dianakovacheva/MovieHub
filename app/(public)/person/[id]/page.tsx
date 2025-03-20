@@ -16,77 +16,71 @@ export const metadata: Metadata = {
   title: "Person Page",
 };
 
-// interface PersonPageProps {
-//   params: { id: string };
-// }
-
 export default async function PersonPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-  const personId: number = Number(id.split("-")[0]);
+  const { id } = params;
+  const personId = Number(id.split("-")[0]);
   const personData = await getPersonData(personId);
-  let yearOfBirth: string | undefined;
-  let yearOfDeat: string | undefined;
+
+  const yearOfBirth = personData?.birthday?.split("-")[0] ?? "";
+  const yearOfDeath =
+    typeof personData?.deathday === "string"
+      ? personData.deathday.split("-")[0]
+      : "";
+
   let personImages = await getPersonImages(personId);
   const personMovieCredits = await getPersonMovieCredits(personId);
   const moviesActorPlayedIn = personMovieCredits!.cast;
   const acterAsCrew = personMovieCredits!.crew;
-  let moviesSortedByReleaseYear: typeof moviesActorPlayedIn;
-  let moviesBySortedJobs: typeof acterAsCrew;
-  let moviesSortedByJobsAndYear: typeof acterAsCrew;
-  const title = personData!.name;
-  const subtitleData = `Known For ${personData!.known_for_department}`;
+  let moviesSortedByJobs: typeof acterAsCrew = [];
+  const title = personData?.name ?? "Unknown";
+  const subtitleData = personData?.known_for_department
+    ? `Known For ${personData.known_for_department}`
+    : "Known For N/A";
 
-  // Sort cast movies by release year
-  if (moviesActorPlayedIn) {
-    moviesSortedByReleaseYear = moviesActorPlayedIn.sort(
+  // Sort movies by release year
+  const moviesSortedByReleaseYear = moviesActorPlayedIn!
+    .filter((movie) => movie.release_date)
+    .sort(
       (a, b) =>
         new Date(Number(b.release_date)).getFullYear() -
         new Date(Number(a.release_date)).getFullYear()
     );
-  }
 
-  // Sort crew movies by job and relese year
+  // Sort movies by job and relese year
   if (acterAsCrew) {
-    moviesBySortedJobs = acterAsCrew.sort((a, b) =>
-      a.job!.localeCompare(b.job!)
-    );
-  }
+    moviesSortedByJobs = acterAsCrew.sort((a, b) => {
+      // First, sort by job alphabetically
+      const jobComparison = a.job!.localeCompare(b.job!);
+      if (jobComparison !== 0) return jobComparison; // If jobs are different, sort by job
 
-  if (moviesBySortedJobs) {
-    moviesSortedByJobsAndYear = moviesBySortedJobs.sort(
-      (a, b) =>
+      // If jobs are the same, sort by release year (descending)
+      return (
         new Date(Number(b.release_date)).getFullYear() -
         new Date(Number(a.release_date)).getFullYear()
-    );
-  }
-
-  if (personData && personData.deathday) {
-    yearOfDeat = personData.deathday.toString().split("-")[0];
-  }
-
-  if (personData && personData.birthday) {
-    yearOfBirth = personData.birthday.split("-")[0];
+      );
+    });
   }
 
   const titleData = (
     <div className="flex flex-col items-start md:flex-row md:items-end gap-2">
       <span>{title}</span>
-      <h2 className="text-3xl text-zinc-500 dark:text-[#c0bcbc] font-medium">
-        ({yearOfBirth} - {yearOfDeat})
-      </h2>
+      {yearOfBirth && typeof yearOfDeath === "string" && (
+        <h2 className="text-3xl text-zinc-500 dark:text-[#c0bcbc] font-medium">
+          ({yearOfBirth} - {yearOfDeath})
+        </h2>
+      )}
     </div>
   );
 
-  if (personImages && personData) {
-    personImages = personImages.map((image) => ({
+  personImages =
+    personImages?.map((image) => ({
       ...image,
-      name: personData.name,
-    }));
-  }
+      name: personData?.name,
+    })) ?? [];
 
   return (
     <div className="flex flex-col gap-4 mb-10">
@@ -111,12 +105,14 @@ export default async function PersonPage({
             />
           </div>
           {/* Biography*/}
-          <ActorBiography biography={personData.biography} />
+          {personData.biography && (
+            <ActorBiography biography={personData.biography} />
+          )}
         </div>
       )}
 
       {/* Actor Information Block*/}
-      {personData && <ActorInformationBlock actorData={personData} />}
+      {personData && <ActorInformationBlock personData={personData} />}
 
       {/* Actor Image Gallery */}
       {personImages && (
@@ -129,12 +125,11 @@ export default async function PersonPage({
       {moviesActorPlayedIn && <ActorKnownFor movies={moviesActorPlayedIn} />}
 
       {/* Actor Credits */}
-      {moviesSortedByReleaseYear && moviesSortedByJobsAndYear && (
-        <ActorCredits
-          moviesSortedByReleaseYear={moviesSortedByReleaseYear}
-          moviesSortedByJobsAndYear={moviesSortedByJobsAndYear}
-        />
-      )}
+
+      <ActorCredits
+        moviesSortedByReleaseYear={moviesSortedByReleaseYear ?? []}
+        moviesSortedByJobs={moviesSortedByJobs ?? []}
+      />
     </div>
   );
 }

@@ -30,23 +30,18 @@ export const metadata: Metadata = {
   title: "Details Page",
 };
 
-// interface MovieDetailsProps {
-//   params: { id: string };
-// }
-
 export default async function MovieDetails({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const movie = await getMovieDetails(id);
-  const movieId: string = movie!.id.toString();
   const movieCredits = await getMovieCredits(id);
-  let backdrops = await getMovieBackdrops(movieId);
-  const movieVideos = await getMovieVideos(movieId);
-  const movieSuggestions = await getMovieSuggestions(movieId);
-  const keywords = await getMovieKeywords(movieId);
+  let backdrops = await getMovieBackdrops(id);
+  const movieVideos = await getMovieVideos(id);
+  const movieSuggestions = await getMovieSuggestions(id);
+  const keywords = await getMovieKeywords(id);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
   const cast: MovieCreditsResponse["cast"] = [];
@@ -91,7 +86,6 @@ export default async function MovieDetails({
   }
 
   // Add movie's title to the backdrops
-
   if (movie && backdrops) {
     backdrops = backdrops.map((image) => ({
       ...image,

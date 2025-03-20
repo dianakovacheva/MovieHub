@@ -1,32 +1,41 @@
+import { MovieDetailsResponse } from "../../app/actions/movie/types";
 import InformationBlock from "../information-block";
 import Paragraph from "../paragraph";
 import HeaderSection from "./header-section";
 import Keywords from "./keywords";
 import MovieGenres from "./movie-genres";
 
-export default function Storyline({ movie, keywords }) {
+export default function Storyline({
+  movie,
+  keywords,
+}: {
+  movie: MovieDetailsResponse;
+  keywords: { id: number; name?: string }[];
+}) {
   const sectionName: string = "Storyline";
 
-  return movie ? (
+  return (
     <div className="flex flex-col gap-2">
-      {movie.overview && (
-        <HeaderSection sectionName={sectionName} count={undefined} />
-      )}
+      <HeaderSection sectionName={sectionName} count={undefined} />
 
-      {movie.overview !== "" && <Paragraph text={movie.overview} />}
+      {movie.overview && movie.overview !== "" ? (
+        <Paragraph text={movie.overview} />
+      ) : (
+        <p> No movie overview available. </p>
+      )}
 
       {keywords && <Keywords keywords={keywords} />}
 
       <div>
         {/* Taglines */}
-        {movie.tagline !== "" && (
+        {movie.tagline && movie.tagline !== "" && (
           <InformationBlock blockName="Taglines">
             {movie.tagline}
           </InformationBlock>
         )}
 
         {/* Genres */}
-        {movie.genres.length > 0 && (
+        {movie.genres && movie.genres.length > 0 && (
           <InformationBlock
             blockName={movie.genres.length > 1 ? "Genres" : "Genre"}
           >
@@ -35,7 +44,5 @@ export default function Storyline({ movie, keywords }) {
         )}
       </div>
     </div>
-  ) : (
-    <p> No movie overview available. </p>
   );
 }

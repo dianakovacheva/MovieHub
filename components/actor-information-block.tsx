@@ -3,20 +3,26 @@ import HeaderSection from "./movie-details/header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
 import calculateAge from "../app/utils/calculate-age";
 import InformationBlock from "./information-block";
+import { PersonProps } from "../app/actions/person/definitions";
 
-export default async function ActorInformationBlock({ actorData }) {
+export default async function ActorInformationBlock({
+  personData,
+}: PersonProps) {
   const sectionName: string = "Personal details";
-  let gender: string = "";
-  const age: number = await calculateAge(
-    actorData.birthday,
-    actorData.deathday
-  );
+  // Gender
+  const gender =
+    personData.gender === 1
+      ? "Female"
+      : personData.gender === 2
+      ? "Male"
+      : "Non-binary / Other";
 
-  if (actorData.gender == 1) {
-    gender = "Female";
-  } else {
-    gender = "Male";
-  }
+  // Death date
+  const deathDate = personData.deathday?.toString() ?? "";
+
+  // Calculate actors age
+  const age =
+    personData.birthday && calculateAge(personData.birthday, deathDate);
 
   return (
     <>
@@ -26,38 +32,28 @@ export default async function ActorInformationBlock({ actorData }) {
         <InformationBlock blockName="Gender">{gender}</InformationBlock>
       )}
 
-      {actorData.birthday && !actorData.deathday ? (
-        <div>
-          <InformationBlock blockName="Born">
-            {`${actorData.birthday} (${age} years old)`}
-          </InformationBlock>
-        </div>
-      ) : actorData.birthday ? (
-        <div>
-          <InformationBlock blockName="Born">
-            {actorData.birthday}
-          </InformationBlock>
-        </div>
-      ) : (
-        ""
-      )}
-
-      {actorData.deathday && (
-        <div>
-          <InformationBlock blockName="Died">{`${actorData.deathday} (${age} years old)`}</InformationBlock>
-        </div>
-      )}
-
-      {actorData.place_of_birth && (
-        <InformationBlock blockName="Place of Birth">
-          {actorData.place_of_birth}
+      {personData.birthday && age && (
+        <InformationBlock blockName="Born">
+          {deathDate
+            ? personData.birthday
+            : `${personData.birthday} (${age} years old)`}
         </InformationBlock>
       )}
 
-      {actorData.homepage && (
+      {deathDate && age && (
+        <InformationBlock blockName="Died">{`${deathDate} (${age} years old)`}</InformationBlock>
+      )}
+
+      {personData.place_of_birth && (
+        <InformationBlock blockName="Place of Birth">
+          {personData.place_of_birth}
+        </InformationBlock>
+      )}
+
+      {personData.homepage && typeof personData.homepage === "string" && (
         <InformationBlock blockName="Official site">
           <Link
-            href={actorData.homepage}
+            href={personData.homepage}
             className="flex items-end gap-2"
             target="_blank"
             rel="nofollow"

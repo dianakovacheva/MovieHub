@@ -1,4 +1,4 @@
-import { getUnique } from "../../utils/get-unique";
+import { getUniqueById } from "../../utils/get-unique-by-id";
 import baseApiURL from "../API-URLS/base-API-URL";
 import {
   MovieCreditDetailsResponse,
@@ -27,7 +27,7 @@ export async function getTrendingMoviesToday(): Promise<
     }
 
     const resData: TrendingMovieListResponse = await res.json();
-    resData.results = resData.results?.filter(getUnique);
+    resData.results = resData.results?.filter(getUniqueById);
     // const parsed = TrendingMovieListSchema.safeParse(resData);
 
     // if (!parsed.success) {
@@ -46,7 +46,7 @@ export async function getTrendingMoviesToday(): Promise<
 
 // Movie's details
 export async function getMovieDetails(
-  id: string
+  id: string | number
 ): Promise<MovieDetailsResponse | null> {
   const movieDetailsURL = `${baseApiURL}/movie/${id}?language=en-US&api_key=${process.env.API_KEY}`;
 
@@ -58,15 +58,10 @@ export async function getMovieDetails(
 
     const resData: MovieDetailsResponse = await res.json();
 
-    resData.genres = resData.genres?.filter(getUnique);
-
-    resData.production_countries =
-      resData.production_countries?.filter(getUnique);
+    resData.genres = resData.genres?.filter(getUniqueById);
 
     resData.production_companies =
-      resData.production_companies?.filter(getUnique);
-
-    resData.spoken_languages = resData.spoken_languages?.filter(getUnique);
+      resData.production_companies?.filter(getUniqueById);
 
     return resData;
   } catch (error) {
@@ -79,7 +74,7 @@ export async function getMovieDetails(
 
 // Movie videos
 export async function getMovieVideos(
-  id: string
+  id: string | number
 ): Promise<MovieVideosResponse["results"] | null> {
   const movieVideosURL = `${baseApiURL}/movie/${id}/videos?language=en-US&api_key=${process.env.API_KEY}`;
   try {
@@ -89,7 +84,6 @@ export async function getMovieVideos(
     }
 
     const resData: MovieVideosResponse = await res.json();
-    resData.results = resData.results?.filter(getUnique);
 
     return resData.results;
   } catch (error) {
@@ -102,7 +96,7 @@ export async function getMovieVideos(
 
 // Movie Backdrops
 export async function getMovieBackdrops(
-  id: string
+  id: string | number
 ): Promise<MovieImagesResponse["backdrops"] | null> {
   const movieImagesURL = `${baseApiURL}/movie/${id}/images?api_key=${process.env.API_KEY}`;
 
@@ -125,7 +119,7 @@ export async function getMovieBackdrops(
 
 // Movie Credits
 export async function getMovieCredits(
-  id: string
+  id: string | number
 ): Promise<MovieCreditsResponse | null> {
   const movieCreditsURL = `${baseApiURL}/movie/${id}/credits?language=en-US&api_key=${process.env.API_KEY}`;
   try {
@@ -136,8 +130,8 @@ export async function getMovieCredits(
 
     const resData: MovieCreditsResponse = await res.json();
 
-    resData.cast = resData.cast?.filter(getUnique);
-    resData.crew = resData.crew?.filter(getUnique);
+    resData.cast = resData.cast?.filter(getUniqueById);
+    resData.crew = resData.crew?.filter(getUniqueById);
 
     return resData;
   } catch (error) {
@@ -150,7 +144,7 @@ export async function getMovieCredits(
 
 // Get a Movie Credit details by ID
 export async function getMovieCreditDetails(
-  id: string
+  id: string | number
 ): Promise<MovieCreditDetailsResponse | null> {
   const movieCreditDetailsURL = `${baseApiURL}/credit/${id}?language=en-US&api_key=${process.env.API_KEY}`;
 
@@ -173,7 +167,7 @@ export async function getMovieCreditDetails(
 
 // Movie Suggestions
 export async function getMovieSuggestions(
-  id: string
+  id: string | number
 ): Promise<MovieSuggestionsResponse["results"] | null> {
   const similarMoviesURL = `${baseApiURL}/movie/${id}/similar?language=en-US&api_key=${process.env.API_KEY}`;
 
@@ -184,7 +178,7 @@ export async function getMovieSuggestions(
     }
 
     const resData: MovieSuggestionsResponse = await res.json();
-    resData.results = resData.results?.filter(getUnique);
+    resData.results = resData.results?.filter(getUniqueById);
 
     return resData.results;
   } catch (error) {
@@ -197,7 +191,7 @@ export async function getMovieSuggestions(
 
 // Movie Keyword
 export async function getMovieKeywords(
-  id: string
+  id: string | number
 ): Promise<MovieKeywordsResponse["keywords"] | null> {
   const keywordsURL = `${baseApiURL}/movie/${id}/keywords?language=en-US&api_key=${process.env.API_KEY}`;
 
@@ -208,7 +202,7 @@ export async function getMovieKeywords(
     }
 
     const resData: MovieKeywordsResponse = await res.json();
-    resData.keywords = resData.keywords?.filter(getUnique);
+    resData.keywords = resData.keywords?.filter(getUniqueById);
 
     return resData.keywords;
   } catch (error) {
@@ -270,7 +264,7 @@ export async function getTopRatedMovies(): Promise<
     }
 
     const resData: TopRatedMoviesResponse = await res.json();
-    resData.results = resData.results?.filter(getUnique);
+    resData.results = resData.results?.filter(getUniqueById);
 
     return resData.results;
   } catch (error) {

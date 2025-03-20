@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { z } from "zod";
 
 export const CreateListFormSchema = z.object({
@@ -18,3 +19,23 @@ export type CreateListFormState =
       id?: string;
     }
   | undefined;
+
+export type ListsProps = {
+  lists: {
+    id: string;
+    name: string;
+    description: string | null;
+    isPublic: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    userId: string;
+  }[];
+};
+
+export type EmptyListProps = {
+  listTitle: string;
+  listParagraph?: string;
+  buttonText?: string;
+  buttonAction?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+};

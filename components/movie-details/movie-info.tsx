@@ -3,18 +3,18 @@ import SubtitleMovie from "./subtitle-movie";
 import PageTitle from "../page-title";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
-type MovieInfoProps = {
+export default async function MovieInfo({
+  movie,
+}: {
   movie: MovieDetailsResponse;
-};
-
-export default async function MovieInfo({ movie }: MovieInfoProps) {
+}) {
   const buttonName = "Rate";
 
   return movie ? (
     <div className="flex items-start justify-between w-full">
       {/* Movie Info Left Side */}
       <div className="flex flex-col gap-2 md:gap-0">
-        <PageTitle title={movie.title} />
+        {movie.title && <PageTitle title={movie.title} />}
         <SubtitleMovie movie={movie} />
       </div>
 
@@ -70,7 +70,7 @@ export default async function MovieInfo({ movie }: MovieInfoProps) {
           <p className="text-zinc-500 dark:text-[#c0bcbc] text-xs font-bold">
             YOUR RATING
           </p>
-          <RateButton buttonName={buttonName} width={"24"} height={"24"} />
+          <RateButton buttonName={buttonName} width="24" height="24" />
         </div>
 
         {/* Popularity Info */}

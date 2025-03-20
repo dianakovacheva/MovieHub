@@ -1,4 +1,12 @@
-export default function RateButton({ width, height, buttonName }) {
+export default function RateButton({
+  buttonName,
+  width,
+  height,
+}: {
+  buttonName: string;
+  width: string;
+  height: string;
+}) {
   return (
     <button className="btn-ghost text-[#5799ef]">
       <div className="flex items-center gap-2">

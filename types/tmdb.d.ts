@@ -3186,6 +3186,7 @@ export interface operations {
         };
         content: {
           "application/json": {
+            origin_country: any;
             /**
              * @default true
              * @example false

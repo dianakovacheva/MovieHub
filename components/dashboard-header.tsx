@@ -2,7 +2,13 @@ import { CalendarDays } from "lucide-react";
 import Poster from "./poster";
 import PageTitleSubtitle from "./page-title-subtitle";
 
-export default function DashboardHeader({ userEmail, profileCreatedAt }) {
+export default function DashboardHeader({
+  userEmail,
+  profileCreatedAt,
+}: {
+  userEmail: string;
+  profileCreatedAt: string;
+}) {
   const title = userEmail;
   const subtitleData = (
     <span className="flex gap-2 font-bold">

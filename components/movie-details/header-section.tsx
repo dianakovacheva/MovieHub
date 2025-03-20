@@ -1,12 +1,10 @@
-type HeaderSectionProps = {
-  sectionName: string;
-  count: number | undefined;
-};
-
 export default function HeaderSection({
   sectionName,
   count,
-}: HeaderSectionProps) {
+}: {
+  sectionName: string;
+  count: number | undefined;
+}) {
   return (
     <div className="pt-4">
       <h2 className="inline-flex gap-2 items-center text-4xl font-medium text-zinc-900 dark:text-white">

@@ -1,4 +1,4 @@
-export default function MovieRating({ movie }) {
+export default function MovieRating({ voteAverage }: { voteAverage: number }) {
   return (
     <div className="flex items-center gap-2">
       <svg
@@ -15,11 +15,7 @@ export default function MovieRating({ movie }) {
       {/* Rating */}
       <div>
         <div className="flex items-center gap-1 font-semibold dark:text-[#c0bcbc]">
-          {movie.vote_average ? (
-            <p>{movie.vote_average.toFixed(1)}</p>
-          ) : (
-            <p>0</p>
-          )}
+          {voteAverage ? <p>{voteAverage.toFixed(1)}</p> : <p>0</p>}
         </div>
       </div>
     </div>

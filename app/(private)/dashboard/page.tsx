@@ -15,34 +15,29 @@ export const metadata: Metadata = {
 
 export default async function Dashboard() {
   const session = await auth();
-  let userEmail: string = "";
-  let profileCreatedAt;
-  const userId = session?.user?.id;
-
-  if (session?.user?.email) {
-    userEmail = session?.user?.email;
-  }
+  const userEmail = session?.user?.email ?? "";
+  const userId = session?.user?.id ?? "";
 
   const user = await db.query.users.findFirst({
     where: eq(users.email, userEmail),
   });
 
+  const profileCreatedAt = user
+    ? convertDateToString(new Date(user!.createdAt))
+    : "";
+
   const userLists = await getUserLists(userId);
 
-  if (user?.createdAt) {
-    const date = user?.createdAt;
-    profileCreatedAt = convertDateToString(date);
-  }
-
   return (
-    session?.user?.id && (
+    user &&
+    user.email && (
       <div className="flex flex-col gap-4 mb-10">
         <DashboardHeader
-          userEmail={user?.email}
+          userEmail={user.email}
           profileCreatedAt={profileCreatedAt}
         />
         <WatchlistCarousel watchlist={undefined} />
-        <UserLists userLists={userLists} />
+        {userLists && <UserLists lists={userLists} />}
       </div>
     )
   );

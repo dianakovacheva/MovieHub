@@ -3,8 +3,9 @@ import Link from "next/link";
 import Poster from "./poster";
 import convertDateToString from "../app/utils/convert-date-to-string";
 import { deleteList } from "../app/actions/list/list-data";
+import { ListsProps } from "../app/actions/list/definitions";
 
-export default function ListCard({ lists }) {
+export default function ListCard({ lists }: ListsProps) {
   return (
     <div className="bg-zinc-50 dark:bg-[#121212] rounded-xl p-4 shadow-xs mb-10">
       <div className="font-semibold text-zinc-900 dark:text-white mb-1">

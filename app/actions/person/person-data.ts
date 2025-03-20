@@ -1,4 +1,4 @@
-import { getUnique } from "../../utils/get-unique";
+import { getUniqueById } from "../../utils/get-unique-by-id";
 import baseApiURL from "../API-URLS/base-API-URL";
 import {
   MostPopularPeopleResponse,
@@ -67,8 +67,8 @@ export async function getPersonMovieCredits(
 
     const resData: PersonMovieCreditsResponse = await res.json();
 
-    resData.cast = resData.cast?.filter(getUnique);
-    resData.crew = resData.crew?.filter(getUnique);
+    resData.cast = resData.cast?.filter(getUniqueById);
+    resData.crew = resData.crew?.filter(getUniqueById);
 
     return resData;
   } catch (error) {
@@ -93,7 +93,7 @@ export async function getMostPopularPeople(): Promise<
 
     const resData: MostPopularPeopleResponse = await res.json();
 
-    resData.results = resData.results?.filter(getUnique);
+    resData.results = resData.results?.filter(getUniqueById);
 
     return resData.results;
   } catch (error) {

@@ -1,9 +1,15 @@
 "use client";
 
 import React from "react";
-import YouTube from "react-youtube";
+import YouTube, { YouTubePlayer } from "react-youtube";
 
-export default function Video({ videoId, onReady }) {
+export default function Video({
+  videoId,
+  onReady,
+}: {
+  videoId: string;
+  onReady?: (event: { target: YouTubePlayer }) => void | undefined;
+}) {
   const opts = {
     height: "100%",
     width: "100%",

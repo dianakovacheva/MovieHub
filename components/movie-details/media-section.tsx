@@ -4,18 +4,18 @@ import { getMovieVideos } from "../../app/actions/movie/movie-data";
 import Poster from "../poster";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
-type MovieMediaProps = {
+export default async function MovieMedia({
+  movie,
+}: {
   movie: MovieDetailsResponse;
-};
-
-export default async function MovieMedia({ movie }: MovieMediaProps) {
+}) {
   const movieVideos = await getMovieVideos(movie.id);
-  let movieKey: string | undefined = "";
+  let movieKey: string = "";
 
   // Get trailer key
   if (movieVideos) {
     movieVideos.map((movie) => {
-      if (movie.type?.toLowerCase() === "trailer") {
+      if (movie.type?.toLowerCase() === "trailer" && movie.key) {
         movieKey = movie.key;
       }
     });

@@ -2,7 +2,7 @@
 
 import { db } from "../../db/index";
 import { users } from "../../db/schema";
-import { FormState, LoginFormSchema, SignUpFormSchema } from "../definitions";
+import { FormState, LoginFormSchema, SignUpFormSchema } from "./definitions";
 import { genSaltSync, hashSync } from "bcrypt-ts";
 import { eq } from "drizzle-orm";
 import { signIn, signOut } from "../../../auth";

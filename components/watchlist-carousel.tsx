@@ -1,8 +1,8 @@
 import EmptyList from "./empty-list";
 import HeaderSection from "./movie-details/header-section";
-import MoviesCarousel from "./movie-details/movies-carousel";
+import MoviesCarousel from "./movies-carousel";
 
-export default function WatchlistCarousel({ watchlist }) {
+export default function WatchlistCarousel({ watchlist }: { watchlist?: [] }) {
   const sectionName = "Watchlist";
   const listTitle = "No Watchlist yet";
   const listParagraph = "Create a watchlist to track movies you want to watch.";
@@ -17,7 +17,7 @@ export default function WatchlistCarousel({ watchlist }) {
     <>
       <HeaderSection sectionName={sectionName} count={watchlistCount} />
       {watchlist ? (
-        <MoviesCarousel moviesData={watchlist} />
+        <MoviesCarousel movies={watchlist} />
       ) : (
         <>
           <EmptyList

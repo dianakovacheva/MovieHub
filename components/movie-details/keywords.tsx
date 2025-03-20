@@ -1,4 +1,8 @@
-export default function Keywords({ keywords }) {
+export default function Keywords({
+  keywords,
+}: {
+  keywords: { id: number; name?: string }[];
+}) {
   return keywords.length > 0 ? (
     <>
       <ul className="flex flex-wrap gap-2 mt-2">

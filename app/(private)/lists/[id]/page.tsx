@@ -9,18 +9,14 @@ export const metadata: Metadata = {
   title: "List Details Page",
 };
 
-// interface ListDetailsProps {
-//   params: { id: string };
-// }
-
 export default async function ListDetails({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const list = await getListById(id);
-  const title = list?.name;
+  const title = list?.name ?? "";
   const listOwner = await getUserById(list?.userId);
 
   const listCreatedAt = `Created ${convertDateToString(list!.createdAt)}`;
@@ -33,7 +29,7 @@ export default async function ListDetails({
         <PageTitleSubtitle title={title} subtitle={subtitle} />
         <CreateListButton />
       </div>
-      <p>{list?.description}</p>
+      {list && <p>{list.description}</p>}
     </>
   );
 }

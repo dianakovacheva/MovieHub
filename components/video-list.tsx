@@ -55,7 +55,7 @@ export default function VideoList({
               onClick={() => {
                 setSelectedVideo(video);
                 setCurrentIndex(index);
-                if (player) {
+                if (player && typeof player.pauseVideo === "function") {
                   player.pauseVideo();
                 }
               }}
