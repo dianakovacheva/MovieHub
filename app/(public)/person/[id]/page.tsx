@@ -16,15 +16,13 @@ export const metadata: Metadata = {
   title: "Person Page",
 };
 
-interface PersonPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function PersonPage({ params }: PersonPageProps) {
-  const { id } = params;
-  const personId = Number(id.split("-")[0]);
+export default async function PersonPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = await params;
+  const personId = Number(slug.split("-")[0]);
   const personData = await getPersonData(personId);
 
   const yearOfBirth = personData?.birthday?.split("-")[0] ?? "";

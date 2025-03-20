@@ -30,20 +30,18 @@ export const metadata: Metadata = {
   title: "Details Page",
 };
 
-interface MovieDetailsProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function MovieDetails({ params }: MovieDetailsProps) {
-  const { id } = params;
-  const movie = await getMovieDetails(id);
-  const movieCredits = await getMovieCredits(id);
-  let backdrops = await getMovieBackdrops(id);
-  const movieVideos = await getMovieVideos(id);
-  const movieSuggestions = await getMovieSuggestions(id);
-  const keywords = await getMovieKeywords(id);
+export default async function MovieDetails({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = await params;
+  const movie = await getMovieDetails(slug);
+  const movieCredits = await getMovieCredits(slug);
+  let backdrops = await getMovieBackdrops(slug);
+  const movieVideos = await getMovieVideos(slug);
+  const movieSuggestions = await getMovieSuggestions(slug);
+  const keywords = await getMovieKeywords(slug);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
   const cast: MovieCreditsResponse["cast"] = [];

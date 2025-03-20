@@ -34,7 +34,6 @@ export default function Layout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {" "}
         <ThemeProvider
           attribute="class"
           enableSystem={true}
