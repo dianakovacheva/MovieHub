@@ -1,21 +1,10 @@
+import { Menu } from "lucide-react";
+
 export default function BurgerMenu() {
   return (
     <div className="menu dropdown flex-none text-base dropdown-content rounded-box z-1">
       <button className="btn btn-ghost rounded-field" tabIndex={0}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="inline-block h-5 w-5 stroke-current"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          ></path>
-        </svg>
+        <Menu className="stroke-current" />
         <span className="hidden sm:flex">Menu</span>
       </button>
       <ul
