@@ -5,6 +5,7 @@ import convertDateToString from "../../../utils/convert-date-to-string";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListButton from "../../../../components/create-list-button";
 import { notFound } from "next/navigation";
+import UnorderedList from "../../../../components/unordered-list";
 
 export const metadata: Metadata = {
   title: "List Details Page",
@@ -32,12 +33,12 @@ export default async function ListDetails({
     ? `Modified ${convertDateToString(list!.updatedAt)}`
     : "";
   const subtitle = listOwner
-    ? `by ${listOwner?.email} ${listCreatedAt} ${listUpdatedAt}`
+    ? `by ${listOwner?.email}\n${listCreatedAt}\n${listUpdatedAt}`
     : "";
 
   return (
     <>
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col md:flex md:flex-row md:items-end gap-4 justify-between">
         <PageTitleSubtitle title={title} subtitle={subtitle} />
         <CreateListButton />
       </div>

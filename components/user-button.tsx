@@ -7,7 +7,7 @@ export default function UserButton({ userEmail }: { userEmail: string }) {
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost">
         <CircleUserRound />
-        <span className="hidden lg:flex">{userEmail}</span>
+        <span className="hidden lg:flex flex-wrap">{userEmail}</span>
       </div>
       <ul
         tabIndex={0}

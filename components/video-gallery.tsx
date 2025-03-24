@@ -54,7 +54,7 @@ export default function VideoGallery({
               )}
 
               <div className="mt-4 space-y-2">
-                <div className="flex gap-3">
+                <div className="flex gap-3 flex-wrap">
                   {selectedVideo.movie_title && (
                     <Link
                       href={`/movie/${selectedVideo.movie_id}`}

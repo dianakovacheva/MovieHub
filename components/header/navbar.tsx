@@ -26,7 +26,7 @@ export default function Navbar() {
           </Suspense>
         </div>
         {/* Buttons right side */}
-        <div className="flex gap-2">
+        <div className="flex items-center">
           <WatchListBtn buttonName={buttonName} />
           <AuthButton />
           <ThemeSwitcher />

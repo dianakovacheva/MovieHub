@@ -26,7 +26,7 @@ export default function UserLists({ lists }: ListsProps) {
           listParagraph={undefined}
           buttonText={buttonText}
           buttonAction={redirectToCreateListPage}
-          className="flex flex-col items-center gap-2"
+          className="flex flex-col items-center gap-2 flex-wrap"
         />
       )}
     </>
