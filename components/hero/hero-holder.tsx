@@ -41,7 +41,7 @@ export default async function HeroSection() {
   }
 
   const videoListTitle = (
-    <span className="font-bold text-[#f5c518]">Up next</span>
+    <span className="font-bold dark:text-[#f5c518]">Up next</span>
   );
 
   return (

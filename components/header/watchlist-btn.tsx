@@ -1,10 +1,6 @@
 import Link from "next/link";
 
-type WatchListBtnProps = {
-  buttonName: string;
-};
-
-export default function WatchListBtn({ buttonName }: WatchListBtnProps) {
+export default function WatchListBtn({ buttonName }: { buttonName: string }) {
   return (
     <div className="flex-none hidden sm:flex">
       <Link href={"/watchlist"} className="btn btn-ghost">

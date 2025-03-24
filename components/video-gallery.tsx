@@ -60,7 +60,7 @@ export default function VideoGallery({
                       href={`/movie/${selectedVideo.movie_id}`}
                       className="flex-none"
                     >
-                      <h3 className="text-xl font-bold text-zinc-500 dark:text-[#f5c518] uppercase line-clamp-2 hover:underline">
+                      <h3 className="text-xl font-bold text-zinc-900 dark:text-[#f5c518] uppercase line-clamp-2 hover:underline">
                         {selectedVideo.movie_title}
                       </h3>
                     </Link>
