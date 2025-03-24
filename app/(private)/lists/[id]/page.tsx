@@ -4,6 +4,7 @@ import { getUserById } from "../../../actions/user/user-data";
 import convertDateToString from "../../../utils/convert-date-to-string";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListButton from "../../../../components/create-list-button";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "List Details Page",
@@ -16,12 +17,23 @@ export default async function ListDetails({
 }) {
   const { id } = await params;
   const list = await getListById(id);
+
+  if (!list) {
+    notFound();
+  }
+
   const title = list?.name ?? "";
   const listOwner = await getUserById(list?.userId);
 
-  const listCreatedAt = `Created ${convertDateToString(list!.createdAt)}`;
-  const listUpdatedAt = `Modified ${convertDateToString(list!.updatedAt)}`;
-  const subtitle = `by ${listOwner?.email} ${listCreatedAt} ${listUpdatedAt}`;
+  const listCreatedAt = list
+    ? `Created ${convertDateToString(list!.createdAt)}`
+    : "";
+  const listUpdatedAt = list
+    ? `Modified ${convertDateToString(list!.updatedAt)}`
+    : "";
+  const subtitle = listOwner
+    ? `by ${listOwner?.email} ${listCreatedAt} ${listUpdatedAt}`
+    : "";
 
   return (
     <>

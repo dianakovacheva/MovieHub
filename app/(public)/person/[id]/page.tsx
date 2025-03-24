@@ -11,6 +11,7 @@ import ImageGallery from "../../../../components/image-gallery";
 import ActorKnownFor from "../../../../components/actor-known-for";
 import ActorCredits from "../../../../components/actor-credits";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Person Page",
@@ -24,6 +25,10 @@ export default async function PersonPage({
   const { id } = await params;
   const personId = Number(id.split("-")[0]);
   const personData = await getPersonData(personId);
+
+  if (!personData) {
+    notFound();
+  }
 
   const yearOfBirth = personData?.birthday?.split("-")[0] ?? "";
   const yearOfDeath =

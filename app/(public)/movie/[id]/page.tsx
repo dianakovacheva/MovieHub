@@ -25,6 +25,7 @@ import {
   MovieSuggestionsResponse,
 } from "../../../actions/movie/types";
 import UnorderedList from "../../../../components/unordered-list";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -48,6 +49,10 @@ export default async function MovieDetails({
   let topMovieSuggestions: MovieSuggestionsResponse["results"];
   const videoListTitle: string = "Videos List";
   const sectionName: string = "Videos";
+
+  if (!movie) {
+    notFound();
+  }
 
   if (movieCredits?.crew) {
     movieCredits.crew.forEach((data) => {
@@ -128,7 +133,7 @@ export default async function MovieDetails({
           )}
 
           {/* Stars */}
-          {topThreeCast && (
+          {topThreeCast.length > 0 && (
             <InformationBlock
               blockName={topThreeCast.length > 1 ? "Stars" : "Star"}
             >
@@ -151,7 +156,7 @@ export default async function MovieDetails({
       {backdrops && <ImageGallery backdrops={backdrops} />}
 
       {/* Top Cast List */}
-      {topCast && <TopCastList topCast={topCast} />}
+      {topCast.length > 0 && <TopCastList topCast={topCast} />}
 
       {/* Top Movie Suggestions */}
       {topMovieSuggestions && <MoreLikeThis movies={topMovieSuggestions} />}
