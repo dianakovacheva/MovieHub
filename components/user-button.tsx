@@ -11,7 +11,7 @@ export default function UserButton({ userEmail }: { userEmail: string }) {
       </div>
       <ul
         tabIndex={0}
-        className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
+        className="menu dropdown-content bg-zinc-50 dark:bg-[#121212] rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
       >
         <li>
           <Link href={"/dashboard"}>Your profile</Link>
