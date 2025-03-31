@@ -17,13 +17,13 @@ export default function ActorCredits({
   return (
     <>
       <HeaderSection sectionName={sectionName} count={undefined} />
-      {moviesSortedByReleaseYear && (
+      {moviesSortedByReleaseYear && moviesSortedByReleaseYear?.length > 0 && (
         <MoviesSortedByReleaseYear
           moviesSortedByReleaseYear={moviesSortedByReleaseYear}
         />
       )}
 
-      {moviesSortedByJobs && (
+      {moviesSortedByJobs && moviesSortedByJobs.length > 0 && (
         <MoviesSortedByJobs moviesSortedByJobs={moviesSortedByJobs} />
       )}
     </>
