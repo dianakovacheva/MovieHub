@@ -66,7 +66,7 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
           {movies.map((movie) => (
             <div
               key={movie.id}
-              className="card shadow-sm bg-zinc-50 dark:bg-[#121212] mb-2 w-55 h-[65vh]"
+              className="card shadow-sm bg-zinc-50 dark:bg-[#121212] mb-2 w-55 max-h-[65vh]"
             >
               {movie.title && (
                 <Link
@@ -100,7 +100,9 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
                       .toLowerCase()}`}
                     className="flex-none"
                   >
-                    <p className="truncate hover:underline">{movie.title}</p>
+                    <p className="truncate hover:underline mb-2">
+                      {movie.title}
+                    </p>
                   </Link>
                 )}
               </div>
