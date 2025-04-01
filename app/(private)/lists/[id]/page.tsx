@@ -5,7 +5,6 @@ import convertDateToString from "../../../utils/convert-date-to-string";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListButton from "../../../../components/create-list-button";
 import { notFound } from "next/navigation";
-import UnorderedList from "../../../../components/unordered-list";
 
 export const metadata: Metadata = {
   title: "List Details Page",

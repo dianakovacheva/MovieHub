@@ -58,10 +58,12 @@ export async function getMovieDetails(
 
     const resData: MovieDetailsResponse = await res.json();
 
-    resData.genres = resData.genres?.filter(getUniqueById);
+    if (resData.genres && resData.production_companies) {
+      resData.genres = resData.genres?.filter(getUniqueById);
 
-    resData.production_companies =
-      resData.production_companies?.filter(getUniqueById);
+      resData.production_companies =
+        resData.production_companies?.filter(getUniqueById);
+    }
 
     return resData;
   } catch (error) {
@@ -85,7 +87,7 @@ export async function getMovieVideos(
 
     const resData: MovieVideosResponse = await res.json();
 
-    return resData.results;
+    if (resData.results) return resData.results;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -108,7 +110,7 @@ export async function getMovieBackdrops(
 
     const resData: MovieImagesResponse = await res.json();
 
-    return resData.backdrops;
+    if (resData.backdrops) return resData.backdrops;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -130,8 +132,10 @@ export async function getMovieCredits(
 
     const resData: MovieCreditsResponse = await res.json();
 
-    resData.cast = resData.cast?.filter(getUniqueById);
-    resData.crew = resData.crew?.filter(getUniqueById);
+    if (resData.cast && resData.crew) {
+      resData.cast = resData.cast?.filter(getUniqueById);
+      resData.crew = resData.crew?.filter(getUniqueById);
+    }
 
     return resData;
   } catch (error) {
@@ -178,9 +182,12 @@ export async function getMovieSuggestions(
     }
 
     const resData: MovieSuggestionsResponse = await res.json();
-    resData.results = resData.results?.filter(getUniqueById);
 
-    return resData.results;
+    if (resData.results) {
+      resData.results = resData.results?.filter(getUniqueById);
+
+      return resData.results;
+    }
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -202,9 +209,12 @@ export async function getMovieKeywords(
     }
 
     const resData: MovieKeywordsResponse = await res.json();
-    resData.keywords = resData.keywords?.filter(getUniqueById);
 
-    return resData.keywords;
+    if (resData.keywords) {
+      resData.keywords = resData.keywords?.filter(getUniqueById);
+
+      return resData.keywords;
+    }
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -242,7 +252,7 @@ export async function getUpcomingMovies(): Promise<
 
     const resData: UpcomingMoviesResponse = await res.json();
 
-    return resData.results;
+    if (resData.results) return resData.results;
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"
@@ -264,9 +274,11 @@ export async function getTopRatedMovies(): Promise<
     }
 
     const resData: TopRatedMoviesResponse = await res.json();
-    resData.results = resData.results?.filter(getUniqueById);
+    if (resData.results) {
+      resData.results = resData.results?.filter(getUniqueById);
 
-    return resData.results;
+      return resData.results;
+    }
   } catch (error) {
     console.error(
       error instanceof Error ? error.message : "Unknown error occurred"

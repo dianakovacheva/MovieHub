@@ -2,11 +2,11 @@ import Image from "next/image";
 import posterURL from "../app/actions/API-URLS/image-API-URL";
 
 type Poster = {
-  name: string | undefined;
-  path: string | undefined;
-  height: number | undefined;
-  width: number | undefined;
-  className: string | undefined;
+  name?: string;
+  path?: string;
+  height?: number;
+  width?: number;
+  className?: string;
   isMovie: boolean;
 };
 
