@@ -19,11 +19,11 @@ export default function DashboardHeader({
     <div className="gap-10 flex flex-col flex-wrap items-start md:flex-row">
       <div>
         <Poster
-          name={title}
+          alt={title}
           path={undefined}
           height={130}
           width={130}
-          className="border-none dark:opacity-50"
+          cssStyle="border-none dark:opacity-50"
           isMovie={false}
         />
       </div>
