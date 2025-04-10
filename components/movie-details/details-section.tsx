@@ -2,7 +2,7 @@ import Link from "next/link";
 import HeaderSection from "./header-section";
 import { SquareArrowOutUpRight } from "lucide-react";
 import InformationBlock from "../information-block";
-import UnorderedList from "../unordered-list";
+import HorizontalList from "../horizontal-list";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 
 export default function DetailsSection({
@@ -11,6 +11,20 @@ export default function DetailsSection({
   movie: MovieDetailsResponse;
 }) {
   const sectionName: string = "Details";
+
+  const productionCountries =
+    movie.production_countries &&
+    movie.production_countries.map((country) => ({
+      id: country.iso_3166_1 ? country.iso_3166_1 : "",
+      name: country.name ? country.name : "",
+    }));
+
+  const spokenLanguages =
+    movie.spoken_languages &&
+    movie.spoken_languages.map((language) => ({
+      id: language.iso_639_1 ? language.iso_639_1 : "",
+      name: language.english_name ? language.english_name : "",
+    }));
 
   return (
     movie && (
@@ -23,21 +37,17 @@ export default function DetailsSection({
         )}
 
         {/* Movie Origin Country */}
-        {movie.production_countries &&
-          movie.production_countries.length > 0 && (
-            <InformationBlock
-              blockName={
-                movie.production_countries.length > 1
-                  ? "Countries of origin"
-                  : "Country of origin"
-              }
-            >
-              <UnorderedList
-                data={movie.production_countries}
-                path={undefined}
-              />
-            </InformationBlock>
-          )}
+        {productionCountries && productionCountries.length > 0 && (
+          <InformationBlock
+            blockName={
+              productionCountries.length > 1
+                ? "Countries of origin"
+                : "Country of origin"
+            }
+          >
+            <HorizontalList data={productionCountries} />
+          </InformationBlock>
+        )}
 
         {/* Movie Website */}
         {movie.homepage && movie.homepage !== "" && (
@@ -54,22 +64,11 @@ export default function DetailsSection({
         )}
 
         {/* Languages */}
-        {movie.spoken_languages && movie.spoken_languages.length > 0 && (
+        {spokenLanguages && spokenLanguages.length > 0 && (
           <InformationBlock
-            blockName={
-              movie.spoken_languages.length > 1 ? "Languages" : "Language"
-            }
+            blockName={spokenLanguages.length > 1 ? "Languages" : "Language"}
           >
-            <ul className="flex gap-6">
-              {movie.spoken_languages.map((language) => (
-                <li
-                  key={language.iso_639_1}
-                  className="[&:nth-child(n+2)]:list-disc"
-                >
-                  {language.english_name}
-                </li>
-              ))}
-            </ul>
+            <HorizontalList data={spokenLanguages} />
           </InformationBlock>
         )}
 
@@ -81,27 +80,17 @@ export default function DetailsSection({
         )}
 
         {/* Filming Locations */}
-        {movie.production_countries &&
-          movie.production_countries.length > 0 && (
-            <InformationBlock
-              blockName={
-                movie.production_countries.length > 1
-                  ? "Filming locations"
-                  : "Filming location"
-              }
-            >
-              <ul className="flex flex-wrap gap-6">
-                {movie.production_countries.map((counry) => (
-                  <li
-                    key={counry.iso_3166_1}
-                    className="[&:nth-child(n+2)]:list-disc"
-                  >
-                    {counry.name}
-                  </li>
-                ))}
-              </ul>
-            </InformationBlock>
-          )}
+        {productionCountries && productionCountries.length > 0 && (
+          <InformationBlock
+            blockName={
+              productionCountries.length > 1
+                ? "Filming locations"
+                : "Filming location"
+            }
+          >
+            <HorizontalList data={productionCountries} />
+          </InformationBlock>
+        )}
 
         {/* Production Companies */}
         {movie.production_companies &&
@@ -113,10 +102,7 @@ export default function DetailsSection({
                   : "Production company"
               }
             >
-              <UnorderedList
-                data={movie.production_companies}
-                path={undefined}
-              />
+              <HorizontalList data={movie.production_companies} />
             </InformationBlock>
           )}
       </div>

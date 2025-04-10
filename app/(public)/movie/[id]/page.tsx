@@ -24,7 +24,7 @@ import {
   MovieCreditsResponse,
   MovieSuggestionsResponse,
 } from "../../../actions/movie/types";
-import UnorderedList from "../../../../components/unordered-list";
+import HorizontalList from "../../../../components/horizontal-list";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -119,7 +119,7 @@ export default async function MovieDetails({
             <InformationBlock
               blockName={directors.length > 1 ? "Directors" : "Director"}
             >
-              <UnorderedList data={directors} path="/person" />
+              <HorizontalList data={directors} path="/person" />
             </InformationBlock>
           )}
 
@@ -128,7 +128,7 @@ export default async function MovieDetails({
             <InformationBlock
               blockName={writers.length > 1 ? "Writers" : "Writer"}
             >
-              <UnorderedList data={writers} path={"/person"} />
+              <HorizontalList data={writers} path={"/person"} />
             </InformationBlock>
           )}
 
@@ -137,7 +137,7 @@ export default async function MovieDetails({
             <InformationBlock
               blockName={topThreeCast.length > 1 ? "Stars" : "Star"}
             >
-              <UnorderedList data={topThreeCast} path={"/person"} />
+              <HorizontalList data={topThreeCast} path={"/person"} />
             </InformationBlock>
           )}
         </div>

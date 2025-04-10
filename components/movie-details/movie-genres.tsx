@@ -1,4 +1,4 @@
-import UnorderedList from "../unordered-list";
+import HorizontalList from "../horizontal-list";
 
 export default function MovieGenres({
   movieGenres,
@@ -11,6 +11,5 @@ export default function MovieGenres({
   const movieGenresSorted = movieGenres
     .filter((genre) => typeof genre.name === "string")
     .sort((a, b) => a.name!.localeCompare(b.name!));
-
-  return <UnorderedList data={movieGenresSorted} path={undefined} />;
+  return <HorizontalList data={movieGenresSorted} />;
 }
