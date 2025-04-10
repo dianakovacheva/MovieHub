@@ -3,23 +3,53 @@
 import { redirect } from "next/navigation";
 import EmptyList from "./empty-list";
 import HeaderSection from "./movie-details/header-section";
-import ListCard from "./list-card";
-import { ListsProps } from "../app/actions/list/definitions";
+import MediaList from "./media-list";
 
-export default function UserLists({ lists }: ListsProps) {
+type UserListsProps = {
+  data: {
+    id: string;
+    name?: string;
+    description?: string | null;
+    isPublic?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    userId?: string;
+  }[];
+};
+
+export default function UserLists({ data }: UserListsProps) {
   const sectionName = "Lists";
   const listTitle = "No lists yet";
   const buttonText = "Create a list";
-  const userListsCount = lists?.length ?? 0;
+  const userListsCount = data.length ?? 0;
 
   function redirectToCreateListPage() {
     redirect("/lists/create");
   }
+
   return (
     <>
       <HeaderSection sectionName={sectionName} count={userListsCount} />
-      {lists.length > 0 ? (
-        <ListCard lists={lists} />
+      {userListsCount > 0 ? (
+        <div className="bg-zinc-50 dark:bg-[#121212] rounded-xl p-4 shadow-xs mb-10">
+          <div className="font-semibold text-zinc-900 dark:text-white mb-1">
+            {data && (
+              <MediaList
+                data={data}
+                path="/lists"
+                subtitle={userListsCount.toString()}
+                buttons={true}
+              />
+            )}
+            {/* <HorizontalList
+              data={lists}
+              path="/lists"
+              style="list"
+              buttons={true}
+              
+            /> */}
+          </div>
+        </div>
       ) : (
         <EmptyList
           listTitle={listTitle}

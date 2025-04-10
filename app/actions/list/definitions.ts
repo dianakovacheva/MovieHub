@@ -20,17 +20,21 @@ export type CreateListFormState =
     }
   | undefined;
 
-export type ListsProps = {
-  lists: {
-    id: string;
-    name: string;
-    description: string | null;
-    isPublic: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    userId: string;
-  }[];
-};
+export type ListProps = {
+  id: string | number;
+  name?: string;
+  description?: string | null;
+  isPublic?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: string;
+  media_type?: string;
+  title?: string;
+  release_date?: string;
+  poster_path?: string;
+  known_for_department?: string;
+  profile_path?: string;
+}[];
 
 export type EmptyListProps = {
   listTitle: string;

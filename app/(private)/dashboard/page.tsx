@@ -37,7 +37,7 @@ export default async function Dashboard() {
           profileCreatedAt={profileCreatedAt}
         />
         <WatchlistCarousel watchlist={undefined} />
-        {userLists && <UserLists lists={userLists} />}
+        {userLists && <UserLists data={userLists} />}
       </div>
     )
   );
