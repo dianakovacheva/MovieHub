@@ -11,6 +11,7 @@ type MediaListCardProps = {
   meta?: string;
   link?: string;
   buttons?: boolean;
+  style?: string;
 };
 
 export default function MediaListCard({
@@ -22,9 +23,10 @@ export default function MediaListCard({
   meta,
   link,
   buttons,
+  style,
 }: MediaListCardProps) {
   return (
-    <li className="list-row">
+    <li className={style ? style : "list-row"}>
       <div>
         {link && (
           <Link href={link} className="flex-none">
@@ -33,7 +35,7 @@ export default function MediaListCard({
               path={media}
               height={250}
               width={200}
-              cssStyle="rounded-lg object-cover shadow-sm w-15 h-25"
+              style="rounded-lg object-cover shadow-sm w-15 h-25"
               isMovie={true}
             />
           </Link>

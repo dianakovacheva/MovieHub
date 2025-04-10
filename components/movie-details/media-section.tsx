@@ -25,11 +25,11 @@ export default async function MovieMedia({
     movie && (
       <div className="flex flex-col-reverse md:flex-row w-full gap-2 mb-2">
         <Poster
-          name={movie.title}
+          alt={movie.title}
           path={movie.poster_path}
           height={0}
           width={500}
-          className={undefined}
+          style={undefined}
           isMovie={true}
         />
 

@@ -77,11 +77,11 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
                   className="flex-none"
                 >
                   <Poster
-                    name={movie.title}
+                    alt={movie.title}
                     path={movie.poster_path ? movie.poster_path : ""}
                     height={250}
                     width={200}
-                    className="rounded-t-lg h-90 w-60 object-cover"
+                    style="rounded-t-lg h-90 w-60 object-cover"
                     isMovie={true}
                   />
                 </Link>

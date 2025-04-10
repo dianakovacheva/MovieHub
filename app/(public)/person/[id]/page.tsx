@@ -101,11 +101,11 @@ export default async function PersonPage({
         <div className="flex flex-col md:flex-row gap-6 mb-2">
           <div className="flex flex-col md:w-[25vw]">
             <Poster
-              name={personData.name}
+              alt={personData.name}
               path={personData.profile_path}
               height={personData.profile_path ? 100 : 300}
               width={personData.profile_path ? 400 : 300}
-              className={!personData.profile_path ? "shadow-none" : ""}
+              style={!personData.profile_path ? "shadow-none" : ""}
               isMovie={false}
             />
           </div>

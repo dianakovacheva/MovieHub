@@ -23,7 +23,7 @@ export default function DashboardHeader({
           path={undefined}
           height={130}
           width={130}
-          cssStyle="border-none dark:opacity-50"
+          style="border-none dark:opacity-50"
           isMovie={false}
         />
       </div>

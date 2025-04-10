@@ -36,11 +36,11 @@ export default function Accordion({ movies, listTitle }: AccordionProps) {
                   <li className="list-row">
                     <div>
                       <Poster
-                        name={movie.title}
+                        alt={movie.title}
                         path={movie.poster_path}
                         height={200}
                         width={250}
-                        className="rounded-lg object-cover shadow-sm w-15 h-25"
+                        style="rounded-lg object-cover shadow-sm w-15 h-25"
                         isMovie={true}
                       />
                     </div>

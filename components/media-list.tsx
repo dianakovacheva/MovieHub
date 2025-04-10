@@ -21,6 +21,7 @@ type MediaListProps = {
   searchType?: string;
   buttons?: boolean;
   listStyle?: string;
+  cardStyle?: string;
 };
 
 export default function MediaList({
@@ -30,6 +31,7 @@ export default function MediaList({
   searchType,
   buttons,
   listStyle,
+  cardStyle,
 }: MediaListProps) {
   return (
     <ul className={listStyle ? listStyle : "list"}>
@@ -70,6 +72,7 @@ export default function MediaList({
                 : `/${searchType}/${item.id}`
             }
             buttons={buttons}
+            style={cardStyle}
           />
         ))}
     </ul>

@@ -2,20 +2,20 @@ import Image from "next/image";
 import posterURL from "../app/actions/API-URLS/image-API-URL";
 
 type Poster = {
-  name?: string;
+  alt?: string;
   path?: string;
   height?: number;
   width?: number;
-  className?: string;
+  style?: string;
   isMovie: boolean;
 };
 
 export default function Poster({
-  name,
+  alt,
   path,
   height,
   width,
-  className,
+  style,
   isMovie,
 }: Poster) {
   return (
@@ -27,10 +27,10 @@ export default function Poster({
           ? "/default-movie-poster.jpg"
           : "/default-avatar.png"
       }
-      alt={`${name}'s poster`}
+      alt={`${alt}'s poster`}
       height={height}
       width={width}
-      className={className ? className : "rounded-box object-cover shadow-sm"}
+      className={style ? style : "rounded-box object-cover shadow-sm"}
       unoptimized={false}
       sizes="(max-width: 640px) 250px,
              (max-width: 1024px) 600px,

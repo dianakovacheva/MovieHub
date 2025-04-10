@@ -46,11 +46,11 @@ export default function ImageGallery({ backdrops }: BackdropProps) {
           <div className="flex flex-col">
             <div className="relative">
               <Poster
-                name={selectedImage.name}
+                alt={selectedImage.name}
                 path={`${baseImageUrl}${selectedImage.file_path}`}
                 height={800}
                 width={800}
-                className={
+                style={
                   "max-h-[80vh] w-full rounded-lg object-contain shadow-sm"
                 }
                 isMovie={false}
@@ -108,11 +108,11 @@ export default function ImageGallery({ backdrops }: BackdropProps) {
                     }}
                   >
                     <Poster
-                      name={backdrop.name}
+                      alt={backdrop.name}
                       path={`${posterURL}${backdrop.file_path}`}
                       height={selectedImage.height}
                       width={selectedImage.width}
-                      className={`h-24 w-40 rounded object-cover shadow-sm ${
+                      style={`h-24 w-40 rounded object-cover shadow-sm ${
                         selectedImage.file_path === backdrop.file_path
                           ? "ring-2 ring-blue-500 dark:ring-yellow-400"
                           : "ring-1 ring-gray-200 dark:ring-gray-700"

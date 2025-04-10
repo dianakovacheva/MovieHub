@@ -9,7 +9,6 @@ type UserListsProps = {
   data: {
     id: string;
     name?: string;
-    description?: string | null;
     isPublic?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -41,13 +40,6 @@ export default function UserLists({ data }: UserListsProps) {
                 buttons={true}
               />
             )}
-            {/* <HorizontalList
-              data={lists}
-              path="/lists"
-              style="list"
-              buttons={true}
-              
-            /> */}
           </div>
         </div>
       ) : (
