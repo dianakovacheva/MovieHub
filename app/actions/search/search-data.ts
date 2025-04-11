@@ -1,4 +1,5 @@
 "use server";
+
 import baseApiURL from "../API-URLS/base-API-URL";
 import { SearchResponse } from "./types";
 
@@ -7,7 +8,9 @@ export async function search(
   searchType: string
   //   "multi" | "movie" | "person"
 ): Promise<SearchResponse["results"] | null> {
-  const searchURL = `${baseApiURL}/search/${searchType}?query=${searchTerm}&language=en-US&api_key=${process.env.API_KEY}`;
+  const searchURL = `${baseApiURL}/search/${searchType}?query=${searchTerm.trim()}&language=en-US&api_key=${
+    process.env.API_KEY
+  }`;
 
   try {
     const res = await fetch(searchURL);

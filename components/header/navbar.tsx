@@ -1,7 +1,7 @@
 import Link from "next/link";
 import BurgerMenu from "./burger-menu";
 import WatchListBtn from "./watchlist-btn";
-import SearchContainer from "./search/search-container";
+import SearchContainer from "./search/search";
 import ThemeSwitcher from "./theme-switcher";
 import AuthButton from "./auth-button";
 import { Suspense } from "react";

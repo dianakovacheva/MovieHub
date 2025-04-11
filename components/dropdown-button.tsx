@@ -9,7 +9,7 @@ type DropdownButtonProps = {
 
 export default function DropdownButton({ link, id }: DropdownButtonProps) {
   return (
-    <div className="dropdown dropdown-bottom dropdown-end flex-none text-sm font-semibold">
+    <div className="dropdown sm:dropdown-bottom dropdown-end flex-none text-sm font-semibold">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle m-1">
         <EllipsisVertical />
       </div>

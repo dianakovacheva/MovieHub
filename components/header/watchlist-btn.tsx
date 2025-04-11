@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function WatchListBtn({ buttonName }: { buttonName: string }) {
   return (
-    <div className="flex-none hidden sm:flex">
+    <div className="flex-none hidden lg:flex">
       <Link href={"/watchlist"} className="btn btn-ghost">
         <BookmarkPlus />
         {buttonName}

@@ -11,15 +11,15 @@ export default async function MovieInfo({
   const buttonName = "Rate";
 
   return movie ? (
-    <div className="flex items-start justify-between w-full">
+    <div className="flex flex-wrap items-end justify-between w-full">
       {/* Movie Info Left Side */}
-      <div className="flex flex-col gap-2 md:gap-0">
+      <div className="flex flex-col gap-2 md:gap-0 mr-4">
         {movie.title && <PageTitle title={movie.title} />}
         <SubtitleMovie movie={movie} />
       </div>
 
       {/* Movie Info Right Side */}
-      <div className="right-side flex gap-10 items-start hidden sm:flex">
+      <div className="right-side flex gap-10 items-start hidden md:flex md:pt-4">
         {/* Rating Info */}
         <div className="flex flex-col gap-2">
           <p className="text-zinc-500 dark:text-[#c0bcbc] text-xs font-bold">

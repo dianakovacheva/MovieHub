@@ -54,9 +54,9 @@ export default function MediaListCard({
         )}
 
         {status && status !== undefined && meta && meta !== undefined && (
-          <ul className="flex gap-6 text-sm font-semibold opacity-60">
+          <ul className="flex flex-wrap gap-2 sm:gap-6 text-sm font-semibold opacity-60">
             <li>{status}</li>
-            <li className="list-disc">{meta.toString()}</li>
+            <li className="sm:list-disc">{meta.toString()}</li>
           </ul>
         )}
       </div>
