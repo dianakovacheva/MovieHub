@@ -1,4 +1,4 @@
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
 import SearchForm from "../../../search-form";
 import MediaList from "../../../media-list";
 import { Dispatch, SetStateAction } from "react";

@@ -108,7 +108,8 @@ export const lists = pgTable("lists", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull().unique(),
   description: text("description"),
-  isPublic: boolean("isPublic").notNull().default(true), // Public or private
+  isPublic: text("isPublic").notNull().default("1"),
+  // isPublic: boolean("isPublic").notNull().default(true), // Public or private
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
   userId: text("userId")

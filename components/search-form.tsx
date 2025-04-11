@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { Search } from "lucide-react";
 
 type SearchFormProps = {
   searchType: string;
@@ -48,7 +47,6 @@ export default function SearchForm({
           list="search-options"
           className="lg:w-[20vw] w-[25vw]"
         />
-        {/* <Search className="opacity-50 hidden sm:flex hover:cursor-pointer" /> */}
       </label>
     </form>
   );
