@@ -6,7 +6,7 @@ type MediaListProps = {
     id: string | number;
     name?: string;
     title?: string;
-    isPublic?: boolean;
+    isPublic?: string;
     createdAt?: Date;
     updatedAt?: Date;
     userId?: string;
@@ -57,7 +57,7 @@ export default function MediaList({
                 ? item.known_for_department
                 : item.release_date
             }
-            status={item.isPublic == true ? "Public" : "Private"}
+            status={item.isPublic == "0" ? "Private" : "Public"}
             meta={
               item.updatedAt &&
               `Modified ${convertDateToString(item.updatedAt)}`

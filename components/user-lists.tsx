@@ -9,7 +9,7 @@ type UserListsProps = {
   data: {
     id: string;
     name?: string;
-    isPublic?: boolean;
+    isPublic?: string;
     createdAt?: Date;
     updatedAt?: Date;
     userId?: string;

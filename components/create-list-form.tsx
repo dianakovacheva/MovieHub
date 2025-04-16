@@ -8,7 +8,7 @@ type CreateListFormProps = {
 };
 export default function CreateListForm({ userId }: CreateListFormProps) {
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("0");
 
   return (
     <form
@@ -52,23 +52,27 @@ export default function CreateListForm({ userId }: CreateListFormProps) {
               id="public"
               type="radio"
               name="isPublic"
-              value={1}
+              value={"1"}
               className="radio"
               defaultChecked
               onChange={(e) => setSelected(e.target.value)}
             />
-            <label className="text-base">Public</label>
+            <label htmlFor="public" className="text-base">
+              Public
+            </label>
           </div>
           <div className="flex gap-4 items-center">
             <input
               id="private"
               type="radio"
               name="isPublic"
-              value={0}
+              value={"0"}
               className="radio"
               onChange={(e) => setSelected(e.target.value)}
             />
-            <label className="text-base">Private</label>
+            <label htmlFor="private" className="text-base">
+              Private
+            </label>
           </div>
         </div>
         {selected == "1" ? (

@@ -40,7 +40,7 @@ export async function search(
       );
     }
 
-    // 3. Cache the result in Redis (optional: set TTL)
+    // 3. Cache the result in Redis (set TTL)
     await redis.set(cacheKey, JSON.stringify(resData.results), {
       EX: DEFAULT_EXPIRATION,
     });
