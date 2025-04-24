@@ -74,10 +74,9 @@ export default function SearchField() {
           onKeyDown={handleKeyDown}
           searchResults={searchResults}
         />
-      </Suspense>
 
-      {/* Search icon hidden on desktop */}
-      <Suspense>
+        {/* Search icon hidden on desktop */}
+
         <SearchMobile
           searchType={searchType}
           setSearchType={setSearchType}

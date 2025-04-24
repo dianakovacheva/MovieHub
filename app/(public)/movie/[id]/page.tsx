@@ -26,7 +26,6 @@ import {
 } from "../../../actions/movie/types";
 import HorizontalList from "../../../../components/horizontal-list";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Details Page",
