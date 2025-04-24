@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search as SearchIcon } from "lucide-react";
 import SearchForm from "../../../search-form";
 import MediaList from "../../../media-list";
 import { Dispatch, SetStateAction } from "react";
@@ -37,7 +37,7 @@ export default function SearchMobile({
     <div className="dropdown dropdown-center">
       <div tabIndex={0} role="button" className="btn btn-ghost flex sm:hidden">
         <div className="indicator">
-          <Search />
+          <SearchIcon />
         </div>
       </div>
       <div tabIndex={0} className="dropdown-content z-1 mt-3 shadow pb-6">

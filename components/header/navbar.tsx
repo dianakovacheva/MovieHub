@@ -4,7 +4,6 @@ import WatchListBtn from "./watchlist-btn";
 import SearchField from "./search/search-field";
 import ThemeSwitcher from "./theme-switcher";
 import AuthButton from "./auth-button";
-import { Suspense } from "react";
 
 export default function Navbar() {
   const buttonName = "Watchlist";
