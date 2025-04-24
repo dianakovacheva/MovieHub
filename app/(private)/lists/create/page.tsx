@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListForm from "../../../../components/create-list-form";
 import { auth } from "../../../../auth";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create list",
@@ -16,7 +17,9 @@ export default async function CreateList() {
   return (
     <>
       <PageTitleSubtitle title={title} subtitle={subtitle} />
-      <CreateListForm userId={userId} />
+      <Suspense>
+        <CreateListForm userId={userId} />
+      </Suspense>
     </>
   );
 }

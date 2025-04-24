@@ -5,6 +5,7 @@ import convertDateToString from "../../../utils/convert-date-to-string";
 import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListButton from "../../../../components/create-list-button";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "List Details Page",
@@ -39,7 +40,9 @@ export default async function ListDetails({
     <>
       <div className="flex flex-col md:flex md:flex-row md:items-end gap-4 justify-between">
         <PageTitleSubtitle title={title} subtitle={subtitle} />
-        <CreateListButton />
+        <Suspense>
+          <CreateListButton />
+        </Suspense>
       </div>
       {list && <p>{list.description}</p>}
     </>
