@@ -11,6 +11,7 @@ type SearchDesktopProps = {
       value: string;
     };
   }) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   searchResults?: {
     id: string | number;
     name?: string;
@@ -28,6 +29,7 @@ export default function SearchDesktop({
   setSearchType,
   query,
   handleChange,
+  onKeyDown,
   searchResults,
 }: SearchDesktopProps) {
   return (
@@ -37,6 +39,7 @@ export default function SearchDesktop({
         setSearchType={setSearchType}
         query={query}
         handleChange={handleChange}
+        onKeyDown={onKeyDown}
         style="items-center join hidden sm:flex"
       />
 

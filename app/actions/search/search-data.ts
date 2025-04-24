@@ -10,7 +10,7 @@ export async function search(
   searchTerm: string,
   searchType: string //   "multi" | "movie" | "person"
 ): Promise<SearchResponse["results"] | null> {
-  const searchURL = `${baseApiURL}/search/${searchType}?query=${searchTerm.trim()}&language=en-US&api_key=${
+  const searchURL = `${baseApiURL}/search/${searchType.trim()}?query=${searchTerm.trim()}&language=en-US&api_key=${
     process.env.API_KEY
   }`;
   const cacheKey = `search:${searchType}:${searchTerm.toLowerCase()}`;
@@ -33,17 +33,28 @@ export async function search(
 
     const resData: SearchResponse = await res.json();
 
+    // Filter only movie and person results
     if (resData && resData.results && searchType == "multi") {
       resData.results = resData.results.filter(
         (result) =>
           result.media_type == "movie" || result.media_type == "person"
       );
+
+      resData.results?.filter((item) => item.title !== undefined);
+      resData.results?.filter((item) => item.name !== undefined);
     }
 
     // 3. Cache the result in Redis (set TTL)
     await redis.set(cacheKey, JSON.stringify(resData.results), {
       EX: DEFAULT_EXPIRATION,
     });
+
+    // Sort results by popularity
+    if (resData && resData.results) {
+      resData.results = resData.results.sort(
+        (a, b) => b.popularity - a.popularity
+      );
+    }
 
     return resData.results;
   } catch (error) {

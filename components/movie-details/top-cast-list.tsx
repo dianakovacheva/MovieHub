@@ -43,7 +43,7 @@ export default function TopCastList({ topCast }: TopCastListProps) {
       {topCast.length > 0 ? (
         <HeaderSection sectionName={sectionName} count={topCastCount} />
       ) : (
-        <HeaderSection sectionName={sectionName} count={undefined} />
+        <HeaderSection sectionName={sectionName} />
       )}
 
       {topCast && topCast.length > 0 ? (

@@ -12,6 +12,7 @@ type SearchMobileProps = {
       value: string;
     };
   }) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   searchResults?: {
     id: string | number;
     name?: string;
@@ -29,6 +30,7 @@ export default function SearchMobile({
   setSearchType,
   query,
   handleChange,
+  onKeyDown,
   searchResults,
 }: SearchMobileProps) {
   return (
@@ -44,6 +46,7 @@ export default function SearchMobile({
           setSearchType={setSearchType}
           query={query}
           handleChange={handleChange}
+          onKeyDown={onKeyDown}
           style="sm:hidden flex"
         />
 

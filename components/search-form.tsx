@@ -1,4 +1,6 @@
+import { Search as SearchIcon } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+import Link from "next/link";
 
 type SearchFormProps = {
   searchType: string;
@@ -9,6 +11,7 @@ type SearchFormProps = {
       value: string;
     };
   }) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   style?: string;
 };
 
@@ -17,10 +20,22 @@ export default function SearchForm({
   setSearchType,
   query,
   handleChange,
+  onKeyDown,
   style,
 }: SearchFormProps) {
+  const searchUrl = `/search/?q=${query
+    .split(" ")
+    .join("-")
+    .toLowerCase()}&type=${searchType}`;
+
   return (
-    <form className={style ?? style}>
+    <form
+      // action={`/search/?q=${query
+      //   .split(" ")
+      //   .join("-")
+      //   .toLowerCase()}&type=${searchType}`}
+      className={style ?? style}
+    >
       <select
         id="search-options"
         className="bg-base-100 z-1 w-32 join-item p-2"
@@ -43,10 +58,14 @@ export default function SearchForm({
           type="text"
           value={query}
           onChange={handleChange}
+          onKeyDown={onKeyDown}
           placeholder="Search"
           list="search-options"
           className="lg:w-[20vw] w-[25vw]"
         />
+        <Link href={searchUrl}>
+          <SearchIcon />
+        </Link>
       </label>
     </form>
   );

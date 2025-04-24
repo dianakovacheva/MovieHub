@@ -26,7 +26,7 @@ export default async function ActorInformationBlock({
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
 
       {gender && (
         <InformationBlock blockName="Gender">{gender}</InformationBlock>

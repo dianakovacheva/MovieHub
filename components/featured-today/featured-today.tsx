@@ -8,7 +8,7 @@ export default async function FeaturedToday() {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
       {trendingMovies && <MoviesCarousel movies={trendingMovies} />}
     </>
   );

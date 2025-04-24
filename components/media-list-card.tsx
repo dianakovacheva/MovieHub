@@ -41,7 +41,6 @@ export default function MediaListCard({
           </Link>
         )}
       </div>
-
       <div className="flex flex-col">
         {link && (
           <Link href={link} className="flex-none">

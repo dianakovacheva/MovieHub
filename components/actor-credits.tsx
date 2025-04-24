@@ -16,7 +16,7 @@ export default function ActorCredits({
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
       {moviesSortedByReleaseYear && moviesSortedByReleaseYear?.length > 0 && (
         <MoviesSortedByReleaseYear
           moviesSortedByReleaseYear={moviesSortedByReleaseYear}

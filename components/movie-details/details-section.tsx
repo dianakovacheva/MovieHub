@@ -29,7 +29,7 @@ export default function DetailsSection({
   return (
     movie && (
       <div>
-        <HeaderSection sectionName={sectionName} count={undefined} />
+        <HeaderSection sectionName={sectionName} />
 
         {/* Movie Release Date */}
         {movie.release_date !== "" && (

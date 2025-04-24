@@ -1,7 +1,7 @@
 import Link from "next/link";
 import BurgerMenu from "./burger-menu";
 import WatchListBtn from "./watchlist-btn";
-import SearchContainer from "./search/search";
+import SearchField from "./search/search-field";
 import ThemeSwitcher from "./theme-switcher";
 import AuthButton from "./auth-button";
 import { Suspense } from "react";
@@ -21,9 +21,7 @@ export default function Navbar() {
       <div className="flex gap-2 navbar-end order-2 w-auto">
         {/* Search bar */}
         <div>
-          <Suspense>
-            <SearchContainer />
-          </Suspense>
+          <SearchField />
         </div>
         {/* Buttons right side */}
         <div className="flex items-center">

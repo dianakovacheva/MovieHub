@@ -7,7 +7,7 @@ export default function ActorKnownFor({ movies }: MoviesProps) {
 
   return (
     <>
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
       {movies && <MoviesCarousel movies={movies} />}
     </>
   );

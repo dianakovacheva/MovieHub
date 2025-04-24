@@ -16,7 +16,7 @@ export default function Storyline({
 
   return (
     <div className="flex flex-col gap-2">
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
 
       {movie.overview && movie.overview !== "" ? (
         <Paragraph text={movie.overview} />

@@ -10,7 +10,7 @@ export default function BoxOffice({ revenue }: { revenue: number }) {
 
   return (
     <div>
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
       <InformationBlock blockName="Revenue">
         {USDollar.format(revenue)}
       </InformationBlock>

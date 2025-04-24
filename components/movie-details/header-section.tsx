@@ -3,7 +3,7 @@ export default function HeaderSection({
   count,
 }: {
   sectionName: string;
-  count: number | undefined;
+  count?: number | undefined;
 }) {
   return (
     <div className="pt-4">

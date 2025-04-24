@@ -3650,6 +3650,8 @@ export interface operations {
              */
             page: number;
             results?: {
+              known_for_department: ReactNode;
+              name: ReactNode;
               /**
                * @default true
                * @example false

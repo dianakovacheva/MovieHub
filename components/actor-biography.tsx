@@ -7,7 +7,7 @@ export default function ActorBiography({ biography }: ActorBiographyProps) {
 
   return (
     <div className="flex flex-col gap-4 w-[80vw]">
-      <HeaderSection sectionName={sectionName} count={undefined} />
+      <HeaderSection sectionName={sectionName} />
       {biography && (
         <div>
           <Paragraph text={biography} />
