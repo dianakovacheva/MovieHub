@@ -2,6 +2,7 @@ import { db } from "../../db";
 import { eq } from "drizzle-orm";
 import { users } from "../../db/schema";
 import { compare } from "bcrypt-ts";
+import { auth } from "../../../auth";
 
 export default async function getUserByEmail(
   email: string,
@@ -44,4 +45,14 @@ export async function getUserById(userId: string | undefined) {
   } catch (error) {
     console.log((error as Error).message);
   }
+}
+
+export async function getUserSession() {
+  const session = await auth();
+
+  if (!session) return null;
+
+  const user = await getUserById(session?.user?.id);
+
+  return user;
 }

@@ -2,7 +2,12 @@ import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import { logout } from "../app/actions/user/auth";
 
-export default function UserButton({ userEmail }: { userEmail: string }) {
+type UserButtonProps = {
+  userEmail: string;
+  userId: string;
+};
+
+export default function UserButton({ userEmail, userId }: UserButtonProps) {
   return (
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -14,7 +19,7 @@ export default function UserButton({ userEmail }: { userEmail: string }) {
         className="menu dropdown-content bg-zinc-50 dark:bg-[#121212] rounded-box z-1 mt-4 w-52 p-2 shadow-sm"
       >
         <li>
-          <Link href={"/dashboard"}>Your profile</Link>
+          <Link href={`/user/${userId}`}>Your profile</Link>
         </li>
         <li>
           <Link href={"/watchlist"}>Your watchlist</Link>

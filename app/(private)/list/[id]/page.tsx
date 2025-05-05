@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import { getListById } from "../../../actions/list/list-data";
-import { getUserById } from "../../../actions/user/user-data";
-import convertDateToString from "../../../utils/convert-date-to-string";
-import PageTitleSubtitle from "../../../../components/page-title-subtitle";
 import CreateListButton from "../../../../components/create-list-button";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import PageTitleSubtitle from "../../../../components/page-title-subtitle";
+import convertDateToString from "../../../utils/convert-date-to-string";
+import { getUserById } from "../../../actions/user/user-data";
 
 export const metadata: Metadata = {
   title: "List Details Page",
@@ -25,7 +25,6 @@ export default async function ListDetails({
 
   const title = list?.name ?? "";
   const listOwner = await getUserById(list?.userId);
-
   const listCreatedAt = list
     ? `Created ${convertDateToString(list!.createdAt)}`
     : "";

@@ -1,19 +1,20 @@
 import Link from "next/link";
-import { auth } from "../../auth";
 import UserButton from "../user-button";
+import { getUserSession } from "../../app/actions/user/user-data";
 
 export default async function AuthButton() {
-  const session = await auth();
-  const userEmail =
-    typeof session?.user?.email === "string" ? session?.user?.email : "";
+  const user = await getUserSession();
+  let userEmail: string = "";
 
-  return !session?.user?.id ? (
+  if (user && typeof user.email === "string") userEmail = user.email;
+
+  return !user?.id ? (
     <div>
       <Link href={"/login"} className="btn btn-ghost">
         Login
       </Link>
     </div>
   ) : (
-    <UserButton userEmail={userEmail} />
+    <UserButton userId={user?.id} userEmail={userEmail} />
   );
 }
