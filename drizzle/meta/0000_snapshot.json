@@ -1,5 +1,5 @@
 {
-  "id": "3c06c160-702c-48ce-9f21-f2f3cc793dc4",
+  "id": "4859d6a3-15ad-469a-9d76-ffbd6961e60b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -180,6 +180,129 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.listMembers": {
+      "name": "listMembers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "listMembers_id_lists_id_fk": {
+          "name": "listMembers_id_lists_id_fk",
+          "tableFrom": "listMembers",
+          "tableTo": "lists",
+          "columnsFrom": [
+            "id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "listMembers_userId_users_id_fk": {
+          "name": "listMembers_userId_users_id_fk",
+          "tableFrom": "listMembers",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.listMovies": {
+      "name": "listMovies",
+      "schema": "",
+      "columns": {
+        "listId": {
+          "name": "listId",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "movieId": {
+          "name": "movieId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "addedAt": {
+          "name": "addedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "listMovies_listId_lists_id_fk": {
+          "name": "listMovies_listId_lists_id_fk",
+          "tableFrom": "listMovies",
+          "tableTo": "lists",
+          "columnsFrom": [
+            "listId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "listMovies_userId_users_id_fk": {
+          "name": "listMovies_userId_users_id_fk",
+          "tableFrom": "listMovies",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.lists": {
       "name": "lists",
       "schema": "",
@@ -202,12 +325,12 @@
           "primaryKey": false,
           "notNull": false
         },
-        "status": {
-          "name": "status",
-          "type": "boolean",
+        "isPublic": {
+          "name": "isPublic",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": true
+          "default": "'1'"
         },
         "createdAt": {
           "name": "createdAt",
@@ -247,7 +370,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "lists_name_unique": {
+          "name": "lists_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

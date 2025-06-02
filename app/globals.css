@@ -15,11 +15,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  font-family: Helvetica, Arial, sans-serif;
 }
-
-/* .list-row {
-  @apply border-b-2;
-} */
 
 :is(
     .list > :not(:last-child).list-row,

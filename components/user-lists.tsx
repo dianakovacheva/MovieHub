@@ -1,6 +1,5 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import EmptyList from "./empty-list";
 import HeaderSection from "./movie-details/header-section";
 import MediaList from "./media-list";
@@ -24,10 +23,6 @@ export default function UserLists({ data, userId, style }: UserListsProps) {
   const listTitle = "No lists yet";
   const buttonText = "Create a list";
   const userListsCount = data.length ?? 0;
-
-  function redirectToCreateListPage() {
-    redirect("/lists/create");
-  }
 
   return (
     <>
@@ -55,7 +50,7 @@ export default function UserLists({ data, userId, style }: UserListsProps) {
         <EmptyList
           listTitle={listTitle}
           buttonText={buttonText}
-          buttonAction={redirectToCreateListPage}
+          buttonAction={"/list/create"}
           className="flex flex-col items-center gap-2 flex-wrap"
         />
       )}

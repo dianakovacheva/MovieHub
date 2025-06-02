@@ -1,6 +1,7 @@
 import { JSX } from "react";
 import PageTitle from "./page-title";
 import Subtitle from "./subtitle";
+import EditListButton from "./edit-list-button";
 
 export default function PageTitleSubtitle({
   title,
@@ -11,7 +12,13 @@ export default function PageTitleSubtitle({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <PageTitle title={title} />
+      <div className="flex gap-3">
+        <PageTitle title={title} />
+
+        <div className="flex justify-end gap-10">
+          <EditListButton title={title} />
+        </div>
+      </div>
       <Subtitle subtitle={subtitle} />
     </div>
   );

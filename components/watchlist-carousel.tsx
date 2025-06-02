@@ -24,7 +24,7 @@ export default function WatchlistCarousel({ watchlist }: { watchlist?: [] }) {
             listTitle={listTitle}
             listParagraph={listParagraph}
             buttonText={buttonText}
-            buttonAction={undefined}
+            buttonAction=""
             className="flex flex-col items-center gap-4 flex-wrap"
           />
         </>

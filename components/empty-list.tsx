@@ -1,4 +1,12 @@
-import { EmptyListProps } from "../app/actions/list/definitions";
+import Link from "next/link";
+
+type EmptyListProps = {
+  listTitle: string;
+  listParagraph?: string;
+  buttonText?: string;
+  buttonAction?: string;
+  className?: string;
+};
 
 export default function EmptyList({
   listTitle,
@@ -11,12 +19,16 @@ export default function EmptyList({
     <div className={className}>
       <h3 className="text-xl font-bold">{listTitle}</h3>
       <p className="text-base">{listParagraph}</p>
-      <button
-        onClick={buttonAction}
-        className="btn bg-[#0e63be] hover:bg-[#216fc3] text-white shadow-none dark:shadow-sm rounded-full"
-      >
-        {buttonText}
-      </button>
+      {buttonText || buttonAction ? (
+        <Link
+          href={buttonAction!}
+          className="btn bg-[#0e63be] hover:bg-[#216fc3] text-white shadow-none dark:shadow-sm rounded-full"
+        >
+          {buttonText}
+        </Link>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

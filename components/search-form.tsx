@@ -1,6 +1,6 @@
-import { Search as SearchIcon } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import Link from "next/link";
+import SearchFormFilter from "./search-form-filter";
+import SearchFormInputField from "./search-form-input-field";
 
 type SearchFormProps = {
   searchType: string;
@@ -29,44 +29,14 @@ export default function SearchForm({
     .toLowerCase()}&type=${searchType}`;
 
   return (
-    <form
-      // action={`/search/?q=${query
-      //   .split(" ")
-      //   .join("-")
-      //   .toLowerCase()}&type=${searchType}`}
-      className={style ?? style}
-    >
-      <select
-        id="search-options"
-        className="bg-base-100 z-1 w-32 join-item p-2"
-        value={searchType}
-        onChange={(e) => setSearchType(e.target.value)}
-        aria-label="Search category"
-      >
-        <option disabled={true} value="">
-          Search by
-        </option>
-        <option value="multi">All</option>
-        <option value="movie">Movie</option>
-        <option value="person">Person</option>
-      </select>
-      <label
-        htmlFor="search-input"
-        className="input join-item flex items-center"
-      >
-        <input
-          type="text"
-          value={query}
-          onChange={handleChange}
-          onKeyDown={onKeyDown}
-          placeholder="Search"
-          list="search-options"
-          className="lg:w-[20vw] w-[25vw]"
-        />
-        <Link href={searchUrl}>
-          <SearchIcon />
-        </Link>
-      </label>
+    <form className={style ?? style}>
+      <SearchFormFilter searchType={searchType} setSearchType={setSearchType} />
+      <SearchFormInputField
+        query={query}
+        handleChange={handleChange}
+        onKeyDown={onKeyDown}
+        searchUrl={searchUrl}
+      />
     </form>
   );
 }

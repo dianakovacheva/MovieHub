@@ -117,13 +117,37 @@ export const lists = pgTable("lists", {
     .references(() => users.id, { onDelete: "cascade" }),
 });
 
-// Movies
-// export const movies = pgTable("movies", {
-//   id: integer("id").primaryKey(), // TMDB Movie ID (no need for UUID)
-//   title: text("title").notNull(),
-//   releaseYear: integer("releaseYear"),
-//   posterPath: text("posterPath"), // TMDB poster path
-//   backdropPath: text("backdropPath"), // TMDB backdrop image
-//   tmdbId: integer("tmdbId").unique().notNull(), // Ensure uniqueness
-//   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
-// });
+// List members
+export const listMembers = pgTable(
+  "listMembers",
+  {
+    listId: text("listId")
+      .notNull()
+      .references(() => lists.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    role: text({ enum: ["editor", "viewer"] }),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.listId, table.userId] }),
+  })
+);
+
+// List movies
+export const listMovies = pgTable(
+  "listMovies",
+  {
+    listId: text("listId")
+      .notNull()
+      .references(() => lists.id, { onDelete: "cascade" }),
+    movieId: text("movieId").notNull(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    addedAt: timestamp("addedAt", { mode: "date" }).defaultNow().notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.listId, table.movieId] }),
+  })
+);

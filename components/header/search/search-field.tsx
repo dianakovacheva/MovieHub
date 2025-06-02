@@ -10,6 +10,7 @@ import { SearchResponse } from "../../../app/actions/search/types";
 
 export default function SearchField() {
   const searchParams = useSearchParams();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResponse["results"]>(
     []
@@ -65,6 +66,7 @@ export default function SearchField() {
   return (
     <>
       {/* Search icon hidden on mobile */}
+
       <Suspense>
         <SearchDesktop
           searchType={searchType}
@@ -76,7 +78,6 @@ export default function SearchField() {
         />
 
         {/* Search icon hidden on desktop */}
-
         <SearchMobile
           searchType={searchType}
           setSearchType={setSearchType}

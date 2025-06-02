@@ -1,49 +1,35 @@
 import { Metadata } from "next";
-import { getListById } from "../../../actions/list/list-data";
-import CreateListButton from "../../../../components/create-list-button";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
-import PageTitleSubtitle from "../../../../components/page-title-subtitle";
-import convertDateToString from "../../../utils/convert-date-to-string";
-import { getUserById } from "../../../actions/user/user-data";
+import ListHeader from "../../../../components/list-header";
+import { generateListMetadata } from "../../../actions/list/list-data";
+import SearchListItem from "../../../../components/list/search-list-item";
+import { getUserSession } from "../../../actions/user/user-data";
 
-export const metadata: Metadata = {
-  title: "List Details Page",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  return await generateListMetadata(params.id);
+}
 
 export default async function ListDetails({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-  const list = await getListById(id);
+  const { id } = params;
+  const user = await getUserSession();
 
-  if (!list) {
-    notFound();
-  }
-
-  const title = list?.name ?? "";
-  const listOwner = await getUserById(list?.userId);
-  const listCreatedAt = list
-    ? `Created ${convertDateToString(list!.createdAt)}`
-    : "";
-  const listUpdatedAt = list
-    ? `Modified ${convertDateToString(list!.updatedAt)}`
-    : "";
-  const subtitle = listOwner
-    ? `by ${listOwner?.email}\n${listCreatedAt}\n${listUpdatedAt}`
-    : "";
-
-  return (
+  return id ? (
     <>
-      <div className="flex flex-col md:flex md:flex-row md:items-end gap-4 justify-between">
-        <PageTitleSubtitle title={title} subtitle={subtitle} />
-        <Suspense>
-          <CreateListButton />
-        </Suspense>
+      <ListHeader id={id} />
+
+      <div className="flex flex-col gap-4 mt-10 pl-1 pr-1">
+        <p className="font-bold">Add a title to this list</p>
+        {id && user && <SearchListItem listId={id} userId={user.id} />}
       </div>
-      {list && <p>{list.description}</p>}
     </>
+  ) : (
+    <p>This list is empty.</p>
   );
 }

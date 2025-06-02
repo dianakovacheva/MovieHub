@@ -1,1 +1,0 @@
-ALTER TABLE "lists" ADD CONSTRAINT "lists_name_unique" UNIQUE("name");

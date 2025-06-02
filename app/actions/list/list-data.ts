@@ -1,11 +1,20 @@
 "use server";
 
-import { lists } from "./../../db/schema";
+import { listMovies, lists } from "./../../db/schema";
 import { db } from "../../db";
 import { CreateListFormSchema, CreateListFormState } from "./definitions";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { Metadata } from "next";
+
+// Generate meta data
+export async function generateListMetadata(id: string): Promise<Metadata> {
+  const list = await getListById(id);
+  return {
+    title: list?.name,
+  };
+}
 
 // Create list
 export async function createList(
@@ -56,8 +65,8 @@ export async function createList(
   }
 
   if (insertedList && insertedList[0] !== undefined) {
-    revalidatePath(`/lists`);
-    redirect(`/lists/${insertedList[0].id}`);
+    revalidatePath(`/list`);
+    redirect(`/list/${insertedList[0].id}`);
   }
 
   return insertedList[0] && { success: true, id: insertedList[0].id };
@@ -93,6 +102,41 @@ export async function getListById(listId: string) {
   } catch (error) {
     console.log((error as Error).message);
   }
+}
+
+// Add movie to list
+export async function addMovieToList(
+  listId: string,
+  movieId: string,
+  userId: string
+) {
+  // 1. Check if movie already added to the list
+  const existingMovie = await db
+    .select()
+    .from(listMovies)
+    .where((eq(listMovies.listId, listId), eq(listMovies.movieId, movieId)))
+    .limit(1);
+
+  if (existingMovie.length > 0) {
+    return { errors: { name: ["Movie already added to the list."] } };
+  }
+
+  // 2. Insert movie into the list database
+  const insertedMovie = await db
+    .insert(listMovies)
+    .values({ listId, movieId, userId })
+    .returning({ listId: listMovies.listId });
+
+  if (!insertedMovie.length) {
+    throw new Error("Failed to insert movie to DB.");
+  }
+
+  if (insertedMovie && insertedMovie[0] !== undefined) {
+    revalidatePath(`/list`);
+    redirect(`/list/${insertedMovie[0].listId}`);
+  }
+
+  return insertedMovie[0] && { success: true, id: insertedMovie[0].listId };
 }
 
 // Delete list

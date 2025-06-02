@@ -24,14 +24,28 @@ CREATE TABLE "authenticators" (
 	CONSTRAINT "authenticators_credentialID_unique" UNIQUE("credentialID")
 );
 --> statement-breakpoint
+CREATE TABLE "listMembers" (
+	"id" text PRIMARY KEY NOT NULL,
+	"userId" text NOT NULL,
+	"role" text
+);
+--> statement-breakpoint
+CREATE TABLE "listMovies" (
+	"listId" text PRIMARY KEY NOT NULL,
+	"movieId" text NOT NULL,
+	"userId" text NOT NULL,
+	"addedAt" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "lists" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"description" text,
-	"status" boolean DEFAULT true NOT NULL,
+	"isPublic" text DEFAULT '1' NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL,
-	"userId" text NOT NULL
+	"userId" text NOT NULL,
+	CONSTRAINT "lists_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "sessions" (
@@ -60,5 +74,9 @@ CREATE TABLE "verificationTokens" (
 --> statement-breakpoint
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "authenticators" ADD CONSTRAINT "authenticators_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "listMembers" ADD CONSTRAINT "listMembers_id_lists_id_fk" FOREIGN KEY ("id") REFERENCES "public"."lists"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "listMembers" ADD CONSTRAINT "listMembers_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "listMovies" ADD CONSTRAINT "listMovies_listId_lists_id_fk" FOREIGN KEY ("listId") REFERENCES "public"."lists"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "listMovies" ADD CONSTRAINT "listMovies_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "lists" ADD CONSTRAINT "lists_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;

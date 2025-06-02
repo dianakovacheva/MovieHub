@@ -1,6 +1,6 @@
 {
-  "id": "250c1ac5-bfcb-47ba-a379-4b875ea8eb0a",
-  "prevId": "fde33e62-8479-4c29-bb37-7cf2f88c6f4e",
+  "id": "81e7220e-370e-47f0-800b-2984d1bf6248",
+  "prevId": "250c1ac5-bfcb-47ba-a379-4b875ea8eb0a",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -187,7 +187,7 @@
         "listId": {
           "name": "listId",
           "type": "text",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "userId": {
@@ -232,7 +232,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "listMembers_listId_userId_pk": {
+          "name": "listMembers_listId_userId_pk",
+          "columns": [
+            "listId",
+            "userId"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},

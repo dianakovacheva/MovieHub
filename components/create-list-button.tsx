@@ -1,16 +1,10 @@
-"use client";
-
 import { Plus } from "lucide-react";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default function CreateListButton() {
-  function redirectToCreateListPage() {
-    redirect("/lists/create");
-  }
-
   return (
-    <button
-      onClick={redirectToCreateListPage}
+    <Link
+      href={"/list/create"}
       className="btn btn-large md:btn-wide rounded-full bg-[#f5c518] hover:bg-[#e3b614] text-black pt-6 pb-6"
     >
       <Plus />
@@ -18,6 +12,6 @@ export default function CreateListButton() {
         <p className="text-base font-semibold">Create a new list</p>
         <p className="text-xs font-normal">List your movie picks.</p>
       </div>
-    </button>
+    </Link>
   );
 }
