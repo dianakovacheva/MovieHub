@@ -105,9 +105,9 @@ export default function SearchListItem({
               listId={listId}
               userId={userId}
               listStyle={
-                "dropdown-content list absolute z-1 join-item p-2 mt-4 max-h-[60vh] md:w-[50%] w-[100%] overflow-scroll bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md hover:cursor-pointer"
+                "dropdown-content overflow-scroll list absolute z-1 join-item p-2 mt-4 max-h-[60vh] md:w-[50%] w-[100%] bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md hover:cursor-pointer"
               }
-              cardStyle="list-row hover:bg-zinc-300 dark:hover:bg-zinc-700"
+              cardStyle="list w-[100%] hover:bg-zinc-300 dark:hover:bg-zinc-700"
             />
           )}
         </div>

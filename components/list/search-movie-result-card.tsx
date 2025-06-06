@@ -30,14 +30,14 @@ export default function SearchMovieResultCard({
       >
         <button
           type="submit"
-          className="flex items-center hover:cursor-pointer"
+          className="flex gap-2 items-center w-full justify-between  hover:cursor-pointer"
         >
           <div className="flex gap-4 items-center">
             <Poster
               alt={title}
               path={media}
-              height={250}
-              width={200}
+              height={200}
+              width={250}
               style="rounded-lg object-cover shadow-sm w-15 h-25"
               isMovie={true}
             />

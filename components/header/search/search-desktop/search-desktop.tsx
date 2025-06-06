@@ -49,7 +49,7 @@ export default function SearchDesktop({
           searchType={searchType}
           buttons={false}
           listStyle={
-            "dropdown-content list absolute join-item z-1 join-item p-2 mt-4 max-h-[60vh] w-[100%] overflow-scroll bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md flex gap-4"
+            "dropdown-content list absolute z-1 join-item p-2 mt-4 max-h-[60vh] w-[100%] overflow-scroll bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md flex gap-4"
           }
           cardStyle="list-row hover:bg-zinc-300 dark:hover:bg-zinc-700"
         />

@@ -139,6 +139,24 @@ export async function addMovieToList(
   return insertedMovie[0] && { success: true, id: insertedMovie[0].listId };
 }
 
+// Get list's movies
+export async function getListMovies(listId: string) {
+  if (!listId) return null;
+
+  try {
+    const listMoviesArr = await db
+      .select()
+      .from(listMovies)
+      .where(eq(listMovies.listId, listId));
+
+    if (!listMoviesArr) return null;
+
+    return listMoviesArr;
+  } catch (error) {
+    console.log((error as Error).message);
+  }
+}
+
 // Delete list
 export async function deleteList(listId: string) {
   if (!listId) return null;

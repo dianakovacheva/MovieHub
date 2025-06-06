@@ -1,22 +1,12 @@
-import SearchMovieResultCard from "./search-movie-result-card";
+import { SearchResponse } from "../../app/actions/search/types";
+import Poster from "../poster";
+import { addMovieToList } from "../../app/actions/list/list-data";
+import AddItemButton from "../add-item-button";
 
 type MediaListProps = {
   listId: string;
   userId: string;
-  data: {
-    id: string | number;
-    name?: string;
-    title?: string;
-    isPublic?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    userId?: string;
-    release_date?: string;
-    poster_path?: string;
-    known_for_department?: string;
-    profile_path?: string;
-    media_type?: string;
-  }[];
+  data: SearchResponse["results"];
   subtitle?: string;
   listStyle?: string;
   cardStyle?: string;
@@ -30,20 +20,48 @@ export default function SearchMovieResults({
   cardStyle,
 }: MediaListProps) {
   return (
-    <ul className={listStyle ? listStyle : "list"}>
-      {data &&
-        data.map((item) => (
-          <SearchMovieResultCard
-            key={item.id}
-            listId={listId}
-            movieId={typeof item.id === "number" ? item.id.toString() : item.id}
-            userId={userId}
-            media={item.poster_path}
-            title={item.title}
-            subtitle={item.release_date?.slice(0, 4)}
-            style={cardStyle}
-          />
+    data && (
+      <ul key={listId} className={listStyle ? listStyle : "list"}>
+        {data.map((movie) => (
+          <form
+            key={movie.id}
+            action={async function () {
+              await addMovieToList(listId, movie.id.toString(), userId);
+            }}
+          >
+            <li className={cardStyle ? cardStyle : "list"}>
+              <button type="submit" className="list-row hover:cursor-pointer">
+                <div className="flex list-col-grow items-center gap-4">
+                  <Poster
+                    alt={movie.title}
+                    path={movie.poster_path}
+                    height={200}
+                    width={250}
+                    style="rounded-lg object-cover shadow-sm w-15 h-25"
+                    isMovie={true}
+                  />
+
+                  {movie.release_date && movie.release_date?.length > 0 ? (
+                    <div className="text-md font-bold">
+                      {movie.title} (
+                      {movie.release_date
+                        ? new Date(movie.release_date).getFullYear()
+                        : "-"}
+                      )
+                    </div>
+                  ) : (
+                    <div className="text-md font-bold">{movie.title}</div>
+                  )}
+                </div>
+
+                <div className="flex items-center">
+                  <AddItemButton />
+                </div>
+              </button>
+            </li>
+          </form>
         ))}
-    </ul>
+      </ul>
+    )
   );
 }
