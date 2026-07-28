@@ -3,7 +3,7 @@ import CreateListButton from "./create-list-button";
 import PageTitleSubtitle from "./page-title-subtitle";
 import { getListById } from "../app/actions/list/list-data";
 import { notFound } from "next/navigation";
-import { getUserById } from "../app/actions/user/user-data";
+import { getUserById, getUserSession } from "../app/actions/user/user-data";
 import convertDateToString from "../app/utils/convert-date-to-string";
 import Link from "next/link";
 
@@ -19,7 +19,9 @@ export default async function ListHeader({ id }: ListHeaderProps) {
   }
 
   const title = list?.name ?? "";
+  const currentUser = await getUserSession();
   const listOwner = await getUserById(list?.userId);
+  const isOwner = Boolean(currentUser && currentUser.id === list.userId);
   const listCreatedAt = list
     ? `Created ${convertDateToString(list!.createdAt)}`
     : "";
@@ -32,7 +34,7 @@ export default async function ListHeader({ id }: ListHeaderProps) {
       by
       <li>
         <Link
-          href={`/user/${list.id}`}
+          href={`/user/${list.userId}`}
           className="text-[#5799ef] hover:underline"
         >
           {listOwner?.email}
@@ -47,7 +49,13 @@ export default async function ListHeader({ id }: ListHeaderProps) {
 
   return (
     <div className="flex flex-col md:flex md:flex-row md:items-end gap-4 justify-between">
-      <PageTitleSubtitle title={title} subtitle={subtitle} />
+      <PageTitleSubtitle
+        title={title}
+        subtitle={subtitle}
+        showEdit={isOwner}
+        listId={id}
+        userId={currentUser?.id}
+      />
       <Suspense>
         <CreateListButton />
       </Suspense>
