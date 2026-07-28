@@ -3,9 +3,10 @@
 import { SearchResponse } from "../../app/actions/search/types";
 import { useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { search } from "../../app/actions/search/search-data";
 import SearchMovieResults from "./search-movie-results";
+import NoResultsFound from "../no-results-found";
 
 type SearchListItemProps = {
   listId: string;
@@ -20,9 +21,9 @@ export default function SearchListItem({
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResponse["results"]>(
-    []
+    [],
   );
-  const searchType = "movie";
+  const [searchType, setSearchType] = useState<"movie" | "tv">("movie");
 
   const handleSearch = useDebouncedCallback(async () => {
     if (!searchQuery) {
@@ -33,7 +34,7 @@ export default function SearchListItem({
 
     const searchResultsData = await search(searchQuery, searchType);
 
-    if (searchResultsData) setSearchResults(searchResultsData);
+    setSearchResults(searchResultsData ?? []);
   }, 500);
 
   // Handle input change
@@ -76,42 +77,48 @@ export default function SearchListItem({
     if (!newQuery) setSearchResults([]); // Clear results if the query is empty
   }, [searchParams]);
 
-  // Add movie to the list
-  //     const movie = await addMovieToList(listId, "2", userId);
-
-  //     console.log(movie);
-
   return (
-    <>
-      <Suspense>
-        <div className="dropdown">
-          <form className="items-center">
-            <label htmlFor="search-input">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleInputChange}
-                // onKeyDown={handleKeyDown}
-                placeholder="Search"
-                list="search-options"
-                className="input md:w-[50%] w-[100%]"
-              />
-            </label>
-          </form>
+    <div className="dropdown">
+      <form className="flex items-center gap-2">
+        <select
+          value={searchType}
+          onChange={(e) => setSearchType(e.target.value as "movie" | "tv")}
+          aria-label="Media type"
+          className="select w-28"
+        >
+          <option value="movie">Movies</option>
+          <option value="tv">Series</option>
+        </select>
 
-          {searchResults && searchResults.length > 0 && (
-            <SearchMovieResults
-              data={searchResults}
-              listId={listId}
-              userId={userId}
-              listStyle={
-                "dropdown-content overflow-scroll list absolute z-1 join-item p-2 mt-4 max-h-[60vh] md:w-[50%] w-[100%] bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md hover:cursor-pointer"
-              }
-              cardStyle="list w-[100%] hover:bg-zinc-300 dark:hover:bg-zinc-700"
-            />
-          )}
-        </div>
-      </Suspense>
-    </>
+        <label htmlFor="search-input" className="md:w-[50%] w-[100%]">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleInputChange}
+            // onKeyDown={handleKeyDown}
+            placeholder={
+              searchType === "tv" ? "Search series" : "Search movies"
+            }
+            list="search-options"
+            className="input w-full"
+          />
+        </label>
+      </form>
+
+      {searchResults && searchResults.length > 0 ? (
+        <SearchMovieResults
+          data={searchResults}
+          listId={listId}
+          userId={userId}
+          mediaType={searchType}
+          listStyle={
+            "dropdown-content overflow-scroll list absolute z-1 join-item p-2 mt-4 max-h-[60vh] md:w-[50%] w-[100%] bg-zinc-50 dark:bg-[#121212] rounded-box shadow-md hover:cursor-pointer"
+          }
+          cardStyle="list w-[100%] hover:bg-zinc-300 dark:hover:bg-zinc-700"
+        />
+      ) : (
+        <NoResultsFound searchQuery={searchQuery} />
+      )}
+    </div>
   );
 }
