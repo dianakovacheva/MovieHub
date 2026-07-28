@@ -8,34 +8,26 @@ export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  // Only render theme switch on client-side
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Update data-theme attribute when theme changes
-  useEffect(() => {
-    if (theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-    }
-  }, [theme]);
-
   if (!mounted) {
     return null;
   }
+
+  const isDark = theme === "dark";
 
   return (
     <label className="swap swap-rotate btn btn-ghost">
       <input
         type="checkbox"
         className="theme-controller"
-        checked={theme === "dark"}
-        onChange={() => setTheme(theme === "dark" ? "light" : "dark")}
+        checked={isDark}
+        onChange={() => setTheme(isDark ? "light" : "dark")}
+        aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       />
-      {/* sun icon */}
       <Sun className="swap-off" />
-
-      {/* moon icon */}
       <Moon className="swap-on" />
     </label>
   );
