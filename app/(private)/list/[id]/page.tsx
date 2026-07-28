@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import ListHeader from "../../../../components/list-header";
 import {
   generateListMetadata,
@@ -39,7 +40,11 @@ export default async function ListDetails({
       <div className="flex flex-col gap-4 mt-10">
         <Subtitle subtitle="Add a title to this list" style="font-bold" />
         <div className="flex flex-col pl-1 pr-1 md:pl-1 md:pr-0">
-          {id && user && <SearchListItem listId={id} userId={user.id} />}
+          {id && user && (
+            <Suspense>
+              <SearchListItem listId={id} userId={user.id} />
+            </Suspense>
+          )}
         </div>
       </div>
 
