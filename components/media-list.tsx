@@ -15,6 +15,7 @@ type MediaListProps = {
     known_for_department?: string;
     profile_path?: string;
     media_type?: string;
+    itemCount?: number;
   }[];
   path?: string;
   subtitle?: string;
@@ -43,19 +44,25 @@ export default function MediaList({
             media={item.poster_path ? item.poster_path : item.profile_path}
             title={
               searchType == "multi"
-                ? item.title
-                  ? `${item.title} (movie)`
-                  : `${item.name} (person)`
+                ? item.media_type === "tv"
+                  ? `${item.name} (series)`
+                  : item.title
+                    ? `${item.title} (movie)`
+                    : `${item.name} (person)`
                 : item.title
-                ? item.title
-                : item.name
+                  ? item.title
+                  : item.name
             }
             subtitle={
-              subtitle
-                ? subtitle
-                : item.known_for_department
-                ? item.known_for_department
-                : item.release_date
+              item.itemCount !== undefined
+                ? item.itemCount === 1
+                  ? "1 title"
+                  : `${item.itemCount} titles`
+                : subtitle
+                  ? subtitle
+                  : item.known_for_department
+                    ? item.known_for_department
+                    : item.release_date
             }
             status={item.isPublic == "0" ? "Private" : "Public"}
             meta={
@@ -66,10 +73,12 @@ export default function MediaList({
               path
                 ? `${path}/${item.id}`
                 : searchType == "multi"
-                ? item.media_type === "person" || item.known_for_department
-                  ? `/person/${item.id}`
-                  : `/movie/${item.id}`
-                : `/${searchType}/${item.id}`
+                  ? item.media_type === "tv"
+                    ? `/tv/${item.id}`
+                    : item.media_type === "person" || item.known_for_department
+                      ? `/person/${item.id}`
+                      : `/movie/${item.id}`
+                  : `/${searchType}/${item.id}`
             }
             buttons={buttons}
             style={cardStyle}
