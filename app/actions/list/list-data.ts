@@ -2,8 +2,8 @@
 
 import { listMovies, lists } from "./../../db/schema";
 import { db } from "../../db";
-import { CreateListFormSchema, CreateListFormState } from "./definitions";
-import { eq } from "drizzle-orm";
+import { CreateListFormSchema, CreateListFormState, UpdateListNameSchema, UpdateListNameState } from "./definitions";
+import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Metadata } from "next";
@@ -19,7 +19,7 @@ export async function generateListMetadata(id: string): Promise<Metadata> {
 // Create list
 export async function createList(
   formData: FormData,
-  userId: string
+  userId: string,
 ): Promise<CreateListFormState> {
   // 1. Validate form fields
   const validatedFields = CreateListFormSchema.safeParse({
@@ -72,6 +72,56 @@ export async function createList(
   return insertedList[0] && { success: true, id: insertedList[0].id };
 }
 
+// Update list name
+export async function updateListName(
+  listId: string,
+  userId: string,
+  name: string,
+): Promise<UpdateListNameState> {
+  if (!listId || !userId) {
+    return { errors: { name: ["Missing list or user id."] } };
+  }
+
+  const validatedFields = UpdateListNameSchema.safeParse({ name });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const list = await getListById(listId);
+
+  if (!list) {
+    return { errors: { name: ["List not found."] } };
+  }
+
+  if (list.userId !== userId) {
+    return { errors: { name: ["You can only edit your own lists."] } };
+  }
+
+  const { name: validatedName } = validatedFields.data;
+
+  const existingList = await db
+    .select()
+    .from(lists)
+    .where(and(eq(lists.name, validatedName)))
+    .limit(1);
+
+  if (existingList.length > 0 && existingList[0]?.id !== listId) {
+    return { errors: { name: ["List already exists."] } };
+  }
+
+  await db
+    .update(lists)
+    .set({ name: validatedName, updatedAt: new Date() })
+    .where(eq(lists.id, listId));
+
+  revalidatePath(`/list/${listId}`);
+
+  return { success: true };
+}
+
 // Get user's lists
 export async function getUserLists(userId: string) {
   if (!userId) return null;
@@ -108,13 +158,13 @@ export async function getListById(listId: string) {
 export async function addMovieToList(
   listId: string,
   movieId: string,
-  userId: string
+  userId: string,
 ) {
   // 1. Check if movie already added to the list
   const existingMovie = await db
     .select()
     .from(listMovies)
-    .where((eq(listMovies.listId, listId), eq(listMovies.movieId, movieId)))
+    .where(and(eq(listMovies.listId, listId), eq(listMovies.movieId, movieId)))
     .limit(1);
 
   if (existingMovie.length > 0) {
@@ -127,16 +177,29 @@ export async function addMovieToList(
     .values({ listId, movieId, userId })
     .returning({ listId: listMovies.listId });
 
-  if (!insertedMovie.length) {
+  if (!insertedMovie.length || !insertedMovie[0]) {
     throw new Error("Failed to insert movie to DB.");
   }
 
-  if (insertedMovie && insertedMovie[0] !== undefined) {
-    revalidatePath(`/list`);
-    redirect(`/list/${insertedMovie[0].listId}`);
+  // Refresh the list page in place so the new movie shows without a full redirect
+  revalidatePath(`/list/${listId}`);
+
+  return { success: true, id: insertedMovie[0].listId };
+}
+
+// Remove movie from list
+export async function removeMovieFromList(listId: string, movieId: string) {
+  if (!listId || !movieId) {
+    return { errors: { name: ["Missing list or movie id."] } };
   }
 
-  return insertedMovie[0] && { success: true, id: insertedMovie[0].listId };
+  await db
+    .delete(listMovies)
+    .where(and(eq(listMovies.listId, listId), eq(listMovies.movieId, movieId)));
+
+  revalidatePath(`/list/${listId}`);
+
+  return { success: true };
 }
 
 // Get list's movies
