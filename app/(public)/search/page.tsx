@@ -34,6 +34,9 @@ export default async function Search({
     searchResults &&
     searchResults.filter((item) => item.title && item.release_date);
 
+  const series: SearchResponse["results"] =
+    searchResults && searchResults.filter((item) => item.media_type === "tv");
+
   return (
     <>
       <PageTitle title={`Search "${q}"`} />
@@ -50,6 +53,13 @@ export default async function Search({
           <HeaderSection sectionName={"Movies"} />
           {movies.length > 0 ? (
             <MediaList data={movies} path="/movie" />
+          ) : (
+            `No results found for "${q}"`
+          )}
+
+          <HeaderSection sectionName={"Series"} />
+          {series.length > 0 ? (
+            <MediaList data={series} path="/tv" />
           ) : (
             `No results found for "${q}"`
           )}
@@ -72,6 +82,17 @@ export default async function Search({
           <HeaderSection sectionName={"Movies"} />
           {movies.length > 0 ? (
             <MediaList data={movies} path="/movie" />
+          ) : (
+            `No results found for "${q}"`
+          )}
+        </>
+      )}
+
+      {searchType === "tv" && (
+        <>
+          <HeaderSection sectionName={"Series"} />
+          {searchResults.length > 0 ? (
+            <MediaList data={searchResults} path="/tv" />
           ) : (
             `No results found for "${q}"`
           )}
