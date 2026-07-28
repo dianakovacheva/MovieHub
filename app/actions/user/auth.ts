@@ -6,16 +6,18 @@ import { FormState, LoginFormSchema, SignUpFormSchema } from "./definitions";
 import { genSaltSync, hashSync } from "bcrypt-ts";
 import { eq } from "drizzle-orm";
 import { signIn, signOut } from "../../../auth";
+import { AuthError } from "next-auth";
 
 // Sign Up
 export async function signUp(
   // state: FormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<FormState> {
   // 1. Validate form fields
   const validatedFields = SignUpFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
   });
 
   // If any form fields are invalid, return early
@@ -34,7 +36,7 @@ export async function signUp(
   });
 
   if (existingUser) {
-    throw new Error("User already exists.");
+    return { message: "An account with this email already exists." };
   }
 
   // Hash password and save user
@@ -53,17 +55,24 @@ export async function signUp(
   const user = data[0];
 
   if (!user) {
-    throw new Error("Failed to create user.");
+    return { message: "Failed to create user. Please try again." };
   }
 
-  // Automatically sign in the user
-  const result = await signIn("credentials", {
-    ...Object.fromEntries(formData),
-    redirect: true,
-    redirectTo: "/",
-  });
-
-  return result; // Return result for error handling
+  // Automatically sign in the user and send them to their profile page.
+  // On success this throws a redirect (handled by Next.js); only auth
+  // failures are caught below.
+  try {
+    await signIn("credentials", {
+      ...Object.fromEntries(formData),
+      redirect: true,
+      redirectTo: `/user/${user.id}`,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return { message: "Could not sign you in. Please try again." };
+    }
+    throw error; // Re-throw redirects and other framework errors
+  }
 }
 
 // Login
@@ -81,13 +90,20 @@ export async function login(formData: FormData): Promise<FormState> {
     };
   }
 
-  const result = await signIn("credentials", {
-    ...Object.fromEntries(formData),
-    redirect: true,
-    redirectTo: "/",
-  });
-
-  return result; // Return result for error handling
+  // On success signIn throws a redirect (handled by Next.js); we only catch
+  // authentication errors so bad credentials show a friendly message.
+  try {
+    await signIn("credentials", {
+      ...Object.fromEntries(formData),
+      redirect: true,
+      redirectTo: "/",
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return { message: "Invalid credentials. Please try again." };
+    }
+    throw error; // Re-throw redirects and other framework errors
+  }
 }
 
 // Logout
