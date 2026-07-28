@@ -46,27 +46,18 @@ export default async function PersonPage({
     ? `Known For ${personData.known_for_department}`
     : "Known For N/A";
 
-  // Sort movies by release year
-  const moviesSortedByReleaseYear = moviesActorPlayedIn!
+  // Sort cast credits newest → oldest by release date
+  const moviesSortedByReleaseYear = [...(moviesActorPlayedIn ?? [])]
     .filter((movie) => movie.release_date)
-    .sort(
-      (a, b) =>
-        new Date(Number(b.release_date)).getFullYear() -
-        new Date(Number(a.release_date)).getFullYear()
-    );
+    .sort((a, b) => (b.release_date ?? "").localeCompare(a.release_date ?? ""));
 
-  // Sort movies by job and relese year
+  // Sort crew credits by job, then newest → oldest within each job
   if (acterAsCrew) {
-    moviesSortedByJobs = acterAsCrew.sort((a, b) => {
-      // First, sort by job alphabetically
-      const jobComparison = a.job!.localeCompare(b.job!);
-      if (jobComparison !== 0) return jobComparison; // If jobs are different, sort by job
+    moviesSortedByJobs = [...acterAsCrew].sort((a, b) => {
+      const jobComparison = (a.job ?? "").localeCompare(b.job ?? "");
+      if (jobComparison !== 0) return jobComparison;
 
-      // If jobs are the same, sort by release year (descending)
-      return (
-        new Date(Number(b.release_date)).getFullYear() -
-        new Date(Number(a.release_date)).getFullYear()
-      );
+      return (b.release_date ?? "").localeCompare(a.release_date ?? "");
     });
   }
 
