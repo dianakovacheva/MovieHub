@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { signUp } from "../../../app/actions/user/auth";
 
+const fieldClassName =
+  "mt-1.5 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 shadow-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-[#f5c518] focus:ring-1 focus:ring-[#f5c518] dark:border-zinc-600 dark:bg-[#1a1a1a] dark:text-white dark:placeholder:text-zinc-500";
+
+const labelClassName =
+  "block text-sm font-semibold text-zinc-800 dark:text-zinc-100";
+
 export function RegisterForm({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
@@ -12,8 +18,6 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
         setError(null);
         const result = await signUp(formData);
 
-        // A successful sign up signs the user in and redirects to their
-        // profile, so it never returns; only failures reach this point.
         if (result?.message) {
           setError(result.message);
         } else if (result?.errors) {
@@ -26,63 +30,60 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
           );
         }
       }}
-      className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
+      className="flex flex-col gap-4"
     >
       <div>
-        <label
-          htmlFor="email"
-          className="block text-xs text-gray-600 uppercase"
-        >
-          Email Address
+        <label htmlFor="email" className={labelClassName}>
+          Email
         </label>
         <input
           id="email"
           name="email"
           type="email"
-          placeholder="user@acme.com"
+          placeholder="you@example.com"
           autoComplete="email"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 text-gray-800 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+          className={fieldClassName}
         />
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="block text-xs text-gray-600 uppercase"
-        >
+        <label htmlFor="password" className={labelClassName}>
           Password
         </label>
         <input
           id="password"
           name="password"
           type="password"
+          autoComplete="new-password"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 text-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+          className={fieldClassName}
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1.5 text-xs text-zinc-500 dark:text-[#c0bcbc]">
           At least 8 characters, including a letter, a number, and a special
           character.
         </p>
       </div>
 
       <div>
-        <label
-          htmlFor="confirmPassword"
-          className="block text-xs text-gray-600 uppercase"
-        >
-          Confirm Password
+        <label htmlFor="confirmPassword" className={labelClassName}>
+          Re-enter password
         </label>
         <input
           id="confirmPassword"
           name="confirmPassword"
           type="password"
+          autoComplete="new-password"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 text-gray-800 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
+          className={fieldClassName}
         />
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && (
+        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400">
+          {error}
+        </p>
+      )}
 
       {children}
     </form>
