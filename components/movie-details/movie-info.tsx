@@ -1,13 +1,16 @@
 import RateButton from "../rate-button";
 import SubtitleMovie from "./subtitle-movie";
 import PageTitle from "../page-title";
+import AddToWatchListButton from "../add-to-watchlist-button";
 import { MovieDetailsResponse } from "../../app/actions/movie/types";
 import { Star } from "lucide-react";
 
 export default async function MovieInfo({
   movie,
+  inWatchlist = false,
 }: {
   movie: MovieDetailsResponse;
+  inWatchlist?: boolean;
 }) {
   const buttonName = "Rate";
 
@@ -63,6 +66,19 @@ export default async function MovieInfo({
             YOUR RATING
           </p>
           <RateButton buttonName={buttonName} width="24" height="24" />
+        </div>
+
+        {/* Watchlist */}
+        <div className="flex flex-col gap-2">
+          <p className="text-zinc-500 dark:text-[#c0bcbc] text-xs font-bold">
+            WATCHLIST
+          </p>
+          <AddToWatchListButton
+            movieId={movie.id}
+            movieTitle={movie.title}
+            initialInWatchlist={inWatchlist}
+            showLabel={true}
+          />
         </div>
 
         {/* Popularity Info */}
