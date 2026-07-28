@@ -6,7 +6,7 @@ import { auth } from "../../../auth";
 
 export default async function getUserByEmail(
   email: string,
-  hashPassword: string
+  hashPassword: string,
 ) {
   if (!email || !hashPassword) return null;
 
@@ -20,10 +20,12 @@ export default async function getUserByEmail(
 
   if (!passwordMatch) return null;
 
+  // Return a flat user object (without the password hash) for NextAuth
   return {
-    user,
     id: user.id,
+    name: user.name,
     email: user.email,
+    image: user.image,
   };
 }
 
