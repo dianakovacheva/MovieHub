@@ -19,6 +19,12 @@ export type CommentWithAuthor = {
   authorEmail: string | null;
 };
 
+export type UserComment = CommentWithAuthor & {
+  mediaTitle: string;
+  mediaHref: string;
+  mediaType: "movie" | "tv";
+};
+
 export type CommentFormState =
   | {
       errors?: {
