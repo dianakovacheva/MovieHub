@@ -90,7 +90,10 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
               <div className="flex flex-col gap-1 text-base font-normal m-3">
                 <div className="flex gap-4 items-center">
                   <MovieRating voteAverage={movie.vote_average} />
-                  <AddToWatchListButton />
+                  <AddToWatchListButton
+                    movieId={movie.id}
+                    movieTitle={movie.title}
+                  />
                 </div>
                 {movie.title && (
                   <Link
