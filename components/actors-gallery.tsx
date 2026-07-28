@@ -49,23 +49,29 @@ export default function ActorsGallery({ actors }: ActorsGalleryProps) {
             >
               <li>
                 <div className="flex items-center gap-x-6">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 group">
                     <div className="avatar">
-                      <div className="rounded-full mask mask-squircle h-24 w-24 shadow-sm">
+                      <div className="relative h-24 w-24 overflow-hidden rounded-full mask mask-squircle shadow-sm">
                         <Poster
                           alt={person.name}
                           path={person.profile_path}
                           height={150}
                           width={150}
-                          style={undefined}
+                          style="h-full w-full object-cover"
                           isMovie={false}
+                        />
+                        <span
+                          aria-hidden
+                          className="pointer-events-none absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100"
                         />
                       </div>
                     </div>
                     <div>
-                      <div className="font-bold">{person.name}</div>
+                      <div className="font-bold transition-colors duration-200 group-hover:text-zinc-500 dark:group-hover:text-zinc-400">
+                        {person.name}
+                      </div>
                       {person.character && (
-                        <div className="text-xs font-normal text-zinc-500 dark:text-[#c0bcbc]">
+                        <div className="text-xs font-normal text-zinc-500 transition-colors duration-200 group-hover:text-zinc-500 dark:text-[#c0bcbc] dark:group-hover:text-zinc-400">
                           {person.character}
                         </div>
                       )}
