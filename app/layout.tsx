@@ -36,9 +36,9 @@ export default function Layout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-          attribute="class"
-          enableSystem={true}
-          defaultTheme="system"
+          attribute="data-theme"
+          enableSystem={false}
+          defaultTheme="dark"
         >
           <AlertProvider>
             <Navbar />
