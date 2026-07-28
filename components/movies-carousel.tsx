@@ -6,8 +6,12 @@ import { useState, useRef, useEffect } from "react";
 import MovieRating from "./movie-rating";
 import AddToWatchListButton from "./add-to-watchlist-button";
 import Poster from "./poster";
-// import { TrendingMovieListResponse } from "../../app/actions/movie/types";
 import { MoviesProps } from "../app/actions/movie/definitions";
+
+function movieHref(id: number, title?: string) {
+  if (!title) return `/movie/${id}`;
+  return `/movie/${id}-${title.split(" ").join("-").toLowerCase()}`;
+}
 
 export default function MoviesCarousel({ movies }: MoviesProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -18,12 +22,10 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
     if (carouselRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
       setShowLeftArrow(scrollLeft > 0);
-      // Add a small buffer (1px) to account for rounding errors
       setShowRightArrow(Math.ceil(scrollLeft) < scrollWidth - clientWidth - 1);
     }
   };
 
-  // Initial arrow visibility check
   useEffect(() => {
     updateArrowVisibility();
   }, [movies]);
@@ -31,8 +33,7 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
   const scroll = (direction: string) => {
     if (carouselRef.current) {
       const { scrollLeft, clientWidth } = carouselRef.current;
-      const scrollAmount = clientWidth; // Scroll by the width of the visible area
-
+      const scrollAmount = clientWidth;
       const newScrollLeft =
         direction === "left"
           ? Math.max(0, scrollLeft - scrollAmount)
@@ -45,12 +46,16 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
     }
   };
 
-  return movies && movies.length > 0 ? (
-    <div className="relative group carousel rounded-box overflow-x-auto scroll-smooth hide-scrollbar">
+  if (!movies || movies.length === 0) {
+    return <p> No movies to show. </p>;
+  }
+
+  return (
+    <div className="relative group">
       {showLeftArrow && (
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full z-10 hover:bg-black/50 transition-all"
+          className="absolute left-0 top-[35%] -translate-y-1/2 bg-black/40 p-2 rounded-full z-10 hover:bg-black/60 transition-all"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-6 h-6 text-white" />
@@ -59,72 +64,65 @@ export default function MoviesCarousel({ movies }: MoviesProps) {
 
       <div
         ref={carouselRef}
-        className="carousel rounded-box overflow-x-auto scroll-smooth hide-scrollbar"
+        className="overflow-x-auto scroll-smooth hide-scrollbar"
         onScroll={updateArrowVisibility}
       >
-        <div className="carousel-item gap-3">
-          {movies.map((movie) => (
-            <div
-              key={movie.id}
-              className="card shadow-sm bg-zinc-50 dark:bg-[#121212] mb-2 w-55 max-h-[65vh]"
-            >
-              {movie.title && (
-                <Link
-                  href={`/movie/${movie.id}-${movie.title
-                    .split(" ")
-                    .join("-")
-                    .toLowerCase()}`}
-                  className="flex-none"
-                >
+        <ul className="flex gap-4 pb-2">
+          {movies.map((movie) => {
+            const href = movieHref(movie.id, movie.title);
+            const year = movie.release_date?.split("-")[0];
+
+            return (
+              <li key={movie.id} className="flex w-40 shrink-0 flex-col">
+                <Link href={href} className="block overflow-hidden rounded-lg">
                   <Poster
                     alt={movie.title}
                     path={movie.poster_path ? movie.poster_path : ""}
-                    height={250}
+                    height={300}
                     width={200}
-                    style="rounded-t-lg h-90 w-60 object-cover"
+                    style="aspect-[2/3] w-full object-cover transition-opacity hover:opacity-90"
                     isMovie={true}
                   />
                 </Link>
-              )}
 
-              <div className="flex flex-col gap-1 text-base font-normal m-3">
-                <div className="flex gap-4 items-center">
-                  <MovieRating voteAverage={movie.vote_average} />
-                  <AddToWatchListButton
-                    movieId={movie.id}
-                    movieTitle={movie.title}
-                  />
-                </div>
-                {movie.title && (
-                  <Link
-                    href={`/movie/${movie.id}-${movie.title
-                      .split(" ")
-                      .join("-")
-                      .toLowerCase()}`}
-                    className="flex-none"
-                  >
-                    <p className="truncate hover:underline mb-2">
-                      {movie.title}
+                <div className="mt-2 flex min-h-[5.5rem] flex-col gap-1.5">
+                  {movie.title && (
+                    <Link href={href} className="min-w-0">
+                      <h3 className="text-sm font-semibold leading-snug line-clamp-2 hover:underline">
+                        {movie.title}
+                      </h3>
+                    </Link>
+                  )}
+
+                  {year && (
+                    <p className="text-xs text-zinc-500 dark:text-[#c0bcbc]">
+                      {year}
                     </p>
-                  </Link>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+                  )}
+
+                  <div className="mt-auto flex items-center justify-between gap-1">
+                    <MovieRating voteAverage={movie.vote_average} />
+                    <AddToWatchListButton
+                      movieId={movie.id}
+                      movieTitle={movie.title}
+                    />
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
       {showRightArrow && (
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full z-10 hover:bg-black/50 transition-all"
+          className="absolute right-0 top-[35%] -translate-y-1/2 bg-black/40 p-2 rounded-full z-10 hover:bg-black/60 transition-all"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-6 h-6 text-white" />
         </button>
       )}
     </div>
-  ) : (
-    <p> No movies to show. </p>
   );
 }
