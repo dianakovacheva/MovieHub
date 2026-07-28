@@ -96,7 +96,7 @@ export async function login(formData: FormData): Promise<FormState> {
     await signIn("credentials", {
       ...Object.fromEntries(formData),
       redirect: true,
-      redirectTo: "/",
+      redirectTo: formData.get("redirectTo")?.toString() || "/",
     });
   } catch (error) {
     if (error instanceof AuthError) {
