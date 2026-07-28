@@ -8,6 +8,11 @@ import AddToWatchListButton from "./add-to-watchlist-button";
 import Poster from "./poster";
 import { SeriesProps } from "../app/actions/series/definitions";
 
+function seriesHref(id: number, name?: string) {
+  if (!name) return `/tv/${id}`;
+  return `/tv/${id}-${name.split(" ").join("-").toLowerCase()}`;
+}
+
 export default function SeriesCarousel({ series }: SeriesProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -29,7 +34,6 @@ export default function SeriesCarousel({ series }: SeriesProps) {
     if (carouselRef.current) {
       const { scrollLeft, clientWidth } = carouselRef.current;
       const scrollAmount = clientWidth;
-
       const newScrollLeft =
         direction === "left"
           ? Math.max(0, scrollLeft - scrollAmount)
@@ -42,12 +46,16 @@ export default function SeriesCarousel({ series }: SeriesProps) {
     }
   };
 
-  return series && series.length > 0 ? (
-    <div className="relative group carousel rounded-box overflow-x-auto scroll-smooth hide-scrollbar">
+  if (!series || series.length === 0) {
+    return <p> No series to show. </p>;
+  }
+
+  return (
+    <div className="relative group">
       {showLeftArrow && (
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full z-10 hover:bg-black/50 transition-all"
+          className="absolute left-0 top-[35%] -translate-y-1/2 bg-black/40 p-2 rounded-full z-10 hover:bg-black/60 transition-all"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-6 h-6 text-white" />
@@ -56,67 +64,65 @@ export default function SeriesCarousel({ series }: SeriesProps) {
 
       <div
         ref={carouselRef}
-        className="carousel rounded-box overflow-x-auto scroll-smooth hide-scrollbar"
+        className="overflow-x-auto scroll-smooth hide-scrollbar"
         onScroll={updateArrowVisibility}
       >
-        <div className="carousel-item gap-3">
+        <ul className="flex gap-4 pb-2">
           {series.map((show) => {
-            const showLink = show.name
-              ? `/tv/${show.id}-${show.name
-                  .split(" ")
-                  .join("-")
-                  .toLowerCase()}`
-              : `/tv/${show.id}`;
+            const href = seriesHref(show.id, show.name);
+            const year = show.first_air_date?.split("-")[0];
 
             return (
-              <div
-                key={show.id}
-                className="card shadow-sm bg-zinc-50 dark:bg-[#121212] mb-2 w-55 max-h-[65vh]"
-              >
-                <Link href={showLink} className="flex-none">
+              <li key={show.id} className="flex w-40 shrink-0 flex-col">
+                <Link href={href} className="block overflow-hidden rounded-lg">
                   <Poster
                     alt={show.name}
                     path={show.poster_path ? show.poster_path : ""}
-                    height={250}
+                    height={300}
                     width={200}
-                    style="rounded-t-lg h-90 w-60 object-cover"
+                    style="aspect-[2/3] w-full object-cover transition-opacity hover:opacity-90"
                     isMovie={true}
                   />
                 </Link>
 
-                <div className="flex flex-col gap-1 text-base font-normal m-3">
-                  <div className="flex gap-4 items-center">
+                <div className="mt-2 flex min-h-[5.5rem] flex-col gap-1.5">
+                  {show.name && (
+                    <Link href={href} className="min-w-0">
+                      <h3 className="text-sm font-semibold leading-snug line-clamp-2 hover:underline">
+                        {show.name}
+                      </h3>
+                    </Link>
+                  )}
+
+                  {year && (
+                    <p className="text-xs text-zinc-500 dark:text-[#c0bcbc]">
+                      {year}
+                    </p>
+                  )}
+
+                  <div className="mt-auto flex items-center justify-between gap-1">
                     <MovieRating voteAverage={show.vote_average ?? 0} />
                     <AddToWatchListButton
                       movieId={`tv-${show.id}`}
                       movieTitle={show.name}
                     />
                   </div>
-                  {show.name && (
-                    <Link href={showLink} className="flex-none">
-                      <p className="truncate hover:underline mb-2">
-                        {show.name}
-                      </p>
-                    </Link>
-                  )}
                 </div>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       {showRightArrow && (
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full z-10 hover:bg-black/50 transition-all"
+          className="absolute right-0 top-[35%] -translate-y-1/2 bg-black/40 p-2 rounded-full z-10 hover:bg-black/60 transition-all"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-6 h-6 text-white" />
         </button>
       )}
     </div>
-  ) : (
-    <p> No series to show. </p>
   );
 }
