@@ -6,12 +6,35 @@ import {
   getWatchlistSeries,
 } from "../../actions/watchlist/watchlist-data";
 import PageTitle from "../../../components/page-title";
+import { getUserSession } from "../../actions/user/user-data";
+import { LoginForm } from "../../../components/auth/login/login-form";
+import { SubmitButton } from "../../../components/auth/submit-button";
+import AuthPanel from "../../../components/auth/auth-panel";
 
 export const metadata: Metadata = {
   title: "Watchlist",
 };
 
 export default async function WatchlistPage() {
+  const user = await getUserSession();
+
+  if (!user) {
+    return (
+      <AuthPanel
+        title="Sign in"
+        subtitle="Sign in to view and manage your Watchlist."
+        alternateHref="/register"
+        alternateLabel="Create a MovieHub account"
+        alternatePrompt="New to MovieHub?"
+        alternateCta="Create an account"
+      >
+        <LoginForm redirectTo="/watchlist">
+          <SubmitButton>Sign in</SubmitButton>
+        </LoginForm>
+      </AuthPanel>
+    );
+  }
+
   const watchlistMovies = await getWatchlistMovies();
   const watchlistSeries = await getWatchlistSeries();
 
