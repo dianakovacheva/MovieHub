@@ -15,7 +15,7 @@ export default function RateButton({
     <button className="btn-ghost text-[#5799ef]">
       <div className="flex items-top gap-2">
         <Star width={width} height={height} />
-        <p className={buttonTextSize ? buttonTextSize : "text-2xl"}>
+        <p className={buttonTextSize ? buttonTextSize : "text-xl"}>
           {buttonName}
         </p>
       </div>
