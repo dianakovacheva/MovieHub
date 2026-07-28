@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/header/navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "../components/footer";
+import { AlertProvider } from "../context/alert-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,11 +40,13 @@ export default function Layout({
           enableSystem={true}
           defaultTheme="system"
         >
-          <Navbar />
-          <main className="flex flex-col min-h-screen w-full gap-4 mb-10 overflow-hidden">
-            {children}
-          </main>
-          <Footer />
+          <AlertProvider>
+            <Navbar />
+            <main className="flex flex-col min-h-screen w-full gap-4 mb-10 overflow-hidden">
+              {children}
+            </main>
+            <Footer />
+          </AlertProvider>
         </ThemeProvider>
       </body>
     </html>
