@@ -9,10 +9,16 @@ export function LoginForm({ children }: { children: React.ReactNode }) {
   return (
     <form
       action={async (formData) => {
+        setError(null);
         const result = await login(formData);
 
-        if (!result) {
-          setError("Invalid credentials. Please try again.");
+        // A successful login redirects and never returns; only failures do.
+        if (result?.message) {
+          setError(result.message);
+        } else if (result?.errors) {
+          const firstError =
+            result.errors.email?.[0] ?? result.errors.password?.[0];
+          setError(firstError ?? "Invalid credentials. Please try again.");
         }
       }}
       className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 sm:px-16"
