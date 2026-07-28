@@ -48,7 +48,7 @@ export const accounts = pgTable(
         columns: [account.provider, account.providerAccountId],
       }),
     },
-  ]
+  ],
 );
 
 // Sessions
@@ -74,7 +74,7 @@ export const verificationTokens = pgTable(
         columns: [verificationToken.identifier, verificationToken.token],
       }),
     },
-  ]
+  ],
 );
 
 // Authenticators
@@ -98,7 +98,7 @@ export const authenticators = pgTable(
         columns: [authenticator.userId, authenticator.credentialID],
       }),
     },
-  ]
+  ],
 );
 
 // Lists
@@ -131,7 +131,7 @@ export const listMembers = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.listId, table.userId] }),
-  })
+  }),
 );
 
 // List movies
@@ -149,5 +149,34 @@ export const listMovies = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.listId, table.movieId] }),
-  })
+  }),
 );
+
+// Watchlist - movies a user wants to watch (one implicit list per user)
+export const watchlist = pgTable(
+  "watchlist",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    movieId: text("movieId").notNull(),
+    addedAt: timestamp("addedAt", { mode: "date" }).defaultNow().notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.movieId] }),
+  }),
+);
+
+// Comments - user-generated comments on movies
+export const comments = pgTable("comments", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  movieId: text("movieId").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).defaultNow().notNull(),
+});
