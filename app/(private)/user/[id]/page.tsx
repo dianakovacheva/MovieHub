@@ -3,6 +3,7 @@ import convertDateToString from "../../../utils/convert-date-to-string";
 import WatchlistCarousel from "../../../../components/watchlist-carousel";
 import SeriesWatchlistCarousel from "../../../../components/series-watchlist-carousel";
 import UserLists from "../../../../components/user-lists";
+import UserComments from "../../../../components/user-comments";
 import { Metadata } from "next";
 import { getUserLists } from "../../../actions/list/list-data";
 import { getUserSession } from "../../../actions/user/user-data";
@@ -10,6 +11,7 @@ import {
   getWatchlistMovies,
   getWatchlistSeries,
 } from "../../../actions/watchlist/watchlist-data";
+import { getUserComments } from "../../../actions/comment/comment-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const user = await getUserSession();
@@ -28,6 +30,7 @@ export default async function User() {
   const userLists = user && (await getUserLists(user.id));
   const watchlistMovies = await getWatchlistMovies();
   const watchlistSeries = await getWatchlistSeries();
+  const userComments = user ? await getUserComments(user.id) : [];
 
   return (
     user &&
@@ -40,6 +43,7 @@ export default async function User() {
         <WatchlistCarousel watchlist={watchlistMovies} />
         <SeriesWatchlistCarousel series={watchlistSeries} />
         {userLists && <UserLists userId={user.id} data={userLists} />}
+        <UserComments comments={userComments} currentUserId={user.id} />
       </div>
     )
   );
