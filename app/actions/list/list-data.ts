@@ -3,7 +3,7 @@
 import { listMovies, lists } from "./../../db/schema";
 import { db } from "../../db";
 import { CreateListFormSchema, CreateListFormState, UpdateListNameSchema, UpdateListNameState } from "./definitions";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Metadata } from "next";
@@ -125,10 +125,22 @@ export async function updateListName(
 // Get user's lists
 export async function getUserLists(userId: string) {
   if (!userId) return null;
+
   const userLists = await db
-    .select()
+    .select({
+      id: lists.id,
+      name: lists.name,
+      description: lists.description,
+      isPublic: lists.isPublic,
+      createdAt: lists.createdAt,
+      updatedAt: lists.updatedAt,
+      userId: lists.userId,
+      itemCount: count(listMovies.movieId),
+    })
     .from(lists)
-    .where(eq(lists.userId, userId));
+    .leftJoin(listMovies, eq(lists.id, listMovies.listId))
+    .where(eq(lists.userId, userId))
+    .groupBy(lists.id);
 
   if (!userLists) return null;
 
