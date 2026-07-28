@@ -4,7 +4,7 @@ import SearchDesktop from "./search-desktop/search-desktop";
 import SearchMobile from "./search-mobile/search-mobile";
 import { redirect, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { search } from "../../../app/actions/search/search-data";
 import { SearchResponse } from "../../../app/actions/search/types";
 
@@ -65,28 +65,23 @@ export default function SearchField() {
 
   return (
     <>
-      {/* Search icon hidden on mobile */}
+      <SearchDesktop
+        searchType={searchType}
+        setSearchType={setSearchType}
+        query={searchQuery}
+        handleChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        searchResults={searchResults}
+      />
 
-      <Suspense>
-        <SearchDesktop
-          searchType={searchType}
-          setSearchType={setSearchType}
-          query={searchQuery}
-          handleChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          searchResults={searchResults}
-        />
-
-        {/* Search icon hidden on desktop */}
-        <SearchMobile
-          searchType={searchType}
-          setSearchType={setSearchType}
-          query={searchQuery}
-          handleChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          searchResults={searchResults}
-        />
-      </Suspense>
+      <SearchMobile
+        searchType={searchType}
+        setSearchType={setSearchType}
+        query={searchQuery}
+        handleChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        searchResults={searchResults}
+      />
     </>
   );
 }
