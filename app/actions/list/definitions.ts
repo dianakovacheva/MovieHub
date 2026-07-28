@@ -18,3 +18,17 @@ export type CreateListFormState =
       id?: string;
     }
   | undefined;
+
+export const UpdateListNameSchema = z.object({
+  name: z.string().trim().min(1, { message: "Name is required." }).max(255),
+});
+
+export type UpdateListNameState =
+  | {
+      errors?: {
+        name?: string[];
+      };
+      message?: string;
+      success?: boolean;
+    }
+  | undefined;
