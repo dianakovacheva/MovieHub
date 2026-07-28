@@ -38,6 +38,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           if (!user) {
             // No user found, so this is their first attempt to login
             // Optionally, this is also the place you could do a user registration
+
             throw new Error("Invalid credentials.");
           }
 
@@ -47,6 +48,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         } catch (error) {
           if (error instanceof ZodError) {
             // Return `null` to indicate that the credentials are invalid
+
             return null;
           }
         }
@@ -63,6 +65,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (user) {
         // User is available during sign-in
         token.id = user.id as string;
+      } else {
       }
       return token;
     },
