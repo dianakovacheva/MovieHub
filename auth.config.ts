@@ -14,7 +14,7 @@ export const authConfig = {
       const { pathname } = nextUrl;
 
       // Routes that require an authenticated user
-      const privateRoutes = ["/watchlist", "/list", "/user"];
+      const privateRoutes = ["/list", "/user"];
       const isOnPrivateRoute = privateRoutes.some(
         (route) => pathname === route || pathname.startsWith(`${route}/`),
       );
