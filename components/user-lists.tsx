@@ -13,6 +13,7 @@ type UserListsProps = {
     createdAt?: Date;
     updatedAt?: Date;
     userId?: string;
+    itemCount?: number;
   }[];
   userId: string;
   style?: string;
@@ -40,7 +41,6 @@ export default function UserLists({ data, userId, style }: UserListsProps) {
               <MediaList
                 data={data}
                 path="/list"
-                subtitle={userListsCount.toString()}
                 buttons={true}
               />
             )}
