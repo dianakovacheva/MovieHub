@@ -26,6 +26,10 @@ import {
 } from "../../../actions/movie/types";
 import HorizontalList from "../../../../components/horizontal-list";
 import { notFound } from "next/navigation";
+import { isInWatchlist } from "../../../actions/watchlist/watchlist-data";
+import CommentSection from "../../../../components/comments/comment-section";
+import { getComments } from "../../../../app/actions/comment/comment-data";
+import { getUserSession } from "../../../actions/user/user-data";
 
 export const metadata: Metadata = {
   title: "Details Page",
@@ -37,12 +41,17 @@ export default async function MovieDetails({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const movie = await getMovieDetails(id);
+  // URLs include a slug (e.g. "550-fight-club"); the numeric prefix is the TMDB id
+  const movieId = id.split("-")[0] ?? id;
+  const movie = await getMovieDetails(movieId);
   const movieCredits = await getMovieCredits(id);
   let backdrops = await getMovieBackdrops(id);
   const movieVideos = await getMovieVideos(id);
   const movieSuggestions = await getMovieSuggestions(id);
   const keywords = await getMovieKeywords(id);
+  const inWatchlist = await isInWatchlist(movieId);
+  const currentUser = await getUserSession();
+  const comments = await getComments(movieId);
   const directors: MovieCreditsResponse["crew"] = [];
   const writers: MovieCreditsResponse["crew"] = [];
   const cast: MovieCreditsResponse["cast"] = [];
@@ -85,7 +94,7 @@ export default async function MovieDetails({
   // Movie Suggestions
   if (movieSuggestions) {
     topMovieSuggestions = [...movieSuggestions].sort(
-      (a, b) => b.popularity - a.popularity
+      (a, b) => b.popularity - a.popularity,
     );
     // .slice(0, 12);
   }
@@ -101,7 +110,7 @@ export default async function MovieDetails({
   return (
     <div className="flex flex-col gap-4 mb-10">
       {/* Movie Info */}
-      {movie && <MovieInfo movie={movie} />}
+      {movie && <MovieInfo movie={movie} inWatchlist={inWatchlist} />}
 
       {/* Media Section */}
       {movie && <MovieMedia movie={movie} />}
@@ -171,6 +180,13 @@ export default async function MovieDetails({
         {/* Box Office*/}
         {movie && <BoxOffice revenue={movie.revenue} />}
       </div>
+
+      {/* Comments */}
+      <CommentSection
+        movieId={movieId}
+        comments={comments ?? []}
+        currentUserId={currentUser?.id ?? null}
+      />
     </div>
   );
 }
