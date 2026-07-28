@@ -1,10 +1,15 @@
 import DashboardHeader from "../../../../components/dashboard-header";
 import convertDateToString from "../../../utils/convert-date-to-string";
 import WatchlistCarousel from "../../../../components/watchlist-carousel";
+import SeriesWatchlistCarousel from "../../../../components/series-watchlist-carousel";
 import UserLists from "../../../../components/user-lists";
 import { Metadata } from "next";
 import { getUserLists } from "../../../actions/list/list-data";
 import { getUserSession } from "../../../actions/user/user-data";
+import {
+  getWatchlistMovies,
+  getWatchlistSeries,
+} from "../../../actions/watchlist/watchlist-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const user = await getUserSession();
@@ -21,6 +26,8 @@ export default async function User() {
     : "";
 
   const userLists = user && (await getUserLists(user.id));
+  const watchlistMovies = await getWatchlistMovies();
+  const watchlistSeries = await getWatchlistSeries();
 
   return (
     user &&
@@ -30,7 +37,8 @@ export default async function User() {
           userEmail={user.email}
           profileCreatedAt={profileCreatedAt}
         />
-        <WatchlistCarousel />
+        <WatchlistCarousel watchlist={watchlistMovies} />
+        <SeriesWatchlistCarousel series={watchlistSeries} />
         {userLists && <UserLists userId={user.id} data={userLists} />}
       </div>
     )
