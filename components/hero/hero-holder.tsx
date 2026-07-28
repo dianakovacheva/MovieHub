@@ -18,13 +18,13 @@ export default async function HeroSection() {
           (movie) => (
             movie.name?.toLowerCase() === upcomingMovie.title?.toLowerCase(),
             movie.id === upcomingMovie.id.toString()
-          )
+          ),
         );
 
         let movieTrailers = movieVideos.filter(
           (movie) =>
             movie.type?.toLowerCase() === "trailer" &&
-            movie.name?.toLowerCase() === "official trailer"
+            movie.name?.toLowerCase() === "official trailer",
         );
 
         movieTrailers = movieTrailers.map((trailer) => ({
@@ -45,7 +45,7 @@ export default async function HeroSection() {
   );
 
   return (
-    <div className="flex flex-col mt-4">
+    <div className="flex flex-col">
       <VideoGallery
         videos={upcomingMoviesTrailers.flat()}
         videoListTitle={videoListTitle}

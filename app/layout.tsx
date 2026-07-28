@@ -42,7 +42,7 @@ export default function Layout({
         >
           <AlertProvider>
             <Navbar />
-            <main className="flex flex-col min-h-screen w-full gap-4 mb-10 overflow-hidden">
+            <main className="flex flex-col min-h-screen w-full gap-4 mt-8 mb-10 overflow-hidden">
               {children}
             </main>
             <Footer />
