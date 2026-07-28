@@ -22,6 +22,7 @@ export default function SearchFormFilter({
       </option>
       <option value="multi">All</option>
       <option value="movie">Movie</option>
+      <option value="tv">Series</option>
       <option value="person">Person</option>
     </select>
   );
