@@ -85,20 +85,20 @@ export default function SeriesCarousel({ series }: SeriesProps) {
                   />
                 </Link>
 
-                <div className="mt-2 flex min-h-[5.5rem] flex-col gap-1.5">
-                  {show.name && (
+                <div className="mt-2 flex h-[6.25rem] flex-col gap-1.5">
+                  {show.name ? (
                     <Link href={href} className="min-w-0">
-                      <h3 className="text-sm font-semibold leading-snug line-clamp-2 hover:underline">
+                      <h3 className="h-10 text-sm font-semibold leading-5 line-clamp-2 hover:underline">
                         {show.name}
                       </h3>
                     </Link>
+                  ) : (
+                    <div className="h-10" aria-hidden />
                   )}
 
-                  {year && (
-                    <p className="text-xs text-zinc-500 dark:text-[#c0bcbc]">
-                      {year}
-                    </p>
-                  )}
+                  <p className="h-4 text-xs text-zinc-500 dark:text-[#c0bcbc]">
+                    {year ?? "\u00A0"}
+                  </p>
 
                   <div className="mt-auto flex items-center justify-between gap-1">
                     <MovieRating voteAverage={show.vote_average ?? 0} />
