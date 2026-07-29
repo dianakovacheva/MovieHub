@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     useTypeScriptCli: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
