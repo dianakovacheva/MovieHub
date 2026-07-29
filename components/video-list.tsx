@@ -71,6 +71,8 @@ export default function VideoList({
                   height={100}
                   alt={video.name!.toString()}
                   className="w-full h-full object-cover"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  priority={index === 0}
                 />
 
                 <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40">
