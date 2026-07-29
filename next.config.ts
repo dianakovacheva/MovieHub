@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // TypeScript 7 does not expose the compiler API Next.js historically used.
+    useTypeScriptCli: true,
+  },
   images: {
     remotePatterns: [
       {
