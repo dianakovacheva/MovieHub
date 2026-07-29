@@ -35,7 +35,7 @@ export default async function ListHeader({ id }: ListHeaderProps) {
       <li>
         <Link
           href={`/user/${list.userId}`}
-          className="text-[#5799ef] hover:underline"
+          className="text-brand-blue hover:underline"
         >
           {listOwner?.email}
         </Link>

@@ -46,7 +46,7 @@ export default function UserComments({
                   <div className="flex flex-col gap-1 min-w-0">
                     <Link
                       href={comment.mediaHref}
-                      className="inline-flex items-center gap-2 font-bold text-[#5799ef] hover:underline"
+                      className="inline-flex items-center gap-2 font-bold text-brand-blue hover:underline"
                     >
                       <MediaIcon width="16" height="16" className="shrink-0" />
                       <span className="truncate">{comment.mediaTitle}</span>

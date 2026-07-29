@@ -27,7 +27,7 @@ export default async function Lists() {
       by
       <Link
         href={`/user/${user.id}`}
-        className="text-[#5799ef] hover:underline"
+        className="text-brand-blue hover:underline"
       >
         {user?.email}
       </Link>

@@ -54,7 +54,7 @@ export default function AddToWatchListButton({
         disabled={isPending}
         aria-label={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
         title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
-        className="btn-ghost text-[#5799ef] disabled:opacity-50"
+        className="btn-ghost text-brand-blue disabled:opacity-50"
       >
         <div className="flex items-center gap-2">
           {inWatchlist ? (
@@ -77,7 +77,7 @@ export default function AddToWatchListButton({
       disabled={isPending}
       aria-label={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
       title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
-      className="btn btn-ghost btn-sm text-[#5799ef]"
+      className="btn btn-ghost btn-sm text-brand-blue"
     >
       {inWatchlist ? (
         <BookmarkCheck width="18" height="18" fill="currentColor" />

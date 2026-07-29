@@ -12,7 +12,7 @@ export default function RateButton({
   buttonTextSize?: string;
 }) {
   return (
-    <button className="btn-ghost text-[#5799ef]">
+    <button className="btn-ghost text-brand-blue">
       <div className="flex items-top gap-2">
         <Star width={width} height={height} />
         <p className={buttonTextSize ? buttonTextSize : "text-xl"}>

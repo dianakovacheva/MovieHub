@@ -86,7 +86,7 @@ export default function CreateListForm({ userId }: CreateListFormProps) {
       <div className="w-[20vw]">
         <button
           type="submit"
-          className="btn rounded-full bg-[#0e63be] hover:bg-[#216fc3] text-white shadow-none dark:shadow-sm"
+          className="btn rounded-full bg-brand-blue hover:bg-brand-blue-hover text-white shadow-none dark:shadow-sm"
         >
           Create
         </button>

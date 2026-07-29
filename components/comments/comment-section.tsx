@@ -54,7 +54,7 @@ export default function CommentSection({
             <button
               type="submit"
               disabled={isPending}
-              className="btn bg-[#0e63be] hover:bg-[#216fc3] text-white rounded-full"
+              className="btn bg-brand-blue hover:bg-brand-blue-hover text-white rounded-full"
             >
               <MessageSquare width="16" height="16" />
               {isPending ? "Posting..." : "Post comment"}
@@ -63,7 +63,7 @@ export default function CommentSection({
         </form>
       ) : (
         <p className="text-zinc-500 dark:text-[#c0bcbc]">
-          <Link href="/login" className="text-[#5799ef] hover:underline">
+          <Link href="/login" className="text-brand-blue hover:underline">
             Log in
           </Link>{" "}
           to join the conversation.

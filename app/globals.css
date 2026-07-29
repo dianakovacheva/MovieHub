@@ -6,6 +6,11 @@
 }
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@theme {
+  --color-brand-blue: #5799ef;
+  --color-brand-blue-hover: #4689e0;
+}
+
 body {
   line-height: 1;
   margin: 0px auto;

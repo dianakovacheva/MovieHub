@@ -24,7 +24,7 @@ export default function HorizontalListItem({
               .split(" ")
               .join("-")
               .toLowerCase()}`}
-            className="link link-hover text-[#0e63be] flex-none"
+            className="link link-hover text-brand-blue flex-none"
           >
             {itemName}
           </Link>

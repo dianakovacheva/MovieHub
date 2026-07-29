@@ -22,7 +22,7 @@ export default function EmptyList({
       {buttonText || buttonAction ? (
         <Link
           href={buttonAction!}
-          className="btn bg-[#0e63be] hover:bg-[#216fc3] text-white shadow-none dark:shadow-sm rounded-full"
+          className="btn bg-brand-blue hover:bg-brand-blue-hover text-white shadow-none dark:shadow-sm rounded-full"
         >
           {buttonText}
         </Link>
