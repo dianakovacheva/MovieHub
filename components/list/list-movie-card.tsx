@@ -103,8 +103,8 @@ export default async function ListMovieCard({
                     <div className="flex items-top gap-2 text-sm text-zinc-500 dark:text-[#c0bcbc]">
                       {/* Rating */}
                       <Star
-                        color="#f5c518"
-                        fill="#f5c518"
+                        color="var(--color-brand-yellow)"
+                        fill="var(--color-brand-yellow)"
                         width="16"
                         height="16"
                       />

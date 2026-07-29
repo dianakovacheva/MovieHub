@@ -114,7 +114,7 @@ export default function ImageGallery({ backdrops }: BackdropProps) {
                       width={selectedImage.width}
                       style={`h-24 w-40 rounded object-cover shadow-sm ${
                         selectedImage.file_path === backdrop.file_path
-                          ? "ring-2 ring-blue-500 dark:ring-yellow-400"
+                          ? "ring-2 ring-brand-yellow"
                           : "ring-1 ring-gray-200 dark:ring-gray-700"
                       }`}
                       isMovie={false}

@@ -32,11 +32,11 @@ export default function Paragraph({
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? (
-              <button className="cursor-pointer font-bold text-[#f5c518]">
+              <button className="cursor-pointer font-bold text-brand-yellow">
                 Show less
               </button>
             ) : (
-              <button className="cursor-pointer font-bold text-[#f5c518]">
+              <button className="cursor-pointer font-bold text-brand-yellow">
                 Show more
               </button>
             )}

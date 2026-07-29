@@ -5,7 +5,7 @@ export default function CreateListButton() {
   return (
     <Link
       href={"/list/create"}
-      className="btn btn-large md:btn-wide rounded-full bg-[#f5c518] hover:bg-[#e3b614] text-black pt-6 pb-6"
+      className="btn btn-large md:btn-wide rounded-full bg-brand-yellow hover:bg-brand-yellow-hover text-black pt-6 pb-6"
     >
       <Plus />
       <div className="flex flex-col items-start">

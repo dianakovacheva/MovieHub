@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signUp } from "../../../app/actions/user/auth";
 
 const fieldClassName =
-  "mt-1.5 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 shadow-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-[#f5c518] focus:ring-1 focus:ring-[#f5c518] dark:border-zinc-600 dark:bg-[#1a1a1a] dark:text-white dark:placeholder:text-zinc-500";
+  "mt-1.5 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 shadow-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow dark:border-zinc-600 dark:bg-[#1a1a1a] dark:text-white dark:placeholder:text-zinc-500";
 
 const labelClassName =
   "block text-sm font-semibold text-zinc-800 dark:text-zinc-100";

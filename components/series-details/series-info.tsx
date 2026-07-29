@@ -33,7 +33,7 @@ export default async function SeriesInfo({
         <div className="flex flex-col gap-2">
           <MetaLabel>VIEWERS RATING</MetaLabel>
           <div className="flex items-center gap-2 h-9">
-            <Star color="#f5c518" fill="#f5c518" width="24" height="24" />
+            <Star color="var(--color-brand-yellow)" fill="var(--color-brand-yellow)" width="24" height="24" />
             <div className="flex flex-col justify-center">
               <div className="flex items-center gap-1 leading-none">
                 <p className="text-xl font-semibold">
