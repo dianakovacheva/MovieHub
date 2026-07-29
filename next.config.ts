@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // TypeScript 7 has no JS compiler API; use the local `tsc` CLI instead.
-    useTypeScriptCli: true,
-  },
   images: {
     remotePatterns: [
       {
